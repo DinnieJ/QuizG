@@ -102,3 +102,5 @@ quiz-g-front/.DS_Store
 
 # Vim swap files
 quiz-g-front/*.swp
+
+quiz-g-front/package-lock.json

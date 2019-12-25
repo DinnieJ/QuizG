@@ -8,8 +8,7 @@
                 @click="clickHeader()"
             />
             <b-card-body>
-                <!-- <b-card-title title-tag="a" :href="/creator/{{ collection.user.id }}"> -->
-                <b-card-title title-tag="a" href="/home/collections" v-if="creatorShow">
+                <b-card-title title-tag="a" :href="`/creator/${collection.user.id}/collections`" v-if="creatorShow" >
                     <h4 class="collection-card-creator">
                         {{ collection.user.name }}
                     </h4>

@@ -16,19 +16,11 @@
 
 <script>
 export default {
+    props: {
+        history: Object
+    },
     data() {
         return {
-            history: {
-                id: 1,
-                collection: {
-                    id: 1,
-                    name: "collection 1"
-                },
-                total: 11,
-                correct: 5,
-                type: 'test',
-                time: 10000
-            },
             hour: 0,
             minute: 0,
             second: 0,

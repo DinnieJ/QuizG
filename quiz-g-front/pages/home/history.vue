@@ -5,14 +5,14 @@
         home
         active-tab="history"
     />
-    <history-table />
+    <history-table :histories="histories"/>
 </div>
 </template>
 
 <script>
 import HistoryTable from '~/components/history/HistoryTable'
 import UserNav from '~/components/user/UserNav'
-import HistoryApi from `~/common/api/history`
+import HistoryApi from '~/common/api/history'
 
 export default {
     // middleware: 'authenticated',
@@ -21,8 +21,8 @@ export default {
         try{
             let response = await HistoryApi.getHistoryByUser(user.id)
             if(response.status == 200) {
-                let collectionsList = response.data.collections
-                store.commit('collection/SET_COLLECTIONS', collectionsList)
+                let histories = response.data.histories
+                store.commit('history/SET_HISTORIES', histories)
                 store.commit('user/ACTIVE_PAGE', 'home')
             }
             
@@ -39,6 +39,10 @@ export default {
         HistoryTable
     },
     computed: {
+        histories() {
+            let histories = this.$store.getters['history/histories']
+            return histories
+        }
     },
     data() {
         return {

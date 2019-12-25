@@ -9,8 +9,8 @@
         <th scope="col">Type</th>
     </tr>
     </thead>
-    <tbody >
-        <HistoryRow v-for="i in 20" :key="i"/>
+    <tbody>
+        <HistoryRow v-for="(item, i) in histories" :key="i" :history="item" />
     </tbody>
 </table> 
 </template>

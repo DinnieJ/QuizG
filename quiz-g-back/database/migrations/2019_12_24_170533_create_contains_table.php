@@ -15,8 +15,10 @@ class CreateContainsTable extends Migration
     {
         Schema::create('contains', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('collection_id');
-            $table->integer('quiz_id');
+            $table->integer('collection_id')->unsigned();
+            $table->integer('quiz_id')->unsigned();
+            $table->foreign('collection_id')->references('id')->on('collections');
+            $table->foreign('quiz_id')->references('id')->on('quizzes');
             $table->timestamps();
         });
     }

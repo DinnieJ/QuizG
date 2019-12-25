@@ -12,4 +12,12 @@ class Collection extends Model
     protected $fillable = [
         'user_id','name'
     ];
+
+    public function quizzes(){
+        return $this->belongsToMany(\App\Quiz::class,'contains');
+    }
+
+    public function user(){
+        return $this->belongsTo(\App\User::class);
+    }
 }

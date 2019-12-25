@@ -19,6 +19,7 @@ class CreateActionsTable extends Migration
             $table->integer('quiz_id');
             $table->integer('answer_id');
             $table->integer('right');
+            $table->integer('time');
             $table->timestamps();
         });
     }

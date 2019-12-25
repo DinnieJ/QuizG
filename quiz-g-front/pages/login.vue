@@ -22,7 +22,6 @@
 
 <script>
 import UserApi from '~/common/api/user'
-import ErrorMap from '~/common/error_code'
 import ErrorAlert from '~/components/common/ErrorAlert'
 
 export default {
@@ -66,12 +65,7 @@ export default {
                 setTimeout(function() {
                     context.error.status = false
                 }, 2000)
-                let code = e.data.error
-                if(ErrorMap.has(code)) {
-                    context.error.message = ErrorMap.get(code)
-                } else {
-                    context.error.message = "Has error"
-                }
+                context.error.message = e.data.error
             })
         }
     },

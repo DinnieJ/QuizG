@@ -18,6 +18,7 @@ class CreateQuizzesTable extends Migration
             $table->integer('user_id');
             $table->text('content');
             $table->integer('correct_answer_id');
+            $table->integer('time');
             $table->timestamps();
         });
     }

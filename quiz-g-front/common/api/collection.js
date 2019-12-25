@@ -38,15 +38,17 @@ export default {
             name: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
             user: {
                 id: 1,
-                name: 'user 1'
+            name: 'user 1'
             }
         }
 
         let collections = []
 
         for(let i = 0; i < 20; i++) {
-            collection.id = i
-            collections.push(collection)
+            let tmp = {}
+            Object.assign(tmp, collection)
+            tmp.id = i
+            collections.push(tmp)
         }
 
         return new Promise(function(resolve, reject) {

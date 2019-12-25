@@ -193,3 +193,40 @@ body {
     color: #1368ce;
     text-decoration: underline;
 }
+
+/* .quiz-card{
+
+} */
+
+.answers-table {
+    border-top: 3px solid #CCCCCC;
+}
+
+.row-answer {
+    padding-bottom: 4px;
+    padding-top: 2px;
+    border-bottom: 1px dotted #CCCCCC;
+}
+
+.row-answer .answer-index {
+    color: #ffffff;
+    font-weight: 600;
+    border-radius: 50%;
+}
+
+.row-answer .answer-0 {
+    background-color: #46178f;
+    
+}
+
+.row-answer .answer-1 {
+    background-color: #e21b3c;
+}
+
+.row-answer .answer-2 {
+    background-color: #26890c;
+}
+
+.row-answer .answer-3 {
+    background-color: #ffa602;
+}

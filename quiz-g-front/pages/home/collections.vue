@@ -13,7 +13,7 @@
 
 <script>
 import CollectionApi from '~/common/api/collection'
-import CollectionsGroup from '~/components/collections/CollectionsGroup'
+import CollectionsGroup from '~/components/collection/CollectionsGroup'
 import UserNav from '~/components/user/UserNav'
 
 export default {
@@ -45,10 +45,6 @@ export default {
             let collections = this.$store.getters['collection/collections']
             return collections;
         },
-        // user() {
-        //     let user = this.$store.getters['user/currentUser']
-        //     return user
-        // }
     },
     data() {
         return {

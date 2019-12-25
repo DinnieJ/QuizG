@@ -1,8 +1,16 @@
 body {
-    background-color: #ffffff;
+    background-color: #f2f2f2;
     background-size: cover;
     font-family: 'Open Sans', sans-serif;
     height: 100vh;
+}
+
+.font-lobster {
+    font-family: 'Lobster', cursive;
+}
+
+.font-pacifico {
+    font-family: 'Pacifico', cursive;
 }
 
 .auth-layout {
@@ -11,9 +19,10 @@ body {
     height: 100vh;
 }
 
+
 .form-user {
     background-color: #f3f3f3ed;
-    color: #26890c;
+    color: #1368ce;
     border-radius: 6px;
     padding: 10px;
     padding-bottom: 30px;
@@ -22,13 +31,13 @@ body {
     margin-bottom: 30px;
     font-weight: 800;
     font-size: 30px;
-    color: #26890c;
+    color: #1368ce;
 }
 .form-header::after {
     content: " ";
     width: 200px;
     height: 5px;
-    background: #26890c;
+    background: #1368ce;
     display: block;
     margin-top: 20px;
     border-radius: 3px;
@@ -36,7 +45,7 @@ body {
     margin-right: auto
 }
 .btn-login {
-    background: #26890c;
+    background: #1368ce;
     color: #ffffff;
     font-weight: 600;
 }
@@ -52,8 +61,172 @@ body {
 .slide-fade-leave-active {
     transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
 }
-.slide-fade-enter, .slide-fade-leave-to
-/* .slide-fade-leave-active below version 2.1.8 */ {
+.slide-fade-enter, .slide-fade-leave-to {
     transform: translateX(10px);
     opacity: 0;
+}
+
+#header {
+    background-color: #1368ce;
+    color: #ffffff;
+}
+
+.header-left .header-item {
+    line-height: 23px;
+    color: #ffffff;
+    padding: 3px;
+    border-radius: 5px;
+}
+
+.header-left .header-item::after {
+    content: " ";
+    width: 100%;
+    height: 5px;
+    display: block;
+    margin-top: 5px;
+    border-radius: 3px;
+    margin-left: auto;
+    margin-right: auto;
+    background: none;
+}
+
+.header-left .header-item:hover::after {
+    background: #ffffff;
+}
+
+.header-left .header-item.active::after {
+    background: #ffffff;
+}
+
+.header-title {
+    color: #ffffff;
+    font-size: 30px;
+    font-weight: 700;
+}
+
+.logout-btn {
+    font-size: 15px;
+    font-weight: 600;
+    background-color: #ffffff;
+    color: #e21b3c;
+}   
+
+.logout-btn:hover {
+    background-color: #e21b3c;
+    color: #ffffff;
+}   
+
+.collection-card {
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 4px 0px;
+    border : #CCCCCC;
+    border-radius: 5px;
+}
+
+.collection-card-creator {
+    text-decoration: none;
+    color: #cccccc;
+}
+
+.collection-card-header {
+    background-color:  #55acee;
+    color: #ffffff;
+    box-shadow: 0px 5px 0px 0px #3C93D5;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.collection-card-header:hover {
+    background-color: #6FC6FF;
+}
+
+.collection-card-header:active {
+    transform: translate(0px, 5px);
+    box-shadow: 0px 1px 0px 0px;
+}
+
+.collection-card-header div {
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.collection-card-btn {
+    border-radius: 5px;
+    color: #ffffff;
+    position: relative;
+    display: inline-block;
+    font-weight: 600;
+}
+
+.collection-card-btn:active {
+    transform: translate(0px, 5px);
+    box-shadow: 0px 1px 0px 0px;
+}
+
+.collection-card-btn.test {
+    background-color: #2ecc71;
+    box-shadow: 0px 5px 0px 0px #15B358;
+}
+
+.collection-card-btn.test:hover {
+    background-color: #48E68B;
+}
+
+.collection-card-btn.play  {
+    background-color: #e74c3c;
+    box-shadow: 0px 5px 0px 0px #CE3323;
+}
+
+
+.collection-card-btn.play:hover {
+    background-color: #FF6656;
+}
+
+.user-nav {
+    background-color: #ffffff;
+    padding: 10px;
+    border-radius: 4px;
+}
+
+.user-nav-name {
+    font-size: 23px;
+    font-weight: 700;
+    color: #1368ce;
+    text-decoration: underline;
+}
+
+/* .quiz-card{
+
+} */
+
+.answers-table {
+    border-top: 3px solid #CCCCCC;
+}
+
+.row-answer {
+    padding-bottom: 4px;
+    padding-top: 2px;
+    border-bottom: 1px dotted #CCCCCC;
+}
+
+.row-answer .answer-index {
+    color: #ffffff;
+    font-weight: 600;
+    border-radius: 50%;
+}
+
+.row-answer .answer-0 {
+    background-color: #46178f;
+    
+}
+
+.row-answer .answer-1 {
+    background-color: #e21b3c;
+}
+
+.row-answer .answer-2 {
+    background-color: #26890c;
+}
+
+.row-answer .answer-3 {
+    background-color: #ffa602;
 }

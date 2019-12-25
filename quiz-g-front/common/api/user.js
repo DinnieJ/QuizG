@@ -35,7 +35,20 @@ export default {
             reject({
                 status: 400,
                 data: {
-                    error : "auth-5"
+                    message : "auth-5"
+                }
+            })
+        })
+    },
+    getCurrentUser() {
+        return new Promise(function(resolve, reject) {
+            resolve({
+                status: 200,
+                data: {
+                    user: {
+                        id: 1,
+                        name: "User 1"
+                    }
                 }
             })
         })

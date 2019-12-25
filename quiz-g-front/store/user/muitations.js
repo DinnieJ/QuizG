@@ -4,5 +4,8 @@ export default {
     },
     LOGOUT(state) {
         state.authenToken = ''
+    },
+    ACTIVE_PAGE(state, page) {
+        state.activePage = page
     }
 }

@@ -1,9 +1,8 @@
 <script>
 export default {
   fetch({ redirect }) {
-    redirect('/home/collections')
+    redirect('/discover/collections')
   },
   // middleware: ['authenticated']
 }
 </script>
-

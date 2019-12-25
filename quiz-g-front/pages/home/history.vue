@@ -3,28 +3,26 @@
     <user-nav 
         :user="user"
         home
-        active-tab="collections"
+        active-tab="history"
     />
-    <collections-group 
-        :collections="collections"
-    />
+    <history-table :histories="histories"/>
 </div>
 </template>
 
 <script>
-import CollectionApi from '~/common/api/collection'
-import CollectionsGroup from '~/components/collection/CollectionsGroup'
+import HistoryTable from '~/components/history/HistoryTable'
 import UserNav from '~/components/user/UserNav'
+import HistoryApi from '~/common/api/history'
 
 export default {
     // middleware: 'authenticated',
     async asyncData({isDev, route, store, env, params, query, req, res, redirect, error}) {
         let user = store.getters['user/currentUser']
         try{
-            let response = await CollectionApi.getCollectionsByUser(user.id)
+            let response = await HistoryApi.getHistoryByUser(user.id)
             if(response.status == 200) {
-                let collectionsList = response.data.collections
-                store.commit('collection/SET_COLLECTIONS', collectionsList)
+                let histories = response.data.histories
+                store.commit('history/SET_HISTORIES', histories)
                 store.commit('user/ACTIVE_PAGE', 'home')
             }
             
@@ -37,14 +35,14 @@ export default {
         }
     },
     components: {
-        CollectionsGroup,
-        UserNav
+        UserNav,
+        HistoryTable
     },
     computed: {
-        collections() {
-            let collections = this.$store.getters['collection/collections']
-            return collections;
-        },
+        histories() {
+            let histories = this.$store.getters['history/histories']
+            return histories
+        }
     },
     data() {
         return {

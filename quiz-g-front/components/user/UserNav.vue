@@ -9,7 +9,7 @@
   <li class="nav-item">
     <a :class="activeTab == 'quizzes' ? 'nav-link text-uppercase active' : 'nav-link text-uppercase'" :href="home ? '/home/quizzes' : ('/creator/' + user.id + '/quizzes')" >quizzes</a>
   </li>
-  <li class="nav-item">
+  <li class="nav-item" v-if="home">
     <a :class="activeTab == 'history' ? 'nav-link text-uppercase active' : 'nav-link text-uppercase'" href="/home/history" >history</a>
   </li>
 </ul>

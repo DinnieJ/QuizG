@@ -27,7 +27,7 @@ export default {
             resolve({
                 status: 200,
                 data: {
-                    collections: collections
+                    collections: collections,
                 }
             })
         })
@@ -38,7 +38,7 @@ export default {
             name: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
             user: {
                 id: 1,
-            name: 'user 1'
+                name: 'user 1'
             }
         }
 
@@ -55,7 +55,11 @@ export default {
             resolve({
                 status: 200,
                 data: {
-                    collections: collections
+                    collections: collections,
+                    user: {
+                        id: 1,
+                        name: 'user 1'
+                    }
                 }
             })
         })

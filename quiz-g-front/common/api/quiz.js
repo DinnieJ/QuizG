@@ -46,7 +46,7 @@ export default {
             resolve({
                 status: 200,
                 data: {
-                    quizzes: quizzes
+                    quizzes: quizzes,
                 }
             })
         })
@@ -93,7 +93,11 @@ export default {
             resolve({
                 status: 200,
                 data: {
-                    quizzes: quizzes
+                    quizzes: quizzes,
+                    user: {
+                        id: 1,
+                        name: 'user 1'
+                    },
                 }
             })
         })

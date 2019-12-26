@@ -1,13 +1,23 @@
 <template>
 <b-card class="quiz-card mb-3 col-sm-6">
     <b-card-body>
-            <b-form-checkbox
-            v-if="selectable"
-            v-model="quiz.select"
-        >
-            #{{ index }}
-        </b-form-checkbox>
-        <b-card-sub-title v-else :sub-title="'#' + index" />
+        <div class="d-flex" v-if="selectable">
+             <b-form-checkbox
+                v-model="select"
+            >
+                #{{ index }}
+            </b-form-checkbox>
+   
+            <a :href="`/creator/${quiz.user.id}/quizzes`" class="ml-2" v-if="creatorShow">
+                {{ quiz.user.name }}
+            </a>
+        </div>
+        <b-card-sub-title v-else>
+            <span>#{{ index }}</span>
+            <a :href="`/creator/${quiz.user.id}/quizzes`" class="ml-2" v-if="creatorShow">
+                {{ quiz.user.name }}
+            </a>
+        </b-card-sub-title>
         <b-card-text title-tag="div">
             <h4>
                 {{ quiz.content }}
@@ -36,6 +46,15 @@ export default {
         selectable: {
             type: Boolean,
             default: false
+        },
+        creatorShow: {
+            type: Boolean,
+            default: false
+        }
+    },
+    data() {
+        return {
+            select: false
         }
     },
     methods: {

@@ -3,7 +3,7 @@
     <user-nav 
         :user="user"
         home
-        active-tab="history"
+        active-tab="History"
     />
     <history-table :histories="histories"/>
 </div>

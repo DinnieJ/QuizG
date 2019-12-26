@@ -3,9 +3,9 @@
     <user-nav 
         :user="user"
         home
-        active-tab="quizzes"
+        active-tab="Quizzes"
     />
-    <quizzes-group :quizzes="quizzes" />
+    <quizzes-group :quizzes="quizzes" selectable/>
 </div>
 </template>
 
@@ -19,7 +19,7 @@ export default {
     async asyncData({isDev, route, store, env, params, query, req, res, redirect, error}) {
         let user = store.getters['user/currentUser']
         try{
-            let response = await QuizApi.getCollectionsByUser(user.id)
+            let response = await QuizApi.getQuizzesByUser(user.id)
             if(response.status == 200) {
                  /**
                  * @type {Array}
@@ -29,7 +29,6 @@ export default {
                 var temp = 0
 
                 let quizzesList = quizzesSource.map(quiz => {
-                    // quiz.select = false
                     temp = quiz.correct_answer_id
                     quiz.answers.forEach(answer => {
                         if(answer.id == temp) {

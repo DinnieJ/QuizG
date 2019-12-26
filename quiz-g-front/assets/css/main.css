@@ -230,3 +230,28 @@ body {
 .row-answer .answer-3 {
     background-color: #ffa602;
 }
+
+.discover-nav {
+    background-color: #ffffff;
+}
+
+.search-icon {
+    background-color: #cccccc;
+    height: 38px;
+    width: 38px;
+    border-radius: 10px;
+    box-shadow: 0px 3px 0px 0px #868282;
+}
+
+.search-icon:hover {
+    background-color: #f1f0f0;
+}
+
+.search-icon:active {
+    transform: translate(0px, 5px);
+    box-shadow: 0px 1px 0px 0px;
+}
+
+.creator-name {
+    color : #46178f
+}

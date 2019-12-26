@@ -1,7 +1,7 @@
 <template>
 <div class="row">
     <template v-for="(item, i) in quizzes">
-        <quiz-card :quiz="item" :index="i + 1" :key="'quiz-' + i" :selectable="selectable" :creator-show="creatorShow"/>
+        <quiz-card :quiz="item" :index="i + 1" :key="'quiz-' + i" :selectable="selectable" :creator-show="creatorShow" :authorize="authorize" />
     </template>
 </div>
 </template>
@@ -19,6 +19,10 @@ export default {
             default: false
         },
         creatorShow: {
+            type: Boolean,
+            default: false
+        },
+        authorize: {
             type: Boolean,
             default: false
         }

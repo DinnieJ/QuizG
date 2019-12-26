@@ -7,6 +7,7 @@
     <quizzes-group 
         :quizzes="quizzes"
         selectable
+        :authorize="authorize"
     />
 </div>
 </template>

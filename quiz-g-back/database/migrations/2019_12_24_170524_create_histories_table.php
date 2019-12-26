@@ -20,6 +20,7 @@ class CreateHistoriesTable extends Migration
             $table->integer('total');
             $table->integer('correct');
             $table->string('type');
+            $table->integer('finished');
             $table->timestamps();
         });
     }

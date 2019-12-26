@@ -86,9 +86,35 @@ class QuizController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update($id,Request $req)
     {
-        //
+        $request = json_decode($req->getContent(),true);
+        $quiz = Quiz::find($id);
+        $quiz->content = $request['content'];
+
+        $quiz->answers()->get()->each->delete();
+
+        $correct_answer_id = -1;
+        $answers = $request['answers'];
+        
+        foreach($answers as &$answer){
+            $new_answer = Answer::create([
+                'quiz_id' => $quiz->id,
+                'content' => $answer['content'],
+            ]);
+            if(isset($answer['correct']) && $answer['correct'] == 1){
+                $correct_answer_id = $new_answer->id;
+            }
+        }
+        $quiz->time = $request['time'];
+        $quiz->correct_answer_id = $correct_answer_id;
+        $quiz->save();
+
+        return response([
+            'message' => 'edited',
+            'quiz' => $quiz,
+            'request' => $request,
+        ],200);
     }
 
     /**
@@ -99,6 +125,13 @@ class QuizController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $quiz = Quiz::find($id);
+        if($quiz != null){
+            $quiz->delete();
+        }
+
+        return response([
+            'message' => 'deleted'
+        ],200);
     }
 }

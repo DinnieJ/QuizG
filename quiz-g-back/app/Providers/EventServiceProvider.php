@@ -6,7 +6,12 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Event;
-
+use App\Quiz;
+use App\Observers\QuizObserver;
+use App\Collection;
+use App\Observers\CollectionObserver;
+use App\History;
+use App\Observers\HistoryObserver;
 class EventServiceProvider extends ServiceProvider
 {
     /**
@@ -29,6 +34,8 @@ class EventServiceProvider extends ServiceProvider
     {
         parent::boot();
 
-        //
+        Quiz::observe(new QuizObserver);
+        Collection::observe(new CollectionObserver);
+        History::observe(new HistoryObserver);
     }
 }

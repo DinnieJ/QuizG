@@ -4,25 +4,29 @@
         <div class="col-6 d-flex flex-row">
             <div class="mr-4">
               <h3 class="font-lobster creator-name">
-                User 1
+                {{ user.name }}
               </h3>
             </div>
             <button 
-                :class="activeTab == 'Collections' ? 'btn mr-2 btn-primary' : 'btn mr-2 btn-outline-primary'"
-                @click="clickLink('collections')"
+              v-if="!addQuiz"
+              :class="activeTab == 'Collections' ? 'btn mr-2 btn-primary' : 'btn mr-2 btn-outline-primary'"
+              @click="clickLink('collections')"
             >Collections</button>
             <button 
-                :class="activeTab == 'Quizzes' ? 'btn mr-2 btn-primary' : 'btn mr-2 btn-outline-primary'"
-                @click="clickLink('quizzes')"
+              v-if="!addQuiz"
+              :class="activeTab == 'Quizzes' ? 'btn mr-2 btn-primary' : 'btn mr-2 btn-outline-primary'"
+              @click="clickLink('quizzes')"
             >Quizzes</button>
-            <button 
-                v-if="home"
+            <button
+                v-if="home || !addQuiz"
                 :class="activeTab == 'History' ? 'btn btn-primary' : 'btn btn-outline-primary'"
                 @click="clickLink('history')"
             >History</button>
         </div>
         <div class="col-6 d-flex flex-row-reverse">
-            <button class="btn btn-outline-warning" v-if="activeTab == 'Quizzes'">Add Quiz</button>
+          <button class="btn btn-outline-danger" v-if="addQuiz" @click="clickDelete()" >Cancel</button>
+          <button class="btn btn-outline-warning" v-if="(activeTab == 'Quizzes')" @click="clickAddQuiz()" >Add Quiz</button>
+            
         </div>
     </div>
 </div>
@@ -36,7 +40,11 @@ export default {
             default: false
         },
         user: Object,
-        activeTab: String
+        activeTab: String,
+        addQuiz: {
+          type: Boolean,
+          default: false
+        }
     },
     data() {
         return {
@@ -52,6 +60,16 @@ export default {
             })
           }
         }
+    },
+    methods: {
+      clickAddQuiz() {
+        this.$router.push({
+          path: '/home/collections/add'
+        })
+      },
+      clickDelete() {
+        this.$router.go(-1)
+      }
     }
 }
 </script>

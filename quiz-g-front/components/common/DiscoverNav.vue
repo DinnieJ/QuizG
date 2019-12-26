@@ -26,7 +26,7 @@
             </b-input-group>
         </div>
         <div class="col-2 d-flex flex-row-reverse" v-if="activeTab == 'Quizzes'">
-            <button class="btn btn-outline-warning">Add Quiz</button>
+            <button class="btn btn-outline-warning" @click="clickAddQuiz()">Add Quiz</button>
         </div>
     </div>
 </div>
@@ -64,7 +64,12 @@ export default {
                 search.type = 2
             }
             this.$emit('enter-search', search)
-        }
+        },
+        clickAddQuiz() {
+            this.$router.push({
+                path: '/home/collections/add'
+            })
+        },
     },
     created() {
         this.dropdown = this.activeTab

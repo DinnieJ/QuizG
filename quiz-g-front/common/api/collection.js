@@ -64,7 +64,43 @@ export default {
             })
         })
     },
-    getCollectionById(payload) {
+    getCollectionById(collectionId) {
+        let quiz = {
+            id: 0,
+            content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+            user: {
+                id: 1,
+                name: 'user 1'
+            },
+            correct_answer_id: 1,
+            answers: [
+                {
+                    id: 1,
+                    content: "Answer 1"
+                },
+                {
+                    id: 2,
+                    content: "Answer 2"
+                },
+                {
+                    id: 3,
+                    content: "Answer 3"
+                },
+                {
+                    id: 4,
+                    content: "Answer 4"
+                },
+            ]
+        }
+
+        let quizzes = []
+
+        for(let i = 0; i < 20; i++) {
+            let tmp = {}
+            Object.assign(tmp, quiz)
+            tmp.id = i
+            quizzes.push(tmp)
+        }
         let collection = {
             id: 0,
             name: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
@@ -77,7 +113,9 @@ export default {
             resolve({
                 status: 200,
                 data: {
-                    collection: collection
+                    collection: collection,
+                    quizzes: quizzes,
+                    authorize: true
                 }
             })
         })

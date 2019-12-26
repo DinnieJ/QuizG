@@ -1,32 +1,36 @@
 <template>
 <div class="container">
-    <discover-nav 
-        active-tab="Quizzes"
-        @enter-search="enterSearch($event)"
+    <collection-nav
+        :collection="collection"
+        :authorize="authorize"
     />
     <quizzes-group 
         :quizzes="quizzes"
-        selectable 
-        creator-show
+        selectable
     />
 </div>
 </template>
 
 <script>
-import QuizApi from '~/common/api/quiz'
+import CollectionApi from '~/common/api/collection'
 import QuizzesGroup from '~/components/quiz/QuizzesGroup'
-import DiscoverNav from '~/components/common/DiscoverNav'
+import CollectionNav from '~/components/collection/CollectionNav'
 
 export default {
     // middleware: 'authenticated',
     async asyncData({isDev, route, store, env, params, query, req, res, redirect, error}) {
+        let collectionId = params.collectionId
+        let collection = {}
+        let authorize = false
         try{
-            let response = await QuizApi.getAllQuizzes()
+            let response = await CollectionApi.getCollectionById(collectionId)
             if(response.status == 200) {
                  /**
                  * @type {Array}
                  */
                 let quizzesSource = response.data.quizzes
+                collection = response.data.collection
+                authorize = response.data.authorize
 
                 var temp = 0
 
@@ -43,19 +47,28 @@ export default {
                     return quiz;
                 })
                
+                store.commit('collection/SET_CURRENT_COLLECTION', collection)
                 store.commit('quiz/SET_QUIZZES', quizzesList)
-                store.commit('user/ACTIVE_PAGE', 'discover')
+                if(authorize) {
+                    store.commit('user/ACTIVE_PAGE', 'home')
+                } else {
+                    store.commit('user/ACTIVE_PAGE', 'discover')
+                }
+                
             }
             
         } catch(e) {
             console.log('getAllCollections error', e)
         }
+
         return {
+            collection,
+            authorize
         }
     },
     components: {
         QuizzesGroup,
-        DiscoverNav
+        CollectionNav
     },
     computed: {
         quizzes() {
@@ -73,15 +86,10 @@ export default {
     },
     data() {
         return {
-            searchContent: "",
-            searchType: 0
+
         }
     },
     methods:{
-        enterSearch(search) {
-            this.searchContent = search.content
-            this.searchType = search.type
-        }
     },
     created() {
 

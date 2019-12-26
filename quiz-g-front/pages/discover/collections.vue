@@ -1,6 +1,10 @@
 <template>
 <div class="container">
-     <collections-group 
+    <discover-nav 
+        active-tab="Collections"
+        @enter-search="enterSearch($event)"
+    />
+    <collections-group 
         :collections="collections"
         creator-show
     />
@@ -10,6 +14,7 @@
 <script>
 import CollectionApi from '~/common/api/collection'
 import CollectionsGroup from '~/components/collection/CollectionsGroup'
+import DiscoverNav from '~/components/common/DiscoverNav'
 
 export default {
     // middleware: 'authenticated',
@@ -31,13 +36,34 @@ export default {
         }
     },
      components: {
-        CollectionsGroup
+        CollectionsGroup,
+        DiscoverNav
     },
     computed: {
         collections() {
             let collections = this.$store.getters['collection/collections']
-            return collections;
+            return collections.filter(item => {
+                if(this.searchType == 1) {
+                    return item.name.toLowerCase().includes(this.searchContent.toLowerCase())
+                }
+                if(this.searchType == 2) {
+                    return item.user.name.toLowerCase().includes(this.searchContent.toLowerCase())
+                }
+                return true
+            });
         },
     },
+    data() {
+        return {
+            searchContent: "",
+            searchType: 0
+        }
+    },
+    methods:{
+        enterSearch(search) {
+            this.searchContent = search.content
+            this.searchType = search.type
+        }
+    }
 }
 </script>

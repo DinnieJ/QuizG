@@ -51,7 +51,7 @@ export default {
             })
         })
     },
-    getCollectionsByUser(userId) {
+    getQuizzesByUser(userId) {
         let quiz = {
             id: 0,
             content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
@@ -96,13 +96,13 @@ export default {
                     quizzes: quizzes,
                     user: {
                         id: 1,
-                        name: 'user 1'
+                        name: 'User 1'
                     },
                 }
             })
         })
     },
-    getCollectionById(payload) {
+    getQuizById(payload) {
         let quiz = {
             id: 0,
             content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",

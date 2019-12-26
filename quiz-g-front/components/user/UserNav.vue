@@ -1,18 +1,31 @@
 <template>
-<ul class="nav nav-pills mb-3 user-nav">
-  <li class="nav-item">
-    <div class="nav-link font-pacifico user-nav-name">{{ user.name }}</div>
-  </li>
-  <li class="nav-item">
-    <a :class="activeTab == 'collections' ? 'nav-link text-uppercase active' : 'nav-link text-uppercase'" :href="home ? '/home/collections' : ('/creator/' + user.id + '/collections')" >collections</a>
-  </li>
-  <li class="nav-item">
-    <a :class="activeTab == 'quizzes' ? 'nav-link text-uppercase active' : 'nav-link text-uppercase'" :href="home ? '/home/quizzes' : ('/creator/' + user.id + '/quizzes')" >quizzes</a>
-  </li>
-  <li class="nav-item" v-if="home">
-    <a :class="activeTab == 'history' ? 'nav-link text-uppercase active' : 'nav-link text-uppercase'" href="/home/history" >history</a>
-  </li>
-</ul>
+<div class="container mb-3">
+    <div class="row discover-nav py-2">
+        <div class="col-6 d-flex flex-row">
+            <div class="mr-4">
+              <h3 class="font-lobster creator-name">
+                User 1
+              </h3>
+            </div>
+            <button 
+                :class="activeTab == 'Collections' ? 'btn mr-2 btn-primary' : 'btn mr-2 btn-outline-primary'"
+                @click="clickLink('collections')"
+            >Collections</button>
+            <button 
+                :class="activeTab == 'Quizzes' ? 'btn mr-2 btn-primary' : 'btn mr-2 btn-outline-primary'"
+                @click="clickLink('quizzes')"
+            >Quizzes</button>
+            <button 
+                v-if="home"
+                :class="activeTab == 'History' ? 'btn btn-primary' : 'btn btn-outline-primary'"
+                @click="clickLink('history')"
+            >History</button>
+        </div>
+        <div class="col-6 d-flex flex-row-reverse">
+            <button class="btn btn-outline-warning" v-if="activeTab == 'Quizzes'">Add Quiz</button>
+        </div>
+    </div>
+</div>
 </template>
 
 <script>
@@ -27,6 +40,17 @@ export default {
     },
     data() {
         return {
+          clickLink(activeTab) {
+            let url = ""
+            if(this.home) {
+              url = '/home/'
+            } else {
+              url = `/creator/${this.user.id}/`
+            }
+            this.$router.push({
+                path: url + activeTab
+            })
+          }
         }
     }
 }

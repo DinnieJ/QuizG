@@ -3,7 +3,7 @@
     <user-nav 
         :user="user"
         home
-        active-tab="collections"
+        active-tab="Collections"
     />
     <collections-group 
         :collections="collections"

@@ -2,7 +2,7 @@
 <div class="container">
     <user-nav 
         :user="user"
-        active-tab="collections"
+        active-tab="Collections"
     />
     <collections-group 
         :collections="collections"

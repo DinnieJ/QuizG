@@ -5,7 +5,11 @@
         home
         active-tab="Quizzes"
     />
-    <quizzes-group :quizzes="quizzes" selectable/>
+    <quizzes-group 
+        :quizzes="quizzes" 
+        selectable
+        authorize
+    />
 </div>
 </template>
 

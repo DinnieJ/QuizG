@@ -1,24 +1,33 @@
 <template>
 <b-card class="quiz-card mb-3 col-sm-6">
     <b-card-body>
-        <div class="d-flex" v-if="selectable">
-             <b-form-checkbox
-                v-model="select"
-                @change="clickCheckbox()"
-            >
-                #{{ index }}
-            </b-form-checkbox>
-   
-            <a :href="`/creator/${quiz.user.id}/quizzes`" class="ml-2" v-if="creatorShow">
-                {{ quiz.user.name }}
-            </a>
+        <div class="d-flex justify-content-between">
+            <div class="d-flex" v-if="selectable">
+                <b-form-checkbox
+                    v-model="select"
+                    @change="clickCheckbox()"
+                >
+                    #{{ index }}
+                </b-form-checkbox>
+    
+                <a :href="`/creator/${quiz.user.id}/quizzes`" class="ml-2" v-if="creatorShow">
+                    {{ quiz.user.name }}
+                </a>
+            </div>
+            <b-card-sub-title v-else>
+                <span>#{{ index }}</span>
+                <a :href="`/creator/${quiz.user.id}/quizzes`" class="ml-2" v-if="creatorShow">
+                    {{ quiz.user.name }}
+                </a>
+            </b-card-sub-title>
+            <div class="d-flex" v-if="authorize" >
+                <button class="btn btn-sm btn-primary mr-2" @click="clickEdit()">Edit</button>
+                <button class="btn btn-sm btn-danger">Delete</button>
+            </div>
+            
         </div>
-        <b-card-sub-title v-else>
-            <span>#{{ index }}</span>
-            <a :href="`/creator/${quiz.user.id}/quizzes`" class="ml-2" v-if="creatorShow">
-                {{ quiz.user.name }}
-            </a>
-        </b-card-sub-title>
+        
+        
         <b-card-text title-tag="div">
             <h4>
                 {{ quiz.content }}
@@ -51,6 +60,10 @@ export default {
         creatorShow: {
             type: Boolean,
             default: false
+        },
+        authorize: {
+            type: Boolean,
+            default: false
         }
     },
     data() {
@@ -70,12 +83,17 @@ export default {
             return result;
         },
         clickCheckbox() {
-            console.log('clickCheckbox', this.select)
             if(!this.select) {
                 this.$store.commit('quiz/ADD_SELECTED_QUIZ', this.quiz)
             } else {
                 this.$store.commit('quiz/REMOVE_SELECTED_QUIZ', this.quiz)
             }
+        },
+        clickEdit() {
+            this.$store.commit('quiz/SET_CURRENT_QUIZ', this.quiz)
+            this.$router.push({
+                path: `/quiz/${this.quiz.id}/edit`
+            })
         }
     }
 }

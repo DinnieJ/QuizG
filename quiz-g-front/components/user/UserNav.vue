@@ -24,9 +24,10 @@
             >History</button>
         </div>
         <div class="col-6 d-flex flex-row-reverse">
-          <button class="btn btn-outline-danger" v-if="addQuiz" @click="clickDelete()" >Cancel</button>
+          <button class="btn btn-outline-danger" v-if="addQuiz" @click="clickCancel()" >Cancel</button>
           <button class="btn btn-outline-warning" v-if="(activeTab == 'Quizzes')" @click="clickAddQuiz()" >Add Quiz</button>
-            
+          <button class="btn btn-outline-success mr-2" v-if="(activeTab == 'Quizzes')" @click="clickCreateQuiz()" >Create Quiz</button>
+          <button class="btn btn-outline-success" v-if="(activeTab == 'Collections')" @click="clickCreateCollection()" >Create Collection</button>
         </div>
     </div>
 </div>
@@ -67,8 +68,18 @@ export default {
           path: '/home/collections/add'
         })
       },
-      clickDelete() {
+      clickCancel() {
         this.$router.go(-1)
+      },
+      clickCreateQuiz() {
+        this.$router.push({
+          path: '/quiz/create'
+        })
+      },
+      clickCreateCollection() {
+        this.$router.push({
+          path: '/collection/create'
+        })
       }
     }
 }

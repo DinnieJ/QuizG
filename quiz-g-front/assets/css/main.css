@@ -221,27 +221,81 @@ body {
     border-bottom: 1px dotted #CCCCCC;
 }
 
-.row-answer .answer-index {
+.answer-index {
     color: #ffffff;
     font-weight: 600;
-    border-radius: 50%;
+    border-radius: 7px;
+    border: 1px solid #ffffff;
 }
 
-.row-answer .answer-0 {
+ .answer-0 {
+    background-color: #ffffff;
+    color: #46178f;
+    border-color: #46178f;
+}
+
+.answer-0-text {
+    color: #46178f;
+}
+
+.answer-0:hover {
     background-color: #46178f;
+    color: #ffffff;
+}
+
+
+.answer-active-0 {
+    background-color: #46178f;
+    color: #ffffff;
+}
+
+.answer-1 {
+    background-color: #ffffff;
+    color: #e21b3c;
+    border-color: #e21b3c;
+}
+
+.answer-1:hover {
+    background-color: #e21b3c;
+    color: #ffffff;
+}
+
+.answer-active-1 {
+    background-color: #e21b3c;
+    color: #ffffff;
+}
+
+.answer-2 {
+    background-color: #ffffff;
+    color: #26890c;
+    border-color: #26890c;
+}
+
+.answer-2:hover {
+    background-color: #26890c;
+    color: #ffffff;
+}
+
+.answer-active-2 {
+    background-color: #26890c;
+    color: #ffffff;
+}
+
+.answer-3 {
+    background-color: #ffffff;
+    color: #ffa602;
+    border-color: #ffa602;
     
 }
 
-.row-answer .answer-1 {
-    background-color: #e21b3c;
-}
-
-.row-answer .answer-2 {
-    background-color: #26890c;
-}
-
-.row-answer .answer-3 {
+.answer-3:hover {
     background-color: #ffa602;
+    color: #ffffff;
+}
+
+.answer-active-3 {
+    background-color: #ffa602;
+    color: #ffffff;
 }
 
 .discover-nav {
@@ -267,4 +321,16 @@ body {
 
 .creator-name {
     color : #46178f
+}
+
+.quiz-form {
+    background-color: #ffffff;
+}
+
+.hor-divider {
+    width: 80%;
+    height: 10px;
+    background-color: #cccccc;
+    border: none;
+    border-radius: 4px;
 }

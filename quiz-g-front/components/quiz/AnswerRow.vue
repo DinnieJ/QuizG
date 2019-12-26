@@ -1,6 +1,6 @@
 <template>
 <div class="row row-answer">
-    <div :class="'col-1 text-center answer-index answer-' + index">{{ String.fromCharCode(index + 65) }}</div>
+    <div :class="'col-1 text-center answer-index answer-active-' + index">{{ String.fromCharCode(index + 65) }}</div>
     <div class="col-9">
         {{ answer.content }}
     </div>

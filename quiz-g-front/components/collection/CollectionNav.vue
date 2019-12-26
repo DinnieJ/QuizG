@@ -15,8 +15,8 @@
         <div class="col-6 d-flex flex-row-reverse">
             <button class="btn btn-outline-danger ml-2" v-if="authorize" >Delete</button>
             <button class="btn btn-outline-success ml-2" v-if="authorize" >New Quiz</button>
-            <button class="btn btn-outline-warning" v-if="authorize" >Add Quiz to Another Collection</button>
-            <button class="btn btn-outline-warning" v-if="!authorize && !createNew" >Add Quiz</button>
+            <button class="btn btn-outline-warning" v-if="authorize" @click="clickAddQuiz()">Add Quiz to Another Collection</button>
+            <button class="btn btn-outline-warning" v-if="!authorize && !createNew" @click="clickAddQuiz()">Add Quiz</button>
         </div>
     </div>
 </div>
@@ -44,7 +44,11 @@ export default {
         }
     },
     methods: {
-
+        clickAddQuiz() {
+            this.$router.push({
+            path: '/home/collections/add'
+            })
+        },
     },
     created() {
         if(this.collection) {

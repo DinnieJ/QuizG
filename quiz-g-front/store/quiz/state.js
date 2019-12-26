@@ -1,6 +1,7 @@
 export default function () {
     return {
         quizzes: [],
-        currentQuiz: {}
+        currentQuiz: {},
+        selectedQuizzes: []
     }
 }

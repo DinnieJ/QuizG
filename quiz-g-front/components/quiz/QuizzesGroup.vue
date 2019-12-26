@@ -23,6 +23,10 @@ export default {
             default: false
         }
     },
-    
+    created() {
+        if(this.selectable) {
+            this.$store.commit('quiz/RESET_SELECTED_QUIZZES')
+        }
+    }
 }
 </script>

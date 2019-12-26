@@ -4,6 +4,7 @@
         <div class="d-flex" v-if="selectable">
              <b-form-checkbox
                 v-model="select"
+                @change="clickCheckbox()"
             >
                 #{{ index }}
             </b-form-checkbox>
@@ -67,6 +68,14 @@ export default {
                 result += characters.charAt(Math.floor(Math.random() * charactersLength));
             }
             return result;
+        },
+        clickCheckbox() {
+            console.log('clickCheckbox', this.select)
+            if(!this.select) {
+                this.$store.commit('quiz/ADD_SELECTED_QUIZ', this.quiz)
+            } else {
+                this.$store.commit('quiz/REMOVE_SELECTED_QUIZ', this.quiz)
+            }
         }
     }
 }

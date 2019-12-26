@@ -1,7 +1,7 @@
 <template>
     <b-card-group columns>
         <template v-for="(item, i) in collections">
-             <collection-card :key="'demo' + i" :collection="item" :creator-show="creatorShow" />
+             <collection-card :key="'demo' + i" :collection="item" :creator-show="creatorShow" :add-quiz="addQuiz" />
         </template>
     </b-card-group>
 </template>
@@ -16,6 +16,10 @@ export default {
     props: {
         collections: Array,
         creatorShow: {
+            type: Boolean,
+            default: false
+        },
+        addQuiz: {
             type: Boolean,
             default: false
         }

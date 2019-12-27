@@ -12,4 +12,8 @@ class Answer extends Model
     protected $fillable = [
         'content','quiz_id'
     ];
+
+    protected $hidden = [
+        'created_at','updated_at'
+    ];
 }

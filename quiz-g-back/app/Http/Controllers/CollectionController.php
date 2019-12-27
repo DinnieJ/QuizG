@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Collection;
 use App\Contain;
+use App\Traits\QuizService;
 use Auth;
 class CollectionController extends Controller
 {
+    use QuizService;
     public function all()
     {
         $data = Collection::paginate(6);
@@ -27,14 +29,15 @@ class CollectionController extends Controller
         ],200);
     }
 
-    public function addQuizToCollection(Request $req ,$id){
-        $request = json_decode($req->getContent(),true);
-        $new_containent = $request['quizzes_id'];
+    public function addQuizToCollection(Request $request ,$id){
+        $new_containent = $request->quizzes_id;
         foreach($new_containent as $ele){
-            Contain::create([
-                'quiz_id' => $ele,
-                'collection_id' => $id,
-            ]);
+            if(!$this->isExistInContainent($ele,$id)){
+                Contain::create([
+                    'quiz_id' => $ele,
+                    'collection_id' => $id,
+                ]);
+            }
         }
 
         return response([
@@ -42,18 +45,22 @@ class CollectionController extends Controller
         ],200);
     }
 
-    public function removeQuiz($id,$quiz_id){
-        $containent = Contain::where([
-            'collection_id' => $id,
-            'quiz_id' => $quiz_id,
-        ])->first();
+    public function removeQuiz(Request $request, $id){
 
-        if(count($containent) > 0){
-            $containent->each->delete();
-            return response([
-                'message' => 'deleted'
-            ],200);
+        $quizzes_id = $request->quizzes_id;
+        foreach($quizzes_id as $quiz_id){
+            $containent = Contain::where([
+                'collection_id' => $id,
+                'quiz_id' => $quiz_id,
+            ])->get();
+
+            if(count($containent) > 0){
+                $containent->each->delete();
+            }
         }
+        
+
+        
 
         return response([
             'message' => 'failed',
@@ -66,12 +73,11 @@ class CollectionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $req)
+    public function store(Request $request)
     {
-        $request = json_decode($req->getContent(),true);
         Collection::create([
             'user_id' => Auth::user()->id,
-            'name' => $request['name'],
+            'name' => $request->name,
         ]); 
 
         return response([
@@ -92,7 +98,6 @@ class CollectionController extends Controller
         foreach($data->quizzes as &$quiz){
             $quiz->setRelation('answers',$quiz->answers);
         }
-        //$data = Collection::find(3);
 
         return response([
             'collection' => $data
@@ -107,11 +112,10 @@ class CollectionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $req, $id)
+    public function update(Request $request, $id)
     {
-        $request = json_decode($req->getContent(),true);
         $collection = Collection::find($id);
-        $collection->name = $request['name'];
+        $collection->name = $request->name;
         $collection->save();
 
         return response(['message'=> 'edited!'],200);

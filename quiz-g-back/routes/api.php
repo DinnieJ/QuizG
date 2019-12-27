@@ -13,9 +13,6 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
 Route::prefix('auth')->group(function () {
     Route::post('register', 'AuthController@register');
     Route::post('login', 'AuthController@login');
@@ -30,7 +27,7 @@ Route::prefix('collections')->group(function () {
         Route::delete('/{id}','CollectionController@destroy');
         Route::put('/{id}','CollectionController@update');
         Route::put('/add/{id}','CollectionController@addQuizToCollection');
-        Route::put('/remove/{id}/{quiz_id}','CollectionController@removeQuiz');
+        Route::put('/remove/{id}','CollectionController@removeQuiz');
     });
     Route::get('/','CollectionController@all');
     Route::get('/{id}','CollectionController@show');
@@ -53,7 +50,7 @@ Route::prefix('game')->group(function () {
 });
 
 Route::prefix('test')->group(function () {
-    Route::get('/test/{id}','TestController@getTestData');
+    Route::get('/{id}','TestController@getTest');
     Route::post('/submit','TestController@submitTest');
 });
 

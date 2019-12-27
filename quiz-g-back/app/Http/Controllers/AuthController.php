@@ -9,35 +9,34 @@ use Validator;
 use Hash;
 class AuthController extends Controller
 {
-    public function login(Request $req){
-        $request = json_decode($req->getContent(),true);
-        $creds = ['email' => $request['email'], 'password' => $request['password']];
+    public function login(Request $request){
+        
+        $creds = ['email' => $request->email, 'password' => $request->password];
         if($token = $this->guard()->attempt($creds)){
             return response()->json([
                 'token' => $token,
             ],200);
         }
 
-        return response()->json(['error'=> 'login error !'],401);
+         return response()->json(['error'=> 'failed'],401);
     }
 
-    public function register(Request $req){
-        $request = json_decode($req->getContent(),true);
-        $v = Validator::make($request, [
+    public function register(Request $request){
+        $validator = Validator::make($request->all(), [
             'email' => 'required|email|unique:users',
             'password'  => 'required|min:5|confirmed',
         ]);
 
-        if($v->fails()){
+        if($validator->fails()){
             return response()->json([
-                'error' => $v->errors()
+                'error' => $validator->errors()
             ],400);
         }
 
         $user = new User();
-        $user->name = $request['name'];
-        $user->email = $request['email'];
-        $user->password = Hash::make($request['password']);
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->password = Hash::make($request->password);
         $user->save();
         return response()->json([
             'message' => 'Register successful'
@@ -45,9 +44,8 @@ class AuthController extends Controller
     }
 
     public function user(){
-        $user = User::find(Auth::user()->id);
         return response([
-            'user' => $user
+            'user' => Auth::user()
         ],200);
     }
 

@@ -5,7 +5,20 @@ namespace App\Traits;
 use App\Quiz;
 use App\Action;
 use App\History;
-trait GradingHelper{
+use App\Collection;
+trait QuizGHelper{
+
+    public function getData($id){
+        $data = $data = Collection::find($id);
+        $data->setRelation('quizzes',$data->quizzes()->inRandomOrder()->get());
+        foreach($data->quizzes as &$quiz){
+            unset($quiz->correct_answer_id);
+            $quiz->setRelation('answers',$quiz->answers()->inRandomOrder()->get());
+        }
+        return $data;
+    }
+
+
     public function checkAnswer($quiz_id,$answer_id){
         $quiz = Quiz::find($quiz_id);
         
@@ -46,6 +59,14 @@ trait GradingHelper{
 
         $history->save();
 
+    }
+
+    public function getHistory($history_id){
+        $history = History::find($history_id);
+
+        $sendback = $history->load('actions');
+
+        return $history;
     }
 }
 

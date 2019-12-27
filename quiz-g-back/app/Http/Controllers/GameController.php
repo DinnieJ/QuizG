@@ -6,19 +6,14 @@ use Illuminate\Http\Request;
 use App\Quiz;
 use App\Collection;
 use App\History;
-use App\Traits\GradingHelper;
+use App\Traits\QuizGHelper;
 use Auth;
 class GameController extends Controller
 {
-    use GradingHelper;
-
+    use QuizGHelper;
     public function getGameData($id){
-        $history_id;
-        $data = Collection::find($id);
-        $data->setRelation('quizzes',$data->quizzes);
-        foreach($data->quizzes as &$quiz){
-            $quiz->setRelation('answers',$quiz->answers);
-        }
+        $history_id = -1;
+        $data = $this->getData($id);
 
         if(Auth::check()){
            $new_history =  History::create([
@@ -42,16 +37,15 @@ class GameController extends Controller
 
 
 
-    public function submitGame(Request $req){
+    public function submitGame(Request $request){
         if(Auth::check()){
-            $request = json_decode($req->getContent(),true);
 
-
-            $history_id = $request['history_id'];
+            $history_id = $request->history_id;
             $this->wrappingUp($history_id);
-
+            $detail = $this->getHistory($history_id);
             return response([
                 'message' => 'finished game',
+                'detail' => $detail
             ],200);
         }
     }
@@ -59,15 +53,15 @@ class GameController extends Controller
 
 
 
-    public function gradingQuiz(Request $req){
-        $request = json_decode($req->getContent(),true);
-        $quiz_id = $request['id'];
+    public function gradingQuiz(Request $request){
+        $quiz_id = $request->id;
         
-        $answer_id = $request['answer_id'];
-        $history_id = $request['history_id'];
+        $answer_id = $request->answer_id;
+        $history_id = $request->history_id;
         $result = $this->checkAnswer($quiz_id,$answer_id);
-        $time = $request['time'];
+        $time = $request->time;
         if($history_id != -1){
+
             $this->addAction($history_id,[
                 'quiz_id' => $quiz_id,
                 'answer_id' => $answer_id,
@@ -77,7 +71,6 @@ class GameController extends Controller
         }
         return response([
             'result' => $result,
-            'key' => $history_id,
         ],200);
     }
 }

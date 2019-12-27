@@ -1,0 +1,11 @@
+{
+    "useTabs": false,
+    "singleQuote": false,
+    "endOfLine": "auto",
+    "prettier/prettier": [
+      "error",
+      {
+        "endOfLine": "auto"
+      }
+    ]
+  }

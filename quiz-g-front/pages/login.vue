@@ -1,38 +1,24 @@
 <template>
-<div class="form form-user">
-    <h2 class="text-center form-header">Login QuizG</h2>
-    <div>
-        <div class="form-group">
-            <label for="inputEmail" class="text-uppercase">Email</label>
-            <input type="email" name="email" class="form-control" placeholder="" required v-model="email">
-            <error-alert :show="error.status" :message="error.message" />
-            
-        </div>
-        <div class="form-group">
-            <label for="exampleInputEmail1" class="text-uppercase">Password</label>
-            <input type="password" name="password" class="form-control" placeholder="" required v-model="password">
-        </div>
-        <div>
-            <button class="btn text-uppercase btn-login" @click="clickLogin()">Login</button>
-            <a class="float-right" href="/register">Signup</a>
-        </div>
-    </div>
+<div>
+    <login-form 
+        v-model="error.status"
+        :error-message="error.message"
+        @click-login="clickLogin($event)"
+    />
 </div>
 </template>
 
 <script>
 import UserApi from '~/common/api/user'
-import ErrorAlert from '~/components/common/ErrorAlert'
+import LoginForm from '~/components/user/LoginForm'
 
 export default {
     layout: 'authLayout',
     components: {
-        ErrorAlert
+        LoginForm
     },
     data() {
         return {
-            email: "",
-            password: "",
             error: {
                 status: false,
                 message: ""
@@ -40,33 +26,18 @@ export default {
         }
     },
     methods: {
-        clickLogin() {
-            let payload = {
-                email : this.email,
-                password: this.password
+        async clickLogin(payload) {
+            try {
+                let response = await UserApi.login(payload)
+                let authen = response.data.authen
+                this.$store.commit('user/AUTHENTICATE', authen)
+                this.$router.push({
+                    path: '/home/collections'
+                })
+            } catch(e) {
+                this.error.status = true
+                this.error.message = e.data.error
             }
-
-            let context = this
-            /**
-             * @type {Promise}
-             */
-            let api = UserApi.login(payload)
-            api.then(response => {
-                if(response && response.status == 200) {
-                    let authen = response.data.authen
-                    context.$store.commit('user/AUTHENTICATE', authen)
-                    context.$router.push({
-                        path: '/home/collections'
-                    })
-                }
-            })
-            api.catch(e => {
-                context.error.status = true
-                setTimeout(function() {
-                    context.error.status = false
-                }, 2000)
-                context.error.message = e.data.error
-            })
         }
     },
     created() {

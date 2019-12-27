@@ -7,7 +7,7 @@
                     v-model="select"
                     @change="clickCheckbox()"
                 >
-                    #{{ index }}
+                    #{{ index }} - Time : {{ timeString }}
                 </b-form-checkbox>
     
                 <a :href="`/creator/${quiz.user.id}/quizzes`" class="ml-2" v-if="creatorShow">
@@ -15,9 +15,9 @@
                 </a>
             </div>
             <b-card-sub-title v-else>
-                <span>#{{ index }}</span>
+                <span>#{{ index }}  - Time : {{ timeString }}</span>
                 <a :href="`/creator/${quiz.user.id}/quizzes`" class="ml-2" v-if="creatorShow">
-                    {{ quiz.user.name }}
+                    Creator : {{quiz.user.name }}
                 </a>
             </b-card-sub-title>
             <div class="d-flex" v-if="authorize" >
@@ -71,6 +71,18 @@ export default {
             select: false
         }
     },
+    computed: {
+        timeString() {
+            let minutes = parseInt(this.quiz.time/60)
+            let seconds = this.quiz.time - minutes*60
+            let result = ''
+            if(minutes > 0) {
+                result = minutes + 'm'
+            }
+            result += seconds + 's'
+            return result
+        }
+    },
     methods: {
         randomId() {
             var length = 6
@@ -94,7 +106,7 @@ export default {
             this.$router.push({
                 path: `/quiz/${this.quiz.id}/edit`
             })
-        }
+        },
     }
 }
 </script>

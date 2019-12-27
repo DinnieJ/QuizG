@@ -8,6 +8,7 @@ export default {
         let quiz = {
             id: 0,
             content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+            time: 20,
             user: {
                 id: 1,
                 name: 'user 1'
@@ -59,6 +60,7 @@ export default {
                 id: 1,
                 name: 'user 1'
             },
+            time: 20,
             correct_answer_id: 1,
             answers: [
                 {
@@ -111,6 +113,7 @@ export default {
                 name: 'user 1'
             },
             correct_answer_id: 1,
+            time: 20,
             answers: [
                 {
                     id: 1,

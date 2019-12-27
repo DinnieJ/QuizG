@@ -13,6 +13,7 @@
 import HistoryTable from '~/components/history/HistoryTable'
 import UserNav from '~/components/user/UserNav'
 import HistoryApi from '~/common/api/history'
+import { mapGetters } from 'vuex'
 
 export default {
     // middleware: 'authenticated',
@@ -39,10 +40,9 @@ export default {
         HistoryTable
     },
     computed: {
-        histories() {
-            let histories = this.$store.getters['history/histories']
-            return histories
-        }
+        ...mapGetters({
+            histories: 'history/histories'
+        })
     },
     data() {
         return {

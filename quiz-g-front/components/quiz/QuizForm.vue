@@ -1,5 +1,20 @@
 <template>
 <div class="container p-3 quiz-form">
+    <div class="row mb-2">
+        <div class="col-2 d-flex">
+            <h5 class="mr-2 quiz-form-time-title">
+                Time
+            </h5>
+            <select class="custom-select custom-select-sm" v-model="time">
+                <option value="20">20s</option>
+                <option value="40">40s</option>
+                <option value="60">1m</option>
+                <option value="80">1m20s</option>
+                <option value="100">1m40s</option>
+                <option value="120">2m</option>
+            </select>
+        </div>
+    </div>
     <b-form-textarea
       v-model="content"
       placeholder="Enter content..."
@@ -7,6 +22,10 @@
       max-rows="8"
       size="lg"
     ></b-form-textarea>
+    <error-alert 
+        :show="error.status" 
+        :message="error.message" 
+    />
     <hr class="hor-divider" />
     <div class="row mb-2">
         <div class="col-sm-6">
@@ -81,14 +100,19 @@
 
     <div class="d-flex">
         <button class="btn btn-primary mr-2" v-if="edit" >Edit</button>
-        <button class="btn btn-primary mr-2" v-else >Create</button>
+        <button class="btn btn-primary mr-2" v-else @click="clickCreate()">Create</button>
         <button class="btn btn-warning" @click="clickCancel()">Cancel</button>
     </div>
 </div>
 </template>
 
 <script>
+import ErrorAlert from '~/components/common/ErrorAlert'
+
 export default {
+    components: {
+        ErrorAlert
+    },
     props: {
         quiz: {
             type: [Boolean, Object],
@@ -109,7 +133,8 @@ export default {
             error: {
                 status: false,
                 message: ""
-            }
+            },
+            time: 20
         }
     },
     methods:{
@@ -118,6 +143,9 @@ export default {
         },
         clickCancel() {
             this.$router.go(-1)
+        },
+        clickCreate() {
+            console.log('time', this.time)
         }
     },
     created() {

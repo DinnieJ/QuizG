@@ -334,3 +334,7 @@ body {
     border: none;
     border-radius: 4px;
 }
+
+.quiz-form-time-title {
+    line-height: 31px;
+}

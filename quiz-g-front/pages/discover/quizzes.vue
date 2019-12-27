@@ -16,6 +16,7 @@
 import QuizApi from '~/common/api/quiz'
 import QuizzesGroup from '~/components/quiz/QuizzesGroup'
 import DiscoverNav from '~/components/common/DiscoverNav'
+import { mapGetters } from 'vuex'
 
 export default {
     // middleware: 'authenticated',
@@ -58,8 +59,11 @@ export default {
         DiscoverNav
     },
     computed: {
+        ...mapGetters({
+            quizzesSource: 'quiz/quizzes'
+        }),
         quizzes() {
-            let quizzes = this.$store.getters['quiz/quizzes']
+            let quizzes = this.quizzesSource
             return quizzes.filter(item => {
                 if(this.searchType == 1) {
                     return item.content.toLowerCase().includes(this.searchContent.toLowerCase())

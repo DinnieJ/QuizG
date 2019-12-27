@@ -16,6 +16,7 @@
 import CollectionApi from '~/common/api/collection'
 import QuizzesGroup from '~/components/quiz/QuizzesGroup'
 import CollectionNav from '~/components/collection/CollectionNav'
+import { mapGetters } from 'vuex'
 
 export default {
     // middleware: 'authenticated',
@@ -72,18 +73,9 @@ export default {
         CollectionNav
     },
     computed: {
-        quizzes() {
-            let quizzes = this.$store.getters['quiz/quizzes']
-            return quizzes.filter(item => {
-                if(this.searchType == 1) {
-                    return item.content.toLowerCase().includes(this.searchContent.toLowerCase())
-                }
-                if(this.searchType == 2) {
-                    return item.user.name.toLowerCase().includes(this.searchContent.toLowerCase())
-                }
-                return true
-            })
-        }
+        ...mapGetters({
+            quizzes: 'quiz/quizzes'
+        })
     },
     data() {
         return {

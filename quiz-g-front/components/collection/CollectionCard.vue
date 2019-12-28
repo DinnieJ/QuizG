@@ -50,14 +50,10 @@ export default {
         }
     },
     methods: {
-        clickHeader() {
-            this.$store.commit('collection/SET_CURRENT_COLLECTION', this.collection)
-        },
         clickTest() {
-            console.log('clickTest', this.collection)
-            // this.$route.push({
-            //     path: '/test/' + this.collection.id
-            // })
+            this.$router.push({
+                path: `/test/${this.collection.id}`
+            })
         },
         clickPlay() {
             console.log('clickPlay', this.collection)

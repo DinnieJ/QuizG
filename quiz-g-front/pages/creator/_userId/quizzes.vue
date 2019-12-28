@@ -12,6 +12,7 @@
 import QuizApi from '~/common/api/quiz'
 import UserNav from '~/components/user/UserNav'
 import QuizzesGroup from '~/components/quiz/QuizzesGroup'
+import { mapGetters } from 'vuex'
 
 export default {
     // middleware: 'authenticated',
@@ -57,10 +58,9 @@ export default {
         QuizzesGroup
     },
     computed: {
-        quizzes() {
-            let quizzes = this.$store.getters['quiz/quizzes']
-            return quizzes
-        }
+        ...mapGetters({
+            quizzes: 'quiz/quizzes'
+        })
     },
     data() {
         return {

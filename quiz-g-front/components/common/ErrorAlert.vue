@@ -9,11 +9,35 @@
 <script>
 export default {
     props: {
-        show: {
+        message: String,
+        value: {
             type: Boolean,
             default: false
-        },
-        message: String
-    }
+        }
+    },
+    data() {
+      return {
+          show: false
+      }  
+    },
+    watch: {
+        value: {
+            deep: true,
+            handler(value) {
+                console.log('ErrorAlert', value)
+                if(value) {
+                    
+                    let context = this
+                    context.show = true
+                    setTimeout(function() {
+                        context.show = false
+                        context.$emit('input', false)
+                    }, 2000)
+                } else {
+                    this.show = false
+                }
+            }
+        }
+    },
 }
 </script>

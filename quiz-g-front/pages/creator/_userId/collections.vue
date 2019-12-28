@@ -14,6 +14,7 @@
 import CollectionApi from '~/common/api/collection'
 import CollectionsGroup from '~/components/collection/CollectionsGroup'
 import UserNav from '~/components/user/UserNav'
+import { mapGetters } from 'vuex'
 
 export default {
     // middleware: 'authenticated',
@@ -31,7 +32,6 @@ export default {
             
         } catch(e) {
             console.log('getAllCollections error', e)
-            redirect('/500')
         }
         return {
             user
@@ -42,10 +42,9 @@ export default {
         UserNav
     },
     computed: {
-        collections() {
-            let collections = this.$store.getters['collection/collections']
-            return collections;
-        },
+        ...mapGetters({
+            collections: 'collection/collections'
+        })
     },
     data() {
         return {

@@ -24,7 +24,7 @@ export default {
             // })
         })
     },
-    register() {
+    register(payload) {
         return new Promise(function(resolve, reject) {
             // resolve({
             //     status: 200,
@@ -35,7 +35,7 @@ export default {
             reject({
                 status: 400,
                 data: {
-                    message : "auth-5"
+                    error : "auth-5"
                 }
             })
         })

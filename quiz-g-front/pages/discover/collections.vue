@@ -15,6 +15,7 @@
 import CollectionApi from '~/common/api/collection'
 import CollectionsGroup from '~/components/collection/CollectionsGroup'
 import DiscoverNav from '~/components/common/DiscoverNav'
+import { mapGetters } from 'vuex'
 
 export default {
     // middleware: 'authenticated',
@@ -29,7 +30,6 @@ export default {
             
         } catch(e) {
             console.log('getAllCollections error', e)
-            redirect('/500')
         }
         return {
             
@@ -40,8 +40,11 @@ export default {
         DiscoverNav
     },
     computed: {
+        ...mapGetters({
+            collectionsSource: 'collection/collections'
+        }),
         collections() {
-            let collections = this.$store.getters['collection/collections']
+            let collections = this.collectionsSource
             return collections.filter(item => {
                 if(this.searchType == 1) {
                     return item.name.toLowerCase().includes(this.searchContent.toLowerCase())

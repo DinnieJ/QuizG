@@ -10,6 +10,6 @@ class Action extends Model
     protected $primaryKey = 'id';
 
     protected $fillable = [
-        'history_id','quiz_id','answer_id','right'
+        'history_id','quiz_id','answer_id','right','time'
     ];
 }

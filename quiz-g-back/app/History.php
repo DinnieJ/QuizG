@@ -10,6 +10,10 @@ class History extends Model
     protected $primaryKey = 'id';
 
     protected $fillable = [
-        'user_id','collection_id','total','correct','type'
+        'user_id','collection_id','total','correct','type','finished','total_time'
     ];
+
+    public function actions(){
+        return $this->hasMany(\App\Action::class);
+    }
 }

@@ -127,26 +127,6 @@ body {
     color: #cccccc;
 }
 
-/* .collection-card-header {
-    background-color:  #55acee;
-    box-shadow: 0px 5px 0px 0px #3C93D5;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.collection-card-header a {
-    color: #ffffff;
-}
-
-.collection-card-header:hover {
-    background-color: #6FC6FF;
-}
-
-.collection-card-header:active {
-    transform: translate(0px, 5px);
-    box-shadow: 0px 1px 0px 0px;
-} */
-
 .collection-card-header {
     border: 1px solid #55acee;
     border-radius: 0.25rem;
@@ -528,3 +508,84 @@ body {
 .test-answer-index {
     line-height: 40px;
 }
+
+.game-quizzes-group {
+    height: 100%;
+    background-color: #736f6f;
+}
+
+.game-nav { 
+    height: 8%;
+}
+
+.game-time-process {
+    width: 100%;
+}
+
+.btn-skip {
+    background-color:  #864cbf;
+    color: #ffffff;
+}
+
+.game-quiz {
+    height: 90%;
+}
+
+.game-quiz-content {
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.game-answer {
+    color: #ffffff;
+    border-radius: 0.25rem;
+    cursor: pointer;
+}
+
+.game-answer:active {
+    transform: translate(0px, 5px);
+    -webkit-transform: translate(0px, 5px);
+    box-shadow: 0px 1px 0px 0px;
+  }
+
+.game-answer-index {
+    line-height: 95px;
+    font-weight: 600;
+    font-size: 50px;
+}
+
+.game-answer-0 {
+    background-color: #9b59b6;
+    box-shadow: 0px 5px 0px 0px #82409D;
+}
+
+.game-answer-0:hover {
+    background-color: #B573D0;
+}
+
+.game-answer-1 {
+    background-color: #e74c3c;
+    box-shadow: 0px 5px 0px 0px #CE3323;
+}
+
+.game-answer-1:hover {
+    background-color: #FF6656;
+}
+
+.game-answer-2 {
+    background-color: #e67e22;
+    box-shadow: 0px 5px 0px 0px #CD6509;
+}
+
+.game-answer-2:hover {
+    background-color: #FF983C;
+}
+
+.game-answer-3 {
+    background-color: #2ecc71;
+    box-shadow: 0px 5px 0px 0px #15B358;
+  }
+  
+  .game-answer-3:hover {
+    background-color: #48E68B;
+  }

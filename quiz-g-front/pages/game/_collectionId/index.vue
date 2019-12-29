@@ -4,18 +4,19 @@
         v-if="!start"
         @start-action="startTest()"
     />
-    <test-quizzes-group 
+    <game-quizzes-group
         v-show="start"
         :start="start"
         :quizzes="quizzes"
+        @finish-quiz="finishQuiz($event)"
     />
 </div>
 </template>
 
 <script>
 import CountdownAction from '~/components/common/CountdownAction'
-import TestQuizzesGroup from '~/components/test/TestQuizzesGroup'
-import TestApi from '~/common/api/test'
+import GameQuizzesGroup from '~/components/game/GameQuizzesGroup'
+import GameApi from '~/common/api/game'
 
 export default {
     layout: 'empty',
@@ -23,10 +24,10 @@ export default {
         let quizzes = []
         let collectionId = params.collectionId
         try {
-            let response = await TestApi.getQuizzesByTest(collectionId)
+            let response = await GameApi.getQuizzesByGame(collectionId)
             quizzes = response.data.quizzes
             quizzes.forEach(item => {
-                item.choieAnswer = ''
+                item.choiceAnswer = ''
             })
         } catch(e) {
 
@@ -37,7 +38,7 @@ export default {
     },
     components: {
         CountdownAction,
-        TestQuizzesGroup
+        GameQuizzesGroup
     },
     data() {
         return {
@@ -47,6 +48,8 @@ export default {
     methods: {
         startTest() {
             this.start = true
+        },
+        finishQuiz(quiz) {
         }
     }
 }

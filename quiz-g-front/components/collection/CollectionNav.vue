@@ -13,12 +13,12 @@
             </b-input-group>
         </div>
         <div class="col-6 d-flex flex-row-reverse">
-            <b-dropdown size="sm" variant="link" toggle-class="text-decoration-none" no-caret dropleft>
+            <button class="btn btn-sm btn-danger" v-if="createNew" @click="clickCancel()">Cancel</button>
+            <b-dropdown size="sm" variant="link" toggle-class="text-decoration-none" no-caret dropleft v-else>
                 <template v-slot:button-content>
                     &#9947;<span class="sr-only">Action</span>
                 </template>
                 <b-dropdown-group header="Actions">
-                    <b-dropdown-item-button v-if="createNew" @click="clickCancel()">Cancel</b-dropdown-item-button>
                     <b-dropdown-item-button v-if="authorize">Delete</b-dropdown-item-button>
                     <b-dropdown-item-button v-if="authorize" @click="clickNewQuiz()">New Quiz</b-dropdown-item-button>
                     <b-dropdown-item-button v-if="authorize" @click="clickAddQuiz()">Add Quiz to Another Collection</b-dropdown-item-button>
@@ -76,10 +76,9 @@ export default {
             })
         },
         clickPlay() {
-            console.log('clickPlay', this.collection)
-            // this.$route.push({
-            //     path: '/game/' + this.collection.id
-            // })
+            this.$router.push({
+                path: `/game/${this.collection.id}`
+            })
         },
     },
     created() {

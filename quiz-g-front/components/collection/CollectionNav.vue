@@ -13,11 +13,23 @@
             </b-input-group>
         </div>
         <div class="col-6 d-flex flex-row-reverse">
-            <button class="btn btn-outline-danger ml-2" v-if="createNew" @click="clickCancel()">Cancel</button>
-            <button class="btn btn-outline-danger ml-2" v-if="authorize" >Delete</button>
-            <button class="btn btn-outline-success ml-2" v-if="authorize" @click="clickNewQuiz()" >New Quiz</button>
-            <button class="btn btn-outline-warning" v-if="authorize" @click="clickAddQuiz()">Add Quiz to Another Collection</button>
-            <button class="btn btn-outline-warning" v-if="!authorize && !createNew" @click="clickAddQuiz()">Add Quiz</button>
+            <b-dropdown size="sm" variant="link" toggle-class="text-decoration-none" no-caret dropleft>
+                <template v-slot:button-content>
+                    &#9947;<span class="sr-only">Action</span>
+                </template>
+                <b-dropdown-group header="Actions">
+                    <b-dropdown-item-button v-if="createNew" @click="clickCancel()">Cancel</b-dropdown-item-button>
+                    <b-dropdown-item-button v-if="authorize">Delete</b-dropdown-item-button>
+                    <b-dropdown-item-button v-if="authorize" @click="clickNewQuiz()">New Quiz</b-dropdown-item-button>
+                    <b-dropdown-item-button v-if="authorize" @click="clickAddQuiz()">Add Quiz to Another Collection</b-dropdown-item-button>
+                    <b-dropdown-item-button v-if="!authorize && !createNew" @click="clickAddQuiz()">Add Quiz</b-dropdown-item-button>
+                </b-dropdown-group>
+                <b-dropdown-divider></b-dropdown-divider>
+                <b-dropdown-group header="Challenges">
+                    <b-dropdown-item-button @click="clickTest()">Test</b-dropdown-item-button>
+                    <b-dropdown-item-button @click="clickPlay()">Play</b-dropdown-item-button>
+                </b-dropdown-group>
+            </b-dropdown>
         </div>
     </div>
 </div>
@@ -57,7 +69,18 @@ export default {
             this.$router.push({
                 path: `/collection/${this.collection.id}/quizzes/create`
             })
-        }
+        },
+        clickTest() {
+            this.$router.push({
+                path: `/test/${this.collection.id}`
+            })
+        },
+        clickPlay() {
+            console.log('clickPlay', this.collection)
+            // this.$route.push({
+            //     path: '/game/' + this.collection.id
+            // })
+        },
     },
     created() {
         if(this.collection) {

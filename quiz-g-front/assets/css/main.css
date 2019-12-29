@@ -127,7 +127,7 @@ body {
     color: #cccccc;
 }
 
-.collection-card-header {
+/* .collection-card-header {
     background-color:  #55acee;
     box-shadow: 0px 5px 0px 0px #3C93D5;
     border-radius: 5px;
@@ -145,7 +145,22 @@ body {
 .collection-card-header:active {
     transform: translate(0px, 5px);
     box-shadow: 0px 1px 0px 0px;
+} */
+
+.collection-card-header {
+    border: 1px solid #55acee;
+    border-radius: 0.25rem;
 }
+
+.collection-card-header:hover {
+    border-color: #3C93D5;
+}
+
+.collection-card-header a {
+    color: #6FC6FF;
+}
+
+
 
 .collection-card-header div {
     font-size: 20px;
@@ -438,7 +453,7 @@ body {
 }
 
 .test-countdown {
-    width: 600px;
+    min-width: 600px;
 }
   
 .test-countdown-block {

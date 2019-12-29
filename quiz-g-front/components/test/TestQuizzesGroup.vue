@@ -1,7 +1,11 @@
 <template>
 <div class="test-quizzes-group">
     <div class="test-quizzes-group-header mb-2">
-        <test-time :time="time"/>
+        <test-time 
+            :time="time"
+            :total="noQuizzes"
+            :correct="correct"
+        />
     </div>
     <div class="test-quizzes-group-quizzes mb-1">
         <div class="row h-100">
@@ -42,6 +46,7 @@
         </div>
         <div class="container">
             <button class="btn btn-sm btn-info" @click="clickSubmit()">Submit</button>
+            <button class="btn btn-sm btn-warning" v-if="correct" @click="clickExit()">Exit</button>
         </div>  
         
     </div>
@@ -74,7 +79,8 @@ export default {
             quizzesLink: [],
             currentQuiz: 0,
             noQuizzes: 0,
-            clock: {}
+            clock: {},
+            correct: false
         }
     },
     watch:{
@@ -121,7 +127,11 @@ export default {
             clearInterval(this.clock)
         },
         clickSubmit() {
+            this.correct = 20
             this.stopClock()
+        },
+        clickExit() {
+            this.$router.go(-1)
         }
     },
     created() {

@@ -28,7 +28,8 @@ class TestController extends Controller
             'total' => $total,
             'correct' => $correct,
             'type' => 'TEST',
-            'finished' => 1
+            'finished' => 1,
+            'total_time'=> null
         ]);
 
         $history_id = $new_history->id;
@@ -47,6 +48,7 @@ class TestController extends Controller
             ]);
         }
 
+        $new_history->total_time = $request->time;
         $new_history->correct = $correct;
         $new_history->save();
 

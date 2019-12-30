@@ -41,8 +41,7 @@ class GameController extends Controller
         if(Auth::check()){
 
             $history_id = $request->history_id;
-            $this->wrappingUp($history_id);
-            $detail = $this->getHistory($history_id);
+            $detail = $this->wrappingUp($history_id);
             return response([
                 'message' => 'finished game',
                 'detail' => $detail

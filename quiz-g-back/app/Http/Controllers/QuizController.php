@@ -76,6 +76,11 @@ class QuizController extends Controller
     public function show($id)
     {
         $quiz = Quiz::find($id);
+        if($quiz == null){
+            return response([
+                'message' => 'Quiz not found'
+            ],400);
+        }
         $quiz->answers;
 
         return response(['quiz' => $quiz], 200);
@@ -143,13 +148,28 @@ class QuizController extends Controller
         if ($quiz != null) {
             $quiz->delete();
             return response([
-                'message' => 'Quiz not found'
-            ],400);
+                'message' => 'Delete'
+            ],200);
         }
 
         return response([
-            'message' => 'deleted'
-            ], 200
+            'message' => 'quiz not found'
+            ], 400
         );
+    }
+
+    public function getQuizByUser($id){
+        $quiz = Quiz::where('user_id',$id)->get();
+        if($quiz == null || count($quiz) <= 0){
+            return response([
+                'message' => 'Quiz not found or empty'
+            ],400);
+        }
+
+        $quiz = $quiz->load('answers');
+
+        return response([
+            'quizzes' => $quiz
+        ],200);
     }
 }

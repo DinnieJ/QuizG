@@ -17,12 +17,15 @@ import QuizApi from '~/common/api/quiz'
 import QuizzesGroup from '~/components/quiz/QuizzesGroup'
 import DiscoverNav from '~/components/common/DiscoverNav'
 import { mapGetters } from 'vuex'
+import ApiBuilder from '~/common/api/builder'
+const QuizzesApi = ApiBuilder.build('quizzes') 
 
 export default {
-    // middleware: 'authenticated',
+    middleware: 'authenticated',
     async asyncData({isDev, route, store, env, params, query, req, res, redirect, error}) {
+        let authToken = store.getters['user/authToken']
         try{
-            let response = await QuizApi.getAllQuizzes()
+            let response = await QuizzesApi.getAll(authToken)
             if(response.status == 200) {
                  /**
                  * @type {Array}

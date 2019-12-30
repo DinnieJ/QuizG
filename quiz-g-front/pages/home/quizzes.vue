@@ -14,17 +14,20 @@
 </template>
 
 <script>
-import QuizApi from '~/common/api/quiz'
+// import QuizApi from '~/common/api/quiz'
 import UserNav from '~/components/user/UserNav'
 import QuizzesGroup from '~/components/quiz/QuizzesGroup'
 import { mapGetters } from 'vuex'
+import ApiBuilder from '~/common/api/builder'
+const QuizzesApi = ApiBuilder.build('quizzes') 
 
 export default {
     middleware: 'authenticated',
     async asyncData({isDev, route, store, env, params, query, req, res, redirect, error}) {
         let user = store.getters['user/currentUser']
+        let authToken = store.getters['user/authToken']
         try{
-            let response = await QuizApi.getQuizzesByUser(user.id)
+            let response = await QuizzesApi.getByUser(authToken,user.id)
             if(response.status == 200) {
                  /**
                  * @type {Array}

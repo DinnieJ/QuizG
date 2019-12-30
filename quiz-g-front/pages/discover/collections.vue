@@ -16,12 +16,15 @@ import CollectionApi from '~/common/api/collection'
 import CollectionsGroup from '~/components/collection/CollectionsGroup'
 import DiscoverNav from '~/components/common/DiscoverNav'
 import { mapGetters } from 'vuex'
+import ApiBuilder from '~/common/api/builder'
+const ColletionsApi = ApiBuilder.build('colletions') 
 
 export default {
-    // middleware: 'authenticated',
+    middleware: 'authenticated',
     async asyncData({isDev, route, store, env, params, query, req, res, redirect, error}) {
+        let authToken = store.getters['user/authToken']
         try{
-            let response = await CollectionApi.getAllCollections()
+            let response = await ColletionsApi.getAll(authToken)
             if(response.status == 200) {
                 let collectionsList = response.data.collections
                 store.commit('collection/SET_COLLECTIONS', collectionsList)

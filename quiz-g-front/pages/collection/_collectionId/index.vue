@@ -17,15 +17,18 @@ import CollectionApi from '~/common/api/collection'
 import QuizzesGroup from '~/components/quiz/QuizzesGroup'
 import CollectionNav from '~/components/collection/CollectionNav'
 import { mapGetters } from 'vuex'
+import ApiBuilder from '~/common/api/builder'
+const CollectionsApi = ApiBuilder.build('collections') 
 
 export default {
-    // middleware: 'authenticated',
+    middleware: 'authenticated',
     async asyncData({isDev, route, store, env, params, query, req, res, redirect, error}) {
         let collectionId = params.collectionId
+        let authToken = store.getters['user/authToken']
         let collection = {}
         let authorize = false
         try{
-            let response = await CollectionApi.getCollectionById(collectionId)
+            let response = await CollectionsApi.getById(authToken, collectionId)
             if(response.status == 200) {
                  /**
                  * @type {Array}

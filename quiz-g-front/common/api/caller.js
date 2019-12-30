@@ -18,8 +18,8 @@ function ApiCaller(
   let headers =  {
     Accept: "application/json",
     "Content-Type": "application/json",
-    "Authorization": `Bearer ${token}`,
-    "Access-Control-Allow-Origin": "*"
+    //"Authorization": `Bearer ${token}`,
+    
   }
 
   if(customHeader) {

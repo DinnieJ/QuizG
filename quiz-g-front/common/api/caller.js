@@ -18,8 +18,7 @@ function ApiCaller(
   let headers =  {
     Accept: "application/json",
     "Content-Type": "application/json",
-    "Authorization": `Bearer ${token}`,
-    "Access-Control-Allow-Methods": "GET, PUT, POST, DELETE"
+    "Authorization": `Bearer ${token}`
   }
 
   if(customHeader) {

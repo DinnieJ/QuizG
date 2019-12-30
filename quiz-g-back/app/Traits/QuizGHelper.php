@@ -22,9 +22,9 @@ trait QuizGHelper{
     public function checkAnswer($quiz_id,$answer_id){
         $quiz = Quiz::find($quiz_id);
         
-        $result = 0;
+        $result = false;
         if($answer_id == $quiz->correct_answer_id){
-            $result = 1;
+            $result = true;
         }
         return $result;
     }

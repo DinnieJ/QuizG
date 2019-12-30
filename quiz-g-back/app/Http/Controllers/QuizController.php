@@ -81,6 +81,11 @@ class QuizController extends Controller
                 'message' => 'Quiz not found'
             ],400);
         }
+        $authored = false;
+        if($data->user_id == Auth::user()->id){
+            $authored = true;
+        }
+        $quiz->authored = $authored;
         $quiz->answers;
 
         return response(['quiz' => $quiz], 200);

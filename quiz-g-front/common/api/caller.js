@@ -19,7 +19,7 @@ function ApiCaller(
     Accept: "application/json",
     "Content-Type": "application/json",
     "Authorization": `Bearer ${token}`,
-    "Access-Control-Allow-Origin": "*"
+    "Access-Control-Allow-Methods": "GET, PUT, POST, DELETE"
   }
 
   if(customHeader) {
@@ -31,6 +31,7 @@ function ApiCaller(
     headers,
     timeout: timeoutDefault
   });
+  console.log('caller', caller.get)
   return caller;
 }
 

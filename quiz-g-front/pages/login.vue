@@ -14,6 +14,8 @@ import LoginForm from '~/components/user/LoginForm'
 import ApiBuilder from '~/common/api/builder'
 const AuthApi = ApiBuilder.build('auth')
 
+import axios from 'axios'
+
 export default {
     layout: 'authLayout',
     components: {
@@ -35,7 +37,9 @@ export default {
                     "email":"dat@gmail.com",
                     "password":"12345"
                 }
-                let response = await AuthApi.login(demoPayload)
+                // let response = await AuthApi.login(demoPayload)
+                let response = await axios.get('http://127.0.0.1:8888/api/auth/login', payload)
+
                 console.log('response', response)
                 // let authen = response.data.authen
                 // this.$store.commit('user/AUTHENTICATE', authen)

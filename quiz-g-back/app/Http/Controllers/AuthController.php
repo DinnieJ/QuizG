@@ -11,6 +11,15 @@ class AuthController extends Controller
 {
     public function login(Request $request){
         
+        $validator = Validator::make($request->all(), [
+            'email' => 'required',
+            'password'  => 'required',
+        ]);
+        if($validator->fails()){
+            return response()->json([
+                'error' => $validator->errors()
+            ],400);
+        }
         $creds = ['email' => $request->email, 'password' => $request->password];
         if($token = $this->guard()->attempt($creds)){
             return response()->json([

@@ -17,6 +17,6 @@ Artisan::command('inspire', function () {
     $this->comment(Inspiring::quote());
 })->describe('Display an inspiring quote');
 
-Artisan::command('you-are-gay',function(){
-    $this->comment('you really are gay !');
+Artisan::command('my-name-is {name}',function($name){
+    $this->info("You are gay, {$name}!");
 });

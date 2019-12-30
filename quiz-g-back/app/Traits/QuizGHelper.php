@@ -47,17 +47,21 @@ trait QuizGHelper{
 
         $total = count($actions);
         $correct = 0;
+        $time = 0;
         foreach($actions as $action){
             if($action->right == 1){
                 $correct++;
             }
+            $time += $action->time;
         }
 
         $history->total = $total;
         $history->correct = $correct;
-        
+        $history->total_time = $time;
 
         $history->save();
+
+        return $history;
 
     }
 

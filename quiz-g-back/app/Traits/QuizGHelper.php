@@ -22,9 +22,9 @@ trait QuizGHelper{
     public function checkAnswer($quiz_id,$answer_id){
         $quiz = Quiz::find($quiz_id);
         
-        $result = 0;
+        $result = false;
         if($answer_id == $quiz->correct_answer_id){
-            $result = 1;
+            $result = true;
         }
         return $result;
     }
@@ -47,17 +47,21 @@ trait QuizGHelper{
 
         $total = count($actions);
         $correct = 0;
+        $time = 0;
         foreach($actions as $action){
             if($action->right == 1){
                 $correct++;
             }
+            $time += $action->time;
         }
 
         $history->total = $total;
         $history->correct = $correct;
-        
+        $history->total_time = $time;
 
         $history->save();
+
+        return $history;
 
     }
 

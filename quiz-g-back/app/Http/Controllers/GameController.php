@@ -41,8 +41,7 @@ class GameController extends Controller
         if(Auth::check()){
 
             $history_id = $request->history_id;
-            $this->wrappingUp($history_id);
-            $detail = $this->getHistory($history_id);
+            $detail = $this->wrappingUp($history_id);
             return response([
                 'message' => 'finished game',
                 'detail' => $detail
@@ -61,11 +60,11 @@ class GameController extends Controller
         $result = $this->checkAnswer($quiz_id,$answer_id);
         $time = $request->time;
         if($history_id != -1){
-
+            $right = ($result) ? 1:0;
             $this->addAction($history_id,[
                 'quiz_id' => $quiz_id,
                 'answer_id' => $answer_id,
-                'right' => $result,
+                'right' => $right,
                 'time' => $time,
             ]);
         }

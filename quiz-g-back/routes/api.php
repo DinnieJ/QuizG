@@ -26,8 +26,8 @@ Route::prefix('collections')->group(function () {
         Route::post('/add','CollectionController@store');
         Route::delete('/{id}','CollectionController@destroy');
         Route::put('/{id}','CollectionController@update');
-        Route::put('/add/{id}','CollectionController@addQuizToCollection');
-        Route::put('/remove/{id}','CollectionController@removeQuiz');
+        Route::put('/{id}/add','CollectionController@addQuizToCollection');
+        Route::put('/{id}/remove','CollectionController@removeQuiz');
     });
     Route::get('/','CollectionController@all');
     Route::get('/{id}','CollectionController@show');
@@ -37,10 +37,13 @@ Route::prefix('collections')->group(function () {
 Route::prefix('quizzes')->group(function () {
     Route::group(['middleware'=>'auth:api'], function () {
         Route::post('/add','QuizController@store');
-        Route::delete('/{id}','QuizController@destroy');
         Route::get('/{id}','QuizController@show');
-        Route::put('/{id}','QuizController@update');
+        Route::group(['middleware'=> 'correctuser'], function (){
+            Route::delete('/{id}','QuizController@destroy');
+            Route::put('/{id}','QuizController@update');
+        });
     });
+    Route::get('/user/{id}','QuizController@getQuizByUser');
 });
 
 Route::prefix('game')->group(function () {

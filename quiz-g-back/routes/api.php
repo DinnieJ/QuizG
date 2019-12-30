@@ -26,8 +26,8 @@ Route::prefix('collections')->group(function () {
         Route::post('/add','CollectionController@store');
         Route::delete('/{id}','CollectionController@destroy');
         Route::put('/{id}','CollectionController@update');
-        Route::put('/add/{id}','CollectionController@addQuizToCollection');
-        Route::put('/remove/{id}','CollectionController@removeQuiz');
+        Route::put('/{id}/add','CollectionController@addQuizToCollection');
+        Route::put('/{id}/remove','CollectionController@removeQuiz');
     });
     Route::get('/','CollectionController@all');
     Route::get('/{id}','CollectionController@show');

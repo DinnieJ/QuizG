@@ -1,5 +1,3 @@
-import Api from './index'
-
 export default {
     /**
      * @returns {Promise}

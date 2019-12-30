@@ -11,6 +11,8 @@
 <script>
 import UserApi from '~/common/api/user'
 import LoginForm from '~/components/user/LoginForm'
+import ApiBuilder from '~/common/api/builder'
+const AuthApi = ApiBuilder.build('auth')
 
 export default {
     layout: 'authLayout',
@@ -28,15 +30,22 @@ export default {
     methods: {
         async clickLogin(payload) {
             try {
-                let response = await UserApi.login(payload)
-                let authen = response.data.authen
-                this.$store.commit('user/AUTHENTICATE', authen)
-                this.$router.push({
-                    path: '/home/collections'
-                })
+                // let response = await UserApi.login(payload)
+                let demoPayload = {
+                    "email":"dat@gmail.com",
+                    "password":"12345"
+                }
+                let response = await AuthApi.login(demoPayload)
+                console.log('response', response)
+                // let authen = response.data.authen
+                // this.$store.commit('user/AUTHENTICATE', authen)
+                // this.$router.push({
+                //     path: '/home/collections'
+                // })
             } catch(e) {
-                this.error.status = true
-                this.error.message = e.data.error
+                console.log('error', e)
+                // this.error.status = true
+                // this.error.message = e.data.error
             }
         }
     },

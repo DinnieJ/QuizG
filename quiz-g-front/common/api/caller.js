@@ -30,7 +30,6 @@ function ApiCaller(
     headers,
     timeout: timeoutDefault
   });
-  console.log('caller', caller.get)
   return caller;
 }
 

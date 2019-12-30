@@ -20,7 +20,7 @@ import QuizzesGroup from '~/components/quiz/QuizzesGroup'
 import { mapGetters } from 'vuex'
 
 export default {
-    // middleware: 'authenticated',
+    middleware: 'authenticated',
     async asyncData({isDev, route, store, env, params, query, req, res, redirect, error}) {
         let user = store.getters['user/currentUser']
         try{

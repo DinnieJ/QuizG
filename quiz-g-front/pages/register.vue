@@ -9,8 +9,9 @@
 </template>
 
 <script>
-import UserApi from '~/common/api/user'
 import RegisterForm from '~/components/user/RegisterForm'
+import ApiBuilder from '~/common/api/builder'
+const AuthApi = ApiBuilder.build('auth')
 
 export default {
     layout: 'authLayout',
@@ -28,15 +29,14 @@ export default {
     methods: {
         async clickCreate(payload) {
             try {
-                let response = await UserApi.register(payload)
-                let authen = response.data.authen
-                this.$store.commit('user/AUTHENTICATE', authen)
-                this.$router.push({
-                    path: '/home/collections'
-                })
+                let response = await AuthApi.register(payload)
+                if(response.status === 200) {
+                    this.$router.push({
+                        path: '/login'
+                    })
+                }
             } catch(e) {
-                this.error.status = true
-                this.error.message = e.data.error
+                console.log('error', e)
             }
         }
     }

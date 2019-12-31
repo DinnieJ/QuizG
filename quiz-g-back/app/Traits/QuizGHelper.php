@@ -43,9 +43,10 @@ trait QuizGHelper{
         $history = History::find($history_id);
 
         $history->finished = 1;
-        $actions = $history->actions;
+        $collection_id = $history->collection_id;
+        $total = Collection::find($collection_id)->quizzes()->count();
 
-        $total = count($actions);
+        $actions = $history->actions;
         $correct = 0;
         $time = 0;
         foreach($actions as $action){

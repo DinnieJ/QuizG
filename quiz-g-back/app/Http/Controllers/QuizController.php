@@ -81,11 +81,11 @@ class QuizController extends Controller
                 'message' => 'Quiz not found'
             ],400);
         }
-        $authored = false;
+        $authorize = false;
         if($data->user_id == Auth::user()->id){
-            $authored = true;
+            $authorize = true;
         }
-        $quiz->authored = $authored;
+        $quiz->authorize = $authorize;
         $quiz->answers;
 
         return response(['quiz' => $quiz], 200);
@@ -164,15 +164,18 @@ class QuizController extends Controller
     }
 
     public function getQuizByUser($id){
-        $quiz = Quiz::where('user_id',$id)->get();
-        if($quiz == null || count($quiz) <= 0){
+        $quizzes = Quiz::where('user_id',$id)->get();
+        if($quizzes == null || count($quizzes) <= 0){
             return response([
                 'message' => 'Quiz not found or empty'
             ],400);
         }
 
-        $quiz = $quiz->load('answers');
-
+        $quizzes = $quiz->load('answers');
+        
+        foreach($quizzes as &$quiz){
+            
+        }
         return response([
             'quizzes' => $quiz
         ],200);

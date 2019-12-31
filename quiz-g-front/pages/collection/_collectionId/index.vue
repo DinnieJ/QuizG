@@ -3,6 +3,8 @@
     <collection-nav
         :collection="collection"
         :authorize="authorize"
+        @click-edit="clickEdit($event)"
+        @click-delete="clickDelete($event)"
     />
     <quizzes-group 
         :quizzes="quizzes"
@@ -13,7 +15,6 @@
 </template>
 
 <script>
-import CollectionApi from '~/common/api/collection'
 import QuizzesGroup from '~/components/quiz/QuizzesGroup'
 import CollectionNav from '~/components/collection/CollectionNav'
 import { mapGetters } from 'vuex'
@@ -24,18 +25,20 @@ export default {
     middleware: 'authenticated',
     async asyncData({isDev, route, store, env, params, query, req, res, redirect, error}) {
         let collectionId = params.collectionId
-        let authToken = store.getters['user/authToken']
+        let authenToken = store.getters['user/authenToken']
         let collection = {}
         let authorize = false
         try{
-            let response = await CollectionsApi.getById(authToken, collectionId)
+            let response = await CollectionsApi.getById(authenToken, collectionId)
             if(response.status == 200) {
                  /**
                  * @type {Array}
                  */
-                let quizzesSource = response.data.quizzes
+                
+                
                 collection = response.data.collection
-                authorize = response.data.authorize
+                let quizzesSource = collection.quizzes.data
+                authorize = collection.authored
 
                 var temp = 0
 
@@ -51,6 +54,7 @@ export default {
                    
                     return quiz;
                 })
+               
                
                 store.commit('collection/SET_CURRENT_COLLECTION', collection)
                 store.commit('quiz/SET_QUIZZES', quizzesList)
@@ -77,7 +81,8 @@ export default {
     },
     computed: {
         ...mapGetters({
-            quizzes: 'quiz/quizzes'
+            quizzes: 'quiz/quizzes',
+            authenToken: 'user/authenToken'
         })
     },
     data() {
@@ -86,6 +91,27 @@ export default {
         }
     },
     methods:{
+        async clickEdit(payload) {
+            try {
+                let response = await CollectionsApi.update(this.authenToken, payload.id, payload)
+                console.log('edit collection', response)
+            } catch(e) {
+                console.log('edit collection error', e)
+            }
+        },
+        async clickDelete(payload) {
+            try {
+                let response = await CollectionsApi.delete(this.authenToken, payload.id)
+                console.log('delete collection', response)
+                if(response.status === 200) {
+                    this.$router.push({
+                        path: '/home/collections'
+                    })
+                }
+            } catch(e) {
+                console.log('delete collection error', e)
+            }
+        }
     },
     created() {
 

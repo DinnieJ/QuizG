@@ -20,10 +20,10 @@ const HistoryApi = ApiBuilder.build('history')
 export default {
     middleware: 'authenticated',
     async asyncData({isDev, route, store, env, params, query, req, res, redirect, error}) {
+        let authenToken = store.getters['user/authenToken']
         let user = store.getters['user/currentUser']
-        let authToken = store.getters['user/authToken']
         try{
-            let response = await HistoryApi.getAll(authToken)
+            let response = await HistoryApi.getAll(authenToken)
             if(response.status == 200) {
                 let histories = response.data.histories
                 store.commit('history/SET_HISTORIES', histories)

@@ -25,9 +25,9 @@ export default {
     middleware: 'authenticated',
     async asyncData({isDev, route, store, env, params, query, req, res, redirect, error}) {
         let user = store.getters['user/currentUser']
-        let authToken = store.getters['user/authToken']
+        let authenToken = store.getters['user/authenToken']
         try{
-            let response = await QuizzesApi.getByUser(authToken,user.id)
+            let response = await QuizzesApi.getByUser(authenToken,user.id)
             if(response.status == 200) {
                  /**
                  * @type {Array}

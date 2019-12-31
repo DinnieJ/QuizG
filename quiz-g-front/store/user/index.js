@@ -8,7 +8,11 @@ export const state = function () {
 }
 
 export const getters = {
-    authenToken : state => state.authenToken,
+    // authenToken : state => {
+    //     let auth = state.authenToken
+    //     return auth
+    // },
+    authenToken: state => state.authenToken,
     activePage: state => state.activePage,
     currentUser: state => state.currentUser
 }

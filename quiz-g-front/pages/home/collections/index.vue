@@ -22,9 +22,9 @@ export default {
     middleware: 'authenticated',
     async asyncData({isDev, route, store, env, params, query, req, res, redirect, error}) {
         let user = store.getters['user/currentUser']
-        let authToken = store.getters['user/authToken']
+        let authenToken = store.getters['user/authenToken']
         try{
-            let response = await CollectionsApi.getByUser(authToken,user.id)
+            let response = await CollectionsApi.getByUser(authenToken,user.id)
             if(response.status == 200) {
                 let collectionsList = response.data.collections
                 store.commit('collection/SET_COLLECTIONS', collectionsList)

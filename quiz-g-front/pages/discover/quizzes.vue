@@ -23,9 +23,9 @@ const QuizzesApi = ApiBuilder.build('quizzes')
 export default {
     middleware: 'authenticated',
     async asyncData({isDev, route, store, env, params, query, req, res, redirect, error}) {
-        let authToken = store.getters['user/authToken']
+        let authenToken = store.getters['user/authenToken']
         try{
-            let response = await QuizzesApi.getAll(authToken)
+            let response = await QuizzesApi.getAll(authenToken)
             if(response.status == 200) {
                  /**
                  * @type {Array}

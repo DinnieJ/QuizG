@@ -33,15 +33,16 @@ export default {
         async clickLogin(payload) {
             try {
                 let loginResonse = await AuthApi.login(payload)
-                let authen = loginResonse.data.token
-                this.$store.commit('user/AUTHENTICATE', authen)
-                Cookie.set('authenToken', authen)
+                let authenToken = loginResonse.data.token
+                this.$store.commit('user/AUTHENTICATE', authenToken)
+                Cookie.set('authenToken', authenToken)
 
-                let getUserResponse = await AuthApi.getByUser(authen)
+                let getUserResponse = await AuthApi.getByUser(authenToken)
                 let user = getUserResponse.data.user
                 this.$store.commit('user/SET_CURRENT_USER', user)
                 Cookie.set('currentUser', user)
-
+                
+                console.log('finish clickLogin', user, authenToken)
                 this.$router.push({
                     path: '/home/collections'
                 })

@@ -14,12 +14,14 @@ export const actions = {
             try {
                 const parsed = cookieparser.parse(req.headers.cookie)
                 authenToken = parsed.authenToken
-                currentUser = parsed.currentUser
+                currentUser = JSON.parse(parsed.currentUser)
+                
+                commit('user/AUTHENTICATE', authenToken)
+                commit('user/SET_CURRENT_USER', currentUser)
             }catch(e) {
-
+                console.log('nuxtServerInit error', e)
             }
-            commit('user/AUTHENTICATE', authenToken)
-            commit('user/SET_CURRENT_USER', currentUser)
+            
         }
     }
 }

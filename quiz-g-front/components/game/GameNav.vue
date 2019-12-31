@@ -5,17 +5,12 @@
             <b-progress 
                 class="ml-1 mt-2 game-time-process" 
                 :max="totalTime" 
-                height="35px"
-                striped 
-                animated
+                height="35px" 
                 :value="time"
-                
+                :variant="progressColor" 
             >
-                <b-progress-bar :variant="progressColor" :value="time">
-                    Time: 
-                    <strong>{{time}}s</strong>
-                </b-progress-bar>
-                
+                Time: 
+                <strong>{{time}}s</strong>
             </b-progress>
         </div>
         <div class="col-2 d-flex flex-row-reverse">

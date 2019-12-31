@@ -44,6 +44,7 @@ Route::prefix('quizzes')->group(function () {
         });
     });
     Route::get('/user/{id}','QuizController@getQuizByUser');
+    Route::get('/','QuizController@all');
 });
 
 Route::prefix('game')->group(function () {

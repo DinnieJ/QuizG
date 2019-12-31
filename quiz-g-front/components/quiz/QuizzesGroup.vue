@@ -1,7 +1,15 @@
 <template>
 <div class="row">
     <template v-for="(item, i) in quizzes">
-        <quiz-card :quiz="item" :index="i + 1" :key="'quiz-' + i" :selectable="selectable" :creator-show="creatorShow" :authorize="authorize" />
+        <quiz-card 
+            :quiz="item" 
+            :index="i + 1" 
+            :key="'quiz-' + i" 
+            :selectable="selectable" 
+            :creator-show="creatorShow" 
+            :authorize="authorize" 
+            @click-delete="clickDelete($event)"
+        />
     </template>
 </div>
 </template>
@@ -25,6 +33,11 @@ export default {
         authorize: {
             type: Boolean,
             default: false
+        }
+    },
+    methods: {
+        clickDelete(payload) {
+            this.$emit('click-delete',payload)
         }
     },
     created() {

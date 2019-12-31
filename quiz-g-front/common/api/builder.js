@@ -9,7 +9,7 @@ let buidler = {
             getAll(token) {
                 return Caller({token}).get(`/${model}`)
             },
-            getByUser(token, userId) {
+            getByUser(token, userId = '') {
                 return Caller({token}).get(`/${model}/user/${userId}`)
             },
             getById(token, id) {
@@ -35,6 +35,9 @@ let buidler = {
             }
             api.register = function(payload) {
                 return Caller().post('/auth/register', payload)
+            }
+            api.logout = function(token) {
+                return Caller({token}).post('/auth/logout')
             }
         }
 

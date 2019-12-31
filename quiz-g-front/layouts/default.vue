@@ -21,22 +21,31 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+import ApiBuilder from '~/common/api/builder'
+const AuthApi = ApiBuilder.build('auth')
+const Cookie = process.client ? require('js-cookie') : undefined
+
 export default {
   computed: {
-    activePage() {
-      let page = this.$store.getters['user/activePage']
-      return page
-    }
+    ...mapGetters({
+      activePage: 'user/activePage',
+      authenToken: 'user/authenToken'
+    })
   },
   methods: {
-    clickLogout() {
-      var dispatch = this.$store.dispatch('user/logout')
-      if(dispatch) {
-        this.$router.push(
-          {
-            path: '/login'
-          }
-        )
+    async clickLogout() {
+      try {
+        let response = await AuthApi.logout(this.authenToken)
+        if(response.status === 200) {
+            this.$store.commit('user/LOGOUT')
+            Cookie.remove('authenToken')
+            this.$router.push({
+                path: '/login'
+            })
+        }
+      } catch(e) {
+        console.log('error', e)
       }
     }
   },

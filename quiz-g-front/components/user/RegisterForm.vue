@@ -67,7 +67,7 @@ export default {
                 name: this.name,
                 email : this.email,
                 password: this.password,
-                confirmPass: this.confirmPass
+                password_confirmation: this.confirmPass
             }
 
             this.$emit('click-create', payload)

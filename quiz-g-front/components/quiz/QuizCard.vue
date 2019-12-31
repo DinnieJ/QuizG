@@ -22,7 +22,7 @@
             </b-card-sub-title>
             <div class="d-flex" v-if="authorize" >
                 <button class="btn btn-sm btn-primary mr-2" @click="clickEdit()">Edit</button>
-                <button class="btn btn-sm btn-danger">Delete</button>
+                <button class="btn btn-sm btn-danger"  @click="clickDelete()">Delete</button>
             </div>
             
         </div>
@@ -107,6 +107,11 @@ export default {
                 path: `/quiz/${this.quiz.id}/edit`
             })
         },
+        clickDelete() {
+            this.$emit('click-delete', {
+                id: this.quiz.id
+            })
+        }
     }
 }
 </script>

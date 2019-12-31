@@ -51,14 +51,14 @@ let buidler = {
         }
 
         if(model === 'test') {
-            api.submit = function(token, id) {
-                return Caller({token}).post(`/test/${id}/submit`)
+            api.submit = function(token, payload) {
+                return Caller({token}).post(`/test/submit`, payload)
             }
         }
 
         if(model === 'game') {
-            api.greeding = function(token, id) {
-                return Caller({token}).post(`/game/${id}/greeding`)
+            api.grading = function(token, payload) {
+                return Caller({token}).post(`/game/grading`, payload)
             }
         }
 

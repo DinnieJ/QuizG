@@ -75,11 +75,13 @@ export default {
         clickAnswer(answerId) {
             let quiz = this.quizzes[this.currentQuiz]
             quiz.choiceAnswer = answerId,
+            quiz.answerTime = this.totalTime - this.time
             this.$emit('finish-quiz', quiz)
             this.nextQuiz()
         },
         clickSkip() {
             let quiz = this.quizzes[this.currentQuiz]
+            quiz.answerTime = this.totalTime
             this.$emit('finish-quiz', quiz)
             this.nextQuiz()
         },

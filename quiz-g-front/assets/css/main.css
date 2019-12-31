@@ -520,6 +520,7 @@ body {
 
 .game-time-process {
     width: 100%;
+    overflow:hidden
 }
 
 .btn-skip {

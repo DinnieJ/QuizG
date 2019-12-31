@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Quiz;
 use App\Contain;
 use App\Answer;
+use App\User;
 use Auth;
 /**
  * Quiz controller
@@ -81,11 +82,11 @@ class QuizController extends Controller
                 'message' => 'Quiz not found'
             ],400);
         }
-        $authored = false;
+        $authorize = false;
         if($data->user_id == Auth::user()->id){
-            $authored = true;
+            $authorize = true;
         }
-        $quiz->authored = $authored;
+        $quiz->authorize = $authorize;
         $quiz->answers;
 
         return response(['quiz' => $quiz], 200);
@@ -164,17 +165,36 @@ class QuizController extends Controller
     }
 
     public function getQuizByUser($id){
-        $quiz = Quiz::where('user_id',$id)->get();
-        if($quiz == null || count($quiz) <= 0){
+        $quizzes = Quiz::where('user_id',$id)->get();
+        if($quizzes == null || count($quizzes) <= 0){
             return response([
                 'message' => 'Quiz not found or empty'
             ],400);
         }
 
-        $quiz = $quiz->load('answers');
-
+        $quizzes = $quizzes->load('answers');
+        $user = User::find($id);
+        $authorize = (Auth::user()->id==$id);
         return response([
-            'quizzes' => $quiz
+            'quizzes' => $quizzes,
+            'user' => $user,
+            'authorize' => $authorize
+        ],200);
+    }
+
+    public function all(){
+        $quizzes = Quiz::all();
+        if($quizzes == null){
+            return response([
+                'message' => 'There is no quiz in the database',
+            ],400);
+        }
+        $quizzes->load('answers');
+        foreach($quizzes as $quiz){
+            $quiz->authorize = (Auth::user()->id == $quiz->user_id);
+        }
+        return response([
+            'quizzes' => $quizzes,
         ],200);
     }
 }

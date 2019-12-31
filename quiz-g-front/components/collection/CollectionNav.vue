@@ -5,10 +5,10 @@
             <b-input-group>
                 <b-form-input v-model="name" :disabled="!authorize && !createNew"/>
                 <b-input-group-append v-if="authorize">
-                    <b-button variant="primary">Edit</b-button>
+                    <b-button variant="primary" @click="clickEdit()">Edit</b-button>
                 </b-input-group-append>
                 <b-input-group-append v-if="createNew">
-                    <b-button variant="success">Create</b-button>
+                    <b-button variant="success" @click="clickCreate()">Create</b-button>
                 </b-input-group-append>
             </b-input-group>
         </div>
@@ -19,7 +19,7 @@
                     &#9947;<span class="sr-only">Action</span>
                 </template>
                 <b-dropdown-group header="Actions">
-                    <b-dropdown-item-button v-if="authorize">Delete</b-dropdown-item-button>
+                    <b-dropdown-item-button v-if="authorize" @click="clickDelete()">Delete</b-dropdown-item-button>
                     <b-dropdown-item-button v-if="authorize" @click="clickNewQuiz()">New Quiz</b-dropdown-item-button>
                     <b-dropdown-item-button v-if="authorize" @click="clickAddQuiz()">Add Quiz to Another Collection</b-dropdown-item-button>
                     <b-dropdown-item-button v-if="!authorize && !createNew" @click="clickAddQuiz()">Add Quiz</b-dropdown-item-button>
@@ -80,6 +80,22 @@ export default {
                 path: `/game/${this.collection.id}`
             })
         },
+        clickEdit() {
+            this.$emit('click-edit', {
+                id: this.collection.id,
+                name: this.name
+            })
+        },
+        clickCreate() {
+            this.$emit('click-create', {
+                name: this.name
+            })
+        },
+        clickDelete() {
+            this.$emit('click-delete', {
+                id: this.collection.id,
+            })
+        }
     },
     created() {
         if(this.collection) {

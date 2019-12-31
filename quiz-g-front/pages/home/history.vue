@@ -12,15 +12,18 @@
 <script>
 import HistoryTable from '~/components/history/HistoryTable'
 import UserNav from '~/components/user/UserNav'
-import HistoryApi from '~/common/api/history'
+// import HistoryApi from '~/common/api/history'
 import { mapGetters } from 'vuex'
+import ApiBuilder from '~/common/api/builder'
+const HistoryApi = ApiBuilder.build('history') 
 
 export default {
-    // middleware: 'authenticated',
+    middleware: 'authenticated',
     async asyncData({isDev, route, store, env, params, query, req, res, redirect, error}) {
+        let authenToken = store.getters['user/authenToken']
         let user = store.getters['user/currentUser']
         try{
-            let response = await HistoryApi.getHistoryByUser(user.id)
+            let response = await HistoryApi.getAll(authenToken)
             if(response.status == 200) {
                 let histories = response.data.histories
                 store.commit('history/SET_HISTORIES', histories)
@@ -29,7 +32,6 @@ export default {
             
         } catch(e) {
             console.log('getAllCollections error', e)
-            redirect('/500')
         }
         return {
             user

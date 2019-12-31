@@ -12,19 +12,26 @@
 </template>
 
 <script>
-import CollectionApi from '~/common/api/collection'
 import CollectionsGroup from '~/components/collection/CollectionsGroup'
 import DiscoverNav from '~/components/common/DiscoverNav'
 import { mapGetters } from 'vuex'
+import ApiBuilder from '~/common/api/builder'
+const CollectionsApi = ApiBuilder.build('collections')
 
 export default {
-    // middleware: 'authenticated',
+    middleware: 'authenticated',
     async asyncData({isDev, route, store, env, params, query, req, res, redirect, error}) {
+        let authenToken = store.getters['user/authenToken']
+        let collections = []
         try{
-            let response = await CollectionApi.getAllCollections()
+            let response = await CollectionsApi.getAll(authenToken)
             if(response.status == 200) {
-                let collectionsList = response.data.collections
-                store.commit('collection/SET_COLLECTIONS', collectionsList)
+                let collectionsList = response.data.collections.data
+                if(collectionsList && collectionsList.length > 0) {
+                    collections = collectionsList
+                }
+                
+                store.commit('collection/SET_COLLECTIONS', collections)
                 store.commit('user/ACTIVE_PAGE', 'discover')
             }
             

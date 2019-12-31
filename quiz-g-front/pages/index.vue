@@ -3,7 +3,7 @@ export default {
   fetch({ redirect }) {
     redirect('/home/collections')
   },
-  // middleware: ['authenticated']
+  middleware: ['authenticated']
 }
 </script>
 

@@ -99,7 +99,7 @@
     </div>
 
     <div class="d-flex">
-        <button class="btn btn-primary mr-2" v-if="edit" >Edit</button>
+        <button class="btn btn-primary mr-2" v-if="edit" @click="clickEdit()">Edit</button>
         <button class="btn btn-primary mr-2" v-else @click="clickCreate()">Create</button>
         <button class="btn btn-warning" @click="clickCancel()">Cancel</button>
     </div>
@@ -121,6 +121,9 @@ export default {
         edit: {
             type: [Boolean],
             default: false
+        },
+        collectionId: {
+            default: undefined
         }
     },
     data() {
@@ -145,7 +148,52 @@ export default {
             this.$router.go(-1)
         },
         clickCreate() {
-            console.log('time', this.time)
+            if(this.correct < 0) {
+                return
+            }
+
+            let payload = {
+                content: this.content,
+                time: this.time,
+                answers: [],
+                collection_id: this.collectionId
+            }
+
+            for(let i = 0; i < 4; i++) {
+                if(this.answersContent[i].length > 0) {
+                    let  answer = {
+                        content: this.answersContent[i],
+                        correct: Boolean(i === this.correct)
+                    }
+                    payload.answers.push(answer)
+                }
+            }
+            console.log('click-create', payload)
+            this.$emit('click-create', payload)
+        },
+        clickEdit() {
+            if(this.correct < 0) {
+                return
+            }
+
+            let payload = {
+                id: this.quiz.id,
+                content: this.content,
+                time: this.time,
+                answers: [],
+            }
+
+            for(let i = 0; i < 4; i++) {
+                if(this.answersContent[i].length > 0) {
+                    let  answer = {
+                        content: this.answersContent[i],
+                        correct: Boolean(i === this.correct)
+                    }
+                    payload.answers.push(answer)
+                }
+            }
+            console.log('click-edit', payload)
+            this.$emit('click-edit', payload)
         }
     },
     created() {

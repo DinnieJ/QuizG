@@ -24,8 +24,10 @@ class CollectionController extends Controller
 
     public function getCollectionByUser($user){
         $data = Collection::where('user_id',$user)->get();
+        $data->load('user');
         return response([
-            'collections' => $data
+            'collections' => $data,
+            'authorize' => ($user==Auth::user()->id),
         ],200);
     }
 
@@ -95,10 +97,7 @@ class CollectionController extends Controller
     {
         $data = Collection::find($id,['id','user_id','name']);
         $data->setRelation('quizzes',$data->quizzes()->paginate(5));
-        $authorize = false;
-        if($data->user_id == Auth::user()->id){
-            $authorize = true;
-        }
+        $authorize = ($data->user_id == Auth::user()->id);
 
         $data->authorize = $authorize;
         foreach($data->quizzes as &$quiz){

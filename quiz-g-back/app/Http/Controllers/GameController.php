@@ -55,7 +55,7 @@ class GameController extends Controller
     public function gradingQuiz(Request $request){
         $quiz_id = $request->id;
         
-        $answer_id = (isset($request->answer_id)) ? $request->answer_id : null;
+        $answer_id = (isset($request->answer_id)) ? $request->answer_id : -1;
         $history_id = $request->history_id;
         
         $time = $request->time;

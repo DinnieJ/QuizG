@@ -16,6 +16,7 @@ import CollectionsGroup from '~/components/collection/CollectionsGroup'
 import DiscoverNav from '~/components/common/DiscoverNav'
 import { mapGetters } from 'vuex'
 import ApiBuilder from '~/common/api/builder'
+const CollectionsApi = ApiBuilder.build('collections')
 
 export default {
     middleware: 'authenticated',

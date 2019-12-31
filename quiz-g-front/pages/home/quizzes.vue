@@ -9,12 +9,12 @@
         :quizzes="quizzes" 
         selectable
         authorize
+        @click-delete="clickDelete($event)"
     />
 </div>
 </template>
 
 <script>
-// import QuizApi from '~/common/api/quiz'
 import UserNav from '~/components/user/UserNav'
 import QuizzesGroup from '~/components/quiz/QuizzesGroup'
 import { mapGetters } from 'vuex'
@@ -66,11 +66,24 @@ export default {
     },
     computed: {
         ...mapGetters({
-            quizzes: 'quiz/quizzes'
+            quizzes: 'quiz/quizzes',
+            authenToken: 'user/authenToken'
         })
     },
     data() {
         return {
+        }
+    },
+    methods: {
+        async clickDelete(payload) {
+            try {
+                let response = await QuizzesApi.delete(this.authenToken, payload.id)
+                if(response.status === 200) {
+                    this.$router.go(0)
+                }
+            } catch (error) {
+                
+            }
         }
     },
     created() {

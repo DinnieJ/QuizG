@@ -14,6 +14,11 @@ class TestController extends Controller
 
     public function getTest($id){
         $data = $this->getData($id);
+        if($data == null){
+            return response([
+                'message' => 'Collection not found'
+            ],400);
+        }
         return response([
             'collection' => $data
         ],200);

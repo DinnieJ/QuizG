@@ -9,7 +9,10 @@ use App\Collection;
 trait QuizGHelper{
 
     public function getData($id){
-        $data = $data = Collection::find($id);
+        $data = Collection::find($id);
+        if($data == null){
+            return data;
+        }
         $data->setRelation('quizzes',$data->quizzes()->inRandomOrder()->get());
         foreach($data->quizzes as &$quiz){
             unset($quiz->correct_answer_id);

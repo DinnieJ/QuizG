@@ -14,7 +14,11 @@ class GameController extends Controller
     public function getGameData($id){
         $history_id = -1;
         $data = $this->getData($id);
-
+        if($data == null){
+            return response([
+                'message' => 'Collection not found'
+            ],400);
+        }
         if(Auth::check()){
            $new_history =  History::create([
                 'user_id' => Auth::user()->id,

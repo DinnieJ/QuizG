@@ -32,7 +32,6 @@ export default {
         async clickCreate(payload) {
             try {
                 let response = await QuizzesApi.create(this.authenToken, payload)
-                console.log('create quiz', response)
                  this.$router.go(-1)
             } catch (error) {
                 console.log('create quiz error', error)

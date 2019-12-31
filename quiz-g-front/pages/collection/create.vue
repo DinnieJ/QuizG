@@ -28,7 +28,6 @@ export default {
             let authenToken = this.authenToken
             try {  
                 let response = await CollectionsApi.create(this.authenToken, payload)
-                console.log('create collections', response)
                 this.$router.push({
                     path: '/home/collections'
                 })

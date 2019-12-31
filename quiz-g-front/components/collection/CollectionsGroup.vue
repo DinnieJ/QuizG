@@ -1,7 +1,13 @@
 <template>
     <b-card-group columns>
         <template v-for="(item, i) in collections">
-             <collection-card :key="'demo' + i" :collection="item" :creator-show="creatorShow" :add-quiz="addQuiz" />
+             <collection-card 
+                :key="'demo' + i" 
+                :collection="item" 
+                :creator-show="creatorShow" 
+                :add-quiz="addQuiz"
+                @click-add-quiz="clickAddQuiz"
+            />
         </template>
     </b-card-group>
 </template>
@@ -22,6 +28,11 @@ export default {
         addQuiz: {
             type: Boolean,
             default: false
+        }
+    },
+    methods: {
+        clickAddQuiz(payload) {
+            this.$emit('click-add-quiz', payload)
         }
     }
 }

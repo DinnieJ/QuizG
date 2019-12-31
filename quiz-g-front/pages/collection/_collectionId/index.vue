@@ -5,6 +5,7 @@
         :authorize="authorize"
         @click-edit="clickEdit($event)"
         @click-delete="clickDelete($event)"
+        @click-remove-quiz="clickRemoveQuiz($event)"
     />
     <quizzes-group 
         :quizzes="quizzes"
@@ -82,7 +83,8 @@ export default {
     computed: {
         ...mapGetters({
             quizzes: 'quiz/quizzes',
-            authenToken: 'user/authenToken'
+            authenToken: 'user/authenToken',
+            selectedQuizzes: 'quiz/selectedQuizzes',
         })
     },
     data() {
@@ -110,6 +112,25 @@ export default {
                 }
             } catch(e) {
                 console.log('delete collection error', e)
+            }
+        },
+        async clickRemoveQuiz(payload) {
+            let collectionId = payload.id
+            let quizzesPayload = this.selectedQuizzes.map(item => {
+                return item.id
+            })
+
+            let apiPayload = {
+                quizzes_id: quizzesPayload,
+            }
+
+            try {
+                let response = await CollectionsApi.removeQuizzes(this.authenToken, collectionId, apiPayload)
+                if(response.status === 200) {
+                    this.$router.go(-1)
+                }
+            } catch (error) {
+                
             }
         }
     },

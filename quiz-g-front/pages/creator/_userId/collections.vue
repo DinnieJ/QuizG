@@ -11,18 +11,21 @@
 </template>
 
 <script>
-import CollectionApi from '~/common/api/collection'
 import CollectionsGroup from '~/components/collection/CollectionsGroup'
 import UserNav from '~/components/user/UserNav'
 import { mapGetters } from 'vuex'
+import ApiBuilder from '~/common/api/builder'
+const CollectionsApi = ApiBuilder.build('collections')
+
 
 export default {
-    // middleware: 'authenticated',
+    middleware: 'authenticated',
     async asyncData({isDev, route, store, env, params, query, req, res, redirect, error}) {
         let userId = params.userId
+        let authenToken = store.getters['user/authenToken']
         let user = {}
         try{
-            let response = await CollectionApi.getCollectionsByUser(userId)
+            let response = await CollectionsApi.getByUser(authenToken, userId)
             if(response.status == 200) {
                 let collectionsList = response.data.collections
                 user = response.data.user
@@ -31,7 +34,7 @@ export default {
             }
             
         } catch(e) {
-            console.log('getAllCollections error', e)
+            console.log('get collections by user error', e)
         }
         return {
             user

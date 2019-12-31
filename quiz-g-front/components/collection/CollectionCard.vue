@@ -23,7 +23,7 @@
                 <button class="btn collection-card-btn play" @click="clickPlay()">Play</button>
             </div>
             <div class="d-flex" v-else>
-                <button class="btn collection-card-btn add" @click="clickPlay()">Add Quiz</button>
+                <button class="btn collection-card-btn add" @click="clickAddQuiz()">Add Quiz</button>
             </div>
         </b-card-body>
     </b-card>
@@ -58,6 +58,11 @@ export default {
                 path: `/game/${this.collection.id}`
             })
         },
+        clickAddQuiz() {
+            this.$emit('click-add-quiz', {
+                id: this.collection.id
+            })
+        }
     }
 }
 </script>

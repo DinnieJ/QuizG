@@ -64,9 +64,7 @@ export default {
         },
         nextQuiz() {
             let index = this.currentQuiz + 1
-            console.log('nextQuiz', index, this.noQuizzes)
             if(index >= this.noQuizzes) {
-                console.log('stopClock', index, this.noQuizzes)
                 this.finish = true
                 this.stopClock()
                 return
@@ -86,7 +84,6 @@ export default {
             this.nextQuiz()
         },
         changeQuiz(quiz) {
-            console.log('currentQuiz', this.currentQuiz)
             this.totalTime = quiz.time
             this.time = quiz.time
         }

@@ -152,6 +152,10 @@ export default {
                 return
             }
 
+            if(this.content.length < 1) {
+                return
+            }
+
             let payload = {
                 content: this.content,
                 time: this.time,
@@ -168,7 +172,11 @@ export default {
                     payload.answers.push(answer)
                 }
             }
-            console.log('click-create', payload)
+
+            if(payload.answers.length < 1) {
+                return
+            }
+
             this.$emit('click-create', payload)
         },
         clickEdit() {
@@ -192,7 +200,6 @@ export default {
                     payload.answers.push(answer)
                 }
             }
-            console.log('click-edit', payload)
             this.$emit('click-edit', payload)
         }
     },

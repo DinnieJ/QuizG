@@ -19,9 +19,10 @@
                     &#9947;<span class="sr-only">Action</span>
                 </template>
                 <b-dropdown-group header="Actions">
-                    <b-dropdown-item-button v-if="authorize" @click="clickDelete()">Delete</b-dropdown-item-button>
                     <b-dropdown-item-button v-if="authorize" @click="clickNewQuiz()">New Quiz</b-dropdown-item-button>
+                     <b-dropdown-item-button v-if="authorize" @click="clickDelete()">Delete</b-dropdown-item-button>
                     <b-dropdown-item-button v-if="authorize" @click="clickAddQuiz()">Add Quiz to Another Collection</b-dropdown-item-button>
+                    <b-dropdown-item-button v-if="authorize" @click="clickRemoveQuiz()">Remove Quiz</b-dropdown-item-button>
                     <b-dropdown-item-button v-if="!authorize && !createNew" @click="clickAddQuiz()">Add Quiz</b-dropdown-item-button>
                 </b-dropdown-group>
                 <b-dropdown-divider></b-dropdown-divider>
@@ -93,6 +94,11 @@ export default {
         },
         clickDelete() {
             this.$emit('click-delete', {
+                id: this.collection.id,
+            })
+        },
+        clickRemoveQuiz() {
+            this.$emit('click-remove-quiz', {
                 id: this.collection.id,
             })
         }

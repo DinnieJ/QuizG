@@ -24,7 +24,6 @@ export default {
         value: {
             deep: true,
             handler(value) {
-                console.log('ErrorAlert', value)
                 if(value) {
                     
                     let context = this

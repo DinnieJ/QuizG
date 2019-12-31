@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Quiz;
 use App\Contain;
 use App\Answer;
+use App\User;
 use Auth;
 /**
  * Quiz controller
@@ -171,13 +172,29 @@ class QuizController extends Controller
             ],400);
         }
 
-        $quizzes = $quiz->load('answers');
-        
-        foreach($quizzes as &$quiz){
-            
+        $quizzes = $quizzes->load('answers');
+        $user = User::find($id);
+        $authorize = (Auth::user()->id==$id);
+        return response([
+            'quizzes' => $quizzes,
+            'user' => $user,
+            'authorize' => $authorize
+        ],200);
+    }
+
+    public function all(){
+        $quizzes = Quiz::all();
+        if($quizzes == null){
+            return response([
+                'message' => 'There is no quiz in the database',
+            ],400);
+        }
+        $quizzes->load('answers');
+        foreach($quizzes as $quiz){
+            $quiz->authorize = (Auth::user()->id == $quiz->user_id);
         }
         return response([
-            'quizzes' => $quiz
+            'quizzes' => $quizzes,
         ],200);
     }
 }

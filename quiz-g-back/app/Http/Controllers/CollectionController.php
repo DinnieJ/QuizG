@@ -15,6 +15,7 @@ class CollectionController extends Controller
         $data = Collection::paginate(6);
         foreach ($data as &$collection){
             $collection->user;
+            $collection->authorize = (Auth::user()->id == $collection->user->id);
         }
 
         return response([
@@ -102,6 +103,7 @@ class CollectionController extends Controller
         $data->authorize = $authorize;
         foreach($data->quizzes as &$quiz){
             $quiz->setRelation('answers',$quiz->answers);
+            $quiz->authorize = ($quiz->user_id == Auth::user()->id);
         }
 
         return response([

@@ -13,6 +13,8 @@ import QuizApi from '~/common/api/quiz'
 import UserNav from '~/components/user/UserNav'
 import QuizzesGroup from '~/components/quiz/QuizzesGroup'
 import { mapGetters } from 'vuex'
+import ApiBuilder from '~/common/api/builder'
+const QuizzesApi = ApiBuilder.build('quizzes')
 
 export default {
     // middleware: 'authenticated',
@@ -20,7 +22,7 @@ export default {
         let userId = params.userId
         let user = {}
         try{
-            let response = await QuizApi.getQuizzesByUser(userId)
+            let response = await QuizzesApi.quizzes(userId)
             if(response.status == 200) {
                  /**
                  * @type {Array}

@@ -2,21 +2,16 @@
 <div class="game-nav">
     <div class="row pa-2">
         <div class="col-10 d-flex flex-row">
-            <b-progress 
-                class="ml-1 mt-2 game-time-process" 
-                :max="totalTime" 
-                height="35px"
-                striped 
-                animated
-                :value="time"
-                
-            >
-                <b-progress-bar :variant="progressColor" :value="time">
-                    Time: 
-                    <strong>{{time}}s</strong>
-                </b-progress-bar>
-                
-            </b-progress>
+            <div class="progress w-100 mt-2 ml-1">
+                <div 
+                    :class="`progress-bar bg-${progressColor}`" 
+                    role="progressbar" 
+                    :style="`width: ${percent}%;`" 
+                    :aria-valuenow="percent" 
+                    aria-valuemin="0" 
+                    aria-valuemax="100"
+                >{{time}}s</div>
+            </div>
         </div>
         <div class="col-2 d-flex flex-row-reverse">
             <button class="btn mr-2 mt-2 btn-skip" @click="clickSkip()">
@@ -31,11 +26,18 @@
 export default {
     props: {
         time: Number,
-        totalTime: Number
+        totalTime: Number,
+        
+    },
+    data() {
+        return {
+            percent: 0
+        }
     },
     computed: {
         progressColor() {
             let percent = parseInt(this.time/this.totalTime*100)
+            this.percent = percent
             if(percent > 75) {
                 return 'success'
             } else if (percent > 50) {

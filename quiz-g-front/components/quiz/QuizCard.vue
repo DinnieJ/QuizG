@@ -24,7 +24,6 @@
                 <button class="btn btn-sm btn-primary mr-2" @click="clickEdit()">Edit</button>
                 <button class="btn btn-sm btn-danger"  @click="clickDelete()">Delete</button>
             </div>
-            
         </div>
         
         

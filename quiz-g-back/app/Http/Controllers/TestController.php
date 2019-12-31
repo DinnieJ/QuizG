@@ -36,13 +36,13 @@ class TestController extends Controller
         
         foreach($data as $ele){
             $right = 0;
-            if(isset($ele['answer_id']) && $this->checkAnswer($ele['quiz_id'], $ele['answer_id'])){
+            if(array_key_exists('answer_id',$ele) && $this->checkAnswer($ele['quiz_id'], $ele['answer_id'])){
                 $correct++;
                 $right = 1;
             }
             $this->addAction($history_id,[
                 'quiz_id' => $ele['quiz_id'],
-                'answer_id'=> $ele['answer_id'],
+                'answer_id'=> (array_key_exists('answer_id',$ele)) ? $ele['answer_id']:-1,
                 'right' => $right,
                 'time' => null
             ]);

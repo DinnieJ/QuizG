@@ -15,6 +15,7 @@ class CollectionController extends Controller
         $data = Collection::paginate(6);
         foreach ($data as &$collection){
             $collection->user;
+            $collection->authorize = (Auth::user()->id == $collection->user->id);
         }
 
         return response([
@@ -24,8 +25,10 @@ class CollectionController extends Controller
 
     public function getCollectionByUser($user){
         $data = Collection::where('user_id',$user)->get();
+        $data->load('user');
         return response([
-            'collections' => $data
+            'collections' => $data,
+            'authorize' => ($user==Auth::user()->id),
         ],200);
     }
 
@@ -48,6 +51,11 @@ class CollectionController extends Controller
     public function removeQuiz(Request $request, $id){
 
         $quizzes_id = $request->quizzes_id;
+        if($quizzes_id == null || count($quizzes_id)<=0){
+            return response([
+                'message' => 'nothing to delete',
+            ],400);
+        }
         foreach($quizzes_id as $quiz_id){
             $containent = Contain::where([
                 'collection_id' => $id,
@@ -58,13 +66,9 @@ class CollectionController extends Controller
                 $containent->each->delete();
             }
         }
-        
-
-        
-
         return response([
-            'message' => 'failed',
-        ],400);
+            'message' => 'successful',
+        ],200);
     }
 
     /**
@@ -95,14 +99,12 @@ class CollectionController extends Controller
     {
         $data = Collection::find($id,['id','user_id','name']);
         $data->setRelation('quizzes',$data->quizzes()->paginate(5));
-        $authored = false;
-        if($data->user_id == Auth::user()->id){
-            $authored = true;
-        }
+        $authorize = ($data->user_id == Auth::user()->id);
 
-        $data->authored = $authored;
+        $data->authorize = $authorize;
         foreach($data->quizzes as &$quiz){
             $quiz->setRelation('answers',$quiz->answers);
+            $quiz->authorize = ($quiz->user_id == Auth::user()->id);
         }
 
         return response([

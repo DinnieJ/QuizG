@@ -95,12 +95,12 @@ class CollectionController extends Controller
     {
         $data = Collection::find($id,['id','user_id','name']);
         $data->setRelation('quizzes',$data->quizzes()->paginate(5));
-        $authored = false;
+        $authorize = false;
         if($data->user_id == Auth::user()->id){
-            $authored = true;
+            $authorize = true;
         }
 
-        $data->authored = $authored;
+        $data->authorize = $authorize;
         foreach($data->quizzes as &$quiz){
             $quiz->setRelation('answers',$quiz->answers);
         }

@@ -55,11 +55,12 @@ class GameController extends Controller
     public function gradingQuiz(Request $request){
         $quiz_id = $request->id;
         
-        $answer_id = $request->answer_id;
+        $answer_id = (isset($request->answer_id)) ? $request->answer_id : null;
         $history_id = $request->history_id;
-        $result = $this->checkAnswer($quiz_id,$answer_id);
+        
         $time = $request->time;
         if($history_id != -1){
+            $result = $this->checkAnswer($quiz_id,$answer_id);
             $right = ($result) ? 1:0;
             $this->addAction($history_id,[
                 'quiz_id' => $quiz_id,

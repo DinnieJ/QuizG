@@ -9,22 +9,25 @@
         :quizzes="quizzes" 
         selectable
         authorize
+        @click-delete="clickDelete($event)"
     />
 </div>
 </template>
 
 <script>
-import QuizApi from '~/common/api/quiz'
 import UserNav from '~/components/user/UserNav'
 import QuizzesGroup from '~/components/quiz/QuizzesGroup'
 import { mapGetters } from 'vuex'
+import ApiBuilder from '~/common/api/builder'
+const QuizzesApi = ApiBuilder.build('quizzes') 
 
 export default {
-    // middleware: 'authenticated',
+    middleware: 'authenticated',
     async asyncData({isDev, route, store, env, params, query, req, res, redirect, error}) {
         let user = store.getters['user/currentUser']
+        let authenToken = store.getters['user/authenToken']
         try{
-            let response = await QuizApi.getQuizzesByUser(user.id)
+            let response = await QuizzesApi.getByUser(authenToken,user.id)
             if(response.status == 200) {
                  /**
                  * @type {Array}
@@ -63,11 +66,24 @@ export default {
     },
     computed: {
         ...mapGetters({
-            quizzes: 'quiz/quizzes'
+            quizzes: 'quiz/quizzes',
+            authenToken: 'user/authenToken'
         })
     },
     data() {
         return {
+        }
+    },
+    methods: {
+        async clickDelete(payload) {
+            try {
+                let response = await QuizzesApi.delete(this.authenToken, payload.id)
+                if(response.status === 200) {
+                    this.$router.go(0)
+                }
+            } catch (error) {
+                
+            }
         }
     },
     created() {

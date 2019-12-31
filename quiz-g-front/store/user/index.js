@@ -1,12 +1,37 @@
-import stateFile from './state'
-import gettersFile from './getters'
-import mutationsFile from './muitations'
-import actionsFile from './actions'
+export const state = function () {
+    return {
+        authenToken : '',
+        activePage: 'home',
+        currentUser: {
+        }
+    }
+}
 
-export const state = stateFile
+export const getters = {
+    // authenToken : state => {
+    //     let auth = state.authenToken
+    //     return auth
+    // },
+    authenToken: state => state.authenToken,
+    activePage: state => state.activePage,
+    currentUser: state => state.currentUser
+}
 
-export const getters = gettersFile
+export const mutations = { 
+    AUTHENTICATE(state, authen) {
+        state.authenToken = authen
+    },
+    LOGOUT(state) {
+        state.authenToken = ''
+    },
+    ACTIVE_PAGE(state, page) {
+        state.activePage = page
+    },
+    SET_CURRENT_USER(state, user) {
+        state.currentUser = user
+    }
+}
 
-export const mutations = mutationsFile
-
-export const actions = actionsFile
+export const actions = {
+    
+}

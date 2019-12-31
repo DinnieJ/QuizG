@@ -15,6 +15,7 @@ class CollectionController extends Controller
         $data = Collection::paginate(6);
         foreach ($data as &$collection){
             $collection->user;
+            $collection->authorize = (Auth::user()->id == $collection->user->id);
         }
 
         return response([
@@ -50,6 +51,11 @@ class CollectionController extends Controller
     public function removeQuiz(Request $request, $id){
 
         $quizzes_id = $request->quizzes_id;
+        if($quizzes_id == null || count($quizzes_id)<=0){
+            return response([
+                'message' => 'nothing to delete',
+            ],400);
+        }
         foreach($quizzes_id as $quiz_id){
             $containent = Contain::where([
                 'collection_id' => $id,
@@ -60,13 +66,9 @@ class CollectionController extends Controller
                 $containent->each->delete();
             }
         }
-        
-
-        
-
         return response([
-            'message' => 'failed',
-        ],400);
+            'message' => 'successful',
+        ],200);
     }
 
     /**
@@ -102,6 +104,7 @@ class CollectionController extends Controller
         $data->authorize = $authorize;
         foreach($data->quizzes as &$quiz){
             $quiz->setRelation('answers',$quiz->answers);
+            $quiz->authorize = ($quiz->user_id == Auth::user()->id);
         }
 
         return response([

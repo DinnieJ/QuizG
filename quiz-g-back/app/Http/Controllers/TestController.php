@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Traits\QuizGHelper;
 use App\History;
+use App\Collection;
 use Auth;
 
 class TestController extends Controller
@@ -13,6 +14,11 @@ class TestController extends Controller
 
     public function getTest($id){
         $data = $this->getData($id);
+        if($data == null){
+            return response([
+                'message' => 'Collection not found'
+            ],400);
+        }
         return response([
             'collection' => $data
         ],200);
@@ -21,10 +27,11 @@ class TestController extends Controller
     public function submitTest(Request $request){
         $correct = 0;
         $data = $request->data;
-        $total = count($data);
+        $collection_id = $request->collection_id;
+        $total = Collection::find($collection_id)->quizzes()->count();
         $new_history = History::create([
             'user_id' => Auth::user()->id,
-            'collection_id' => $request->collection_id,
+            'collection_id' => $collection_id,
             'total' => $total,
             'correct' => $correct,
             'type' => 'TEST',

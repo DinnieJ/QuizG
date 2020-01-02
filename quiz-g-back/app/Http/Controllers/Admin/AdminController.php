@@ -17,15 +17,7 @@ class AdminController{
         return response([
             'collections' => $collections
         ],200);
-    }
-
-    public function removeUser($id){
-
-    }
-
-    public function removeCollection($id){
-        
-    }
+    }    
 }
 
 ?>

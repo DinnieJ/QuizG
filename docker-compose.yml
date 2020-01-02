@@ -4,7 +4,7 @@ version: '3'
 
 services:
   # Server container
-  db:
+  mysql:
     image: mysql
     command: --default-authentication-plugin=mysql_native_password
     restart: always

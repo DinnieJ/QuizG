@@ -1,5 +1,5 @@
 <template>
-<div class="row mt-1" @click="selectAnswer()">
+<div class="row mt-1" @click="selectAnswer()" >
     <div class="col-1">
         <div :class="indexClass">
             {{ String.fromCharCode(index + 65) }}
@@ -21,6 +21,10 @@ export default {
         choice: {
             type: Boolean,
             default: false
+        },
+        disabled: {
+            type: Boolean,
+            default: false
         }
     },
     computed: {
@@ -36,7 +40,10 @@ export default {
     },
     methods: {
         selectAnswer() {
-            this.$emit('select-answer', this.index)
+            if(this.disabled) {
+                return
+            }
+            this.$emit('select-answer', this.answer.id)
         }
     }
 }

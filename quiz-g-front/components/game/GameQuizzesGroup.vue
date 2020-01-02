@@ -35,7 +35,6 @@ export default {
             clock: {},
             currentQuiz: 0,
             noQuizzes: 0,
-            finish: false
         }
     },
     watch: {
@@ -65,7 +64,7 @@ export default {
         nextQuiz() {
             let index = this.currentQuiz + 1
             if(index >= this.noQuizzes) {
-                this.finish = true
+                this.$emit('finish-game')
                 this.stopClock()
                 return
             }
@@ -75,11 +74,13 @@ export default {
         clickAnswer(answerId) {
             let quiz = this.quizzes[this.currentQuiz]
             quiz.choiceAnswer = answerId,
+            quiz.answerTime = this.totalTime - this.time
             this.$emit('finish-quiz', quiz)
             this.nextQuiz()
         },
         clickSkip() {
             let quiz = this.quizzes[this.currentQuiz]
+            quiz.answerTime = this.totalTime
             this.$emit('finish-quiz', quiz)
             this.nextQuiz()
         },

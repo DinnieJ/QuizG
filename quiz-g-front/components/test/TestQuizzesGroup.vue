@@ -3,7 +3,7 @@
     <div class="test-quizzes-group-header mb-2">
         <test-time 
             :time="time"
-            :total="noQuizzes"
+            :total-quizzes="noQuizzes"
             :correct="correct"
         />
     </div>
@@ -20,6 +20,7 @@
                 <test-quiz-card 
                     :quiz="quizzes[currentQuiz]" 
                     :index="currentQuiz"
+                    :disabled="correct > -1"
                     @unanswer-quiz="unanswerQuiz($event)"
                     @answer-quiz="answerQuiz($event)"
                 />
@@ -46,7 +47,7 @@
         </div>
         <div class="container">
             <button class="btn btn-sm btn-info" @click="clickSubmit()">Submit</button>
-            <button class="btn btn-sm btn-warning" v-if="correct" @click="clickExit()">Exit</button>
+            <button class="btn btn-sm btn-warning" v-if="correct > -1" @click="clickExit()">Exit</button>
         </div>  
         
     </div>
@@ -56,6 +57,7 @@
 <script>
 import TestTime from './TestTime'
 import TestQuizCard from './TestQuizCard'
+import { mapGetters } from 'vuex'
 
 export default {
     components: {
@@ -67,11 +69,16 @@ export default {
         start: {
             type: Boolean,
             default: false
+        },
+        correct: {
+            type: Number,
+            default: -1
         }
     },
     data() {
         return {
             time: 0,
+            totalTime: 0,
             clock: {},
             hours: 1,
             minutes: 1,
@@ -80,7 +87,6 @@ export default {
             currentQuiz: 0,
             noQuizzes: 0,
             clock: {},
-            correct: false
         }
     },
     watch:{
@@ -93,6 +99,11 @@ export default {
             }
         }
     }, 
+    computed: {
+        ...mapGetters({
+            currentCollection: 'collection/currentCollection'
+        })
+    },
     methods: {
         clickLink(index) {
             this.quizzesLink[this.currentQuiz].active = false
@@ -127,8 +138,19 @@ export default {
             clearInterval(this.clock)
         },
         clickSubmit() {
-            this.correct = 20
             this.stopClock()
+            let payload = {
+                collection_id: this.currentCollection.id,
+                data: [],
+                time: (this.totalTime - this.time)
+            }
+            this.quizzes.forEach(item => {
+                payload.data.push({
+                    quiz_id: item.id,
+                    answer_id: item.answer_id
+                })
+            })
+            this.$emit('submit-test', payload)
         },
         clickExit() {
             this.$router.go(-1)
@@ -138,12 +160,15 @@ export default {
         this.noQuizzes = this.quizzes.length
         for(let i = 0; i < this.noQuizzes; i++) {
             this.quizzes[i].choice = -1
-            this.time += this.quizzes[i].time
+            this.totalTime += this.quizzes[i].time
             this.quizzesLink.push({
                 answer: false,
                 active: false
             })
         }
+
+        this.time = this.totalTime
+
         this.quizzesLink[0].active = true
     }
 }

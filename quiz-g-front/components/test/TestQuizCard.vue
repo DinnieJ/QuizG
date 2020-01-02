@@ -16,7 +16,8 @@
                 :answer="item" 
                 :key="'answer-' + i" 
                 :index="i"
-                :choice="quiz.choice === i"
+                :choice="checkChoice(item.id)"
+                :disabled="disabled"
                 @select-answer="selectAnswer($event)"
             />
         </template>
@@ -34,7 +35,11 @@ export default {
     },
     props: {
         quiz: Object,
-        index: Number
+        index: Number,
+        disabled: {
+            type: Boolean,
+            default: false
+        }
     },
     data() {
         return {
@@ -43,14 +48,18 @@ export default {
     computed: {
     },
     methods: {
-        selectAnswer(index) {
-            if(this.quiz.answer == index) {
-                this.quiz.choice = -1
-                this.$emit('unanswer-quiz')
+        selectAnswer(id) {
+            if(this.quiz.answer_id == id) {
+                this.quiz.answer_id = undefined
+                this.$emit('unanswer-quiz', this.index)
             } else {
-                this.quiz.choice = index
-                this.$emit('answer-quiz', index)
+                this.quiz.answer_id = id
+                this.$emit('answer-quiz', this.index)
             }
+        },
+        checkChoice(id) {
+            let choice = (this.quiz.answer_id === id)
+            return choice
         }
     }
 }

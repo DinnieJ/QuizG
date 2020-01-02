@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5323e9ecfcfc58ea95317780cf413afb",
+    "content-hash": "70772c8cfbb4ed10458177bc1eeabf94",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -60,45 +60,46 @@
         },
         {
             "name": "barryvdh/laravel-cors",
-            "version": "v1.0.0",
+            "version": "v1.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/fruitcake/laravel-cors.git",
-                "reference": "a16e3fb7f537e57809946805ae0ec96865bfd6bf"
+                "reference": "4b1f95aeaef2c8c201519833ad212bcbf909f15e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fruitcake/laravel-cors/zipball/a16e3fb7f537e57809946805ae0ec96865bfd6bf",
-                "reference": "a16e3fb7f537e57809946805ae0ec96865bfd6bf",
+                "url": "https://api.github.com/repos/fruitcake/laravel-cors/zipball/4b1f95aeaef2c8c201519833ad212bcbf909f15e",
+                "reference": "4b1f95aeaef2c8c201519833ad212bcbf909f15e",
                 "shasum": ""
             },
             "require": {
                 "asm89/stack-cors": "^1.3",
-                "illuminate/support": "^5.5|^6",
+                "illuminate/support": "^5.5|^6.0|^7.0",
                 "php": ">=7",
-                "symfony/http-foundation": "^3.3|^4",
-                "symfony/http-kernel": "^3.3|^4"
+                "symfony/http-foundation": "^3.3|^4|^5.0",
+                "symfony/http-kernel": "^3.3|^4|^5.0"
             },
             "require-dev": {
-                "laravel/framework": "^5.5|^6",
-                "orchestra/testbench": "^3.5|^4.0",
+                "laravel/framework": "^5.5|^6.0|^7.0",
+                "orchestra/testbench": "^3.5|^4.0|^5.0",
+                "phpro/grumphp": "^0.16|^0.17",
                 "phpunit/phpunit": "^6.0|^7.0|^8.0",
-                "squizlabs/php_codesniffer": "^2.3"
+                "squizlabs/php_codesniffer": "^3.5"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "0.11-dev"
+                    "dev-master": "1.0-dev"
                 },
                 "laravel": {
                     "providers": [
-                        "Barryvdh\\Cors\\ServiceProvider"
+                        "Fruitcake\\Cors\\CorsServiceProvider"
                     ]
                 }
             },
             "autoload": {
                 "psr-4": {
-                    "Barryvdh\\Cors\\": "src/"
+                    "Fruitcake\\Cors\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -106,6 +107,10 @@
                 "MIT"
             ],
             "authors": [
+                {
+                    "name": "Fruitcake",
+                    "homepage": "https://fruitcake.nl"
+                },
                 {
                     "name": "Barry vd. Heuvel",
                     "email": "barryvdh@gmail.com"
@@ -118,7 +123,7 @@
                 "crossdomain",
                 "laravel"
             ],
-            "time": "2019-12-25T17:24:53+00:00"
+            "time": "2019-12-31T17:28:15+00:00"
         },
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -395,16 +400,16 @@
         },
         {
             "name": "erusev/parsedown",
-            "version": "1.7.3",
+            "version": "1.7.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/erusev/parsedown.git",
-                "reference": "6d893938171a817f4e9bc9e86f2da1e370b7bcd7"
+                "reference": "cb17b6477dfff935958ba01325f2e8a2bfa6dab3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/erusev/parsedown/zipball/6d893938171a817f4e9bc9e86f2da1e370b7bcd7",
-                "reference": "6d893938171a817f4e9bc9e86f2da1e370b7bcd7",
+                "url": "https://api.github.com/repos/erusev/parsedown/zipball/cb17b6477dfff935958ba01325f2e8a2bfa6dab3",
+                "reference": "cb17b6477dfff935958ba01325f2e8a2bfa6dab3",
                 "shasum": ""
             },
             "require": {
@@ -437,7 +442,7 @@
                 "markdown",
                 "parser"
             ],
-            "time": "2019-03-17T18:48:37+00:00"
+            "time": "2019-12-30T22:54:17+00:00"
         },
         {
             "name": "fideloper/proxy",
@@ -492,68 +497,6 @@
                 "trusted proxy"
             ],
             "time": "2019-12-20T13:11:11+00:00"
-        },
-        {
-            "name": "fruitcake/laravel-cors",
-            "version": "v1.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/fruitcake/laravel-cors.git",
-                "reference": "a16e3fb7f537e57809946805ae0ec96865bfd6bf"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/fruitcake/laravel-cors/zipball/a16e3fb7f537e57809946805ae0ec96865bfd6bf",
-                "reference": "a16e3fb7f537e57809946805ae0ec96865bfd6bf",
-                "shasum": ""
-            },
-            "require": {
-                "asm89/stack-cors": "^1.3",
-                "illuminate/support": "^5.5|^6",
-                "php": ">=7",
-                "symfony/http-foundation": "^3.3|^4",
-                "symfony/http-kernel": "^3.3|^4"
-            },
-            "require-dev": {
-                "laravel/framework": "^5.5|^6",
-                "orchestra/testbench": "^3.5|^4.0",
-                "phpunit/phpunit": "^6.0|^7.0|^8.0",
-                "squizlabs/php_codesniffer": "^2.3"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "0.11-dev"
-                },
-                "laravel": {
-                    "providers": [
-                        "Barryvdh\\Cors\\ServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Barryvdh\\Cors\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Barry vd. Heuvel",
-                    "email": "barryvdh@gmail.com"
-                }
-            ],
-            "description": "Adds CORS (Cross-Origin Resource Sharing) headers support in your Laravel application",
-            "keywords": [
-                "api",
-                "cors",
-                "crossdomain",
-                "laravel"
-            ],
-            "time": "2019-12-25T17:24:53+00:00"
         },
         {
             "name": "jakub-onderka/php-console-color",

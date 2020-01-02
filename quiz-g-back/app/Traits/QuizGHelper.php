@@ -9,7 +9,10 @@ use App\Collection;
 trait QuizGHelper{
 
     public function getData($id){
-        $data = $data = Collection::find($id);
+        $data = Collection::find($id);
+        if($data == null){
+            return data;
+        }
         $data->setRelation('quizzes',$data->quizzes()->inRandomOrder()->get());
         foreach($data->quizzes as &$quiz){
             unset($quiz->correct_answer_id);
@@ -43,9 +46,10 @@ trait QuizGHelper{
         $history = History::find($history_id);
 
         $history->finished = 1;
-        $actions = $history->actions;
+        $collection_id = $history->collection_id;
+        $total = Collection::find($collection_id)->quizzes()->count();
 
-        $total = count($actions);
+        $actions = $history->actions;
         $correct = 0;
         $time = 0;
         foreach($actions as $action){

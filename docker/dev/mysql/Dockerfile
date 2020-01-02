@@ -27,7 +27,6 @@ RUN yum install -y https://repo.mysql.com/mysql-community-minimal-release-el7.rp
       libpwquality \
   && yum clean all \
   && mkdir /docker-entrypoint-initdb.d
-RUN docker-php-ext-install mysqli
 
 VOLUME /var/lib/mysql
 

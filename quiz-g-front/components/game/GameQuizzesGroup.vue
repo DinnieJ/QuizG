@@ -35,7 +35,6 @@ export default {
             clock: {},
             currentQuiz: 0,
             noQuizzes: 0,
-            finish: false
         }
     },
     watch: {
@@ -65,7 +64,7 @@ export default {
         nextQuiz() {
             let index = this.currentQuiz + 1
             if(index >= this.noQuizzes) {
-                this.finish = true
+                this.$emit('finish-game')
                 this.stopClock()
                 return
             }

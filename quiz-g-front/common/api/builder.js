@@ -60,6 +60,9 @@ let buidler = {
             api.grading = function(token, payload) {
                 return Caller({token}).post(`/game/grading`, payload)
             }
+            api.submit = function(token, payload) {
+                return Caller({token}).post(`/game/submit`, payload)
+            }
         }
 
         return api

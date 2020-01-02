@@ -1,7 +1,7 @@
 <template>
 <div class="d-flex justify-content-between mx-auto test-countdown">
-    <test-time-item v-if="correct" :value="correct" title="Correct" />
-    <test-time-item v-if="correct" :value="percent" title="Percent" />
+    <test-time-item v-if="correct > -1" :value="correct" title="Correct" />
+    <test-time-item v-if="correct > -1" :value="percent" title="Percent" />
     <test-time-item :value="hours" title="Hours" />
     <test-time-item :value="minutes" title="Minutes" />
     <test-time-item :value="seconds" title="Seconds" />
@@ -17,10 +17,10 @@ export default {
     },
     props: {
         time: Number,
-        total: Number,
+        totalQuizzes: Number,
         correct: {
-            type: [Boolean, Number],
-            default: false
+            type: [Number],
+            default: -1
         }
     },
     data() {
@@ -28,7 +28,6 @@ export default {
             hours: 0,
             minutes: 0,
             seconds: 0,
-            percent: 0
         }
     },
     watch: {
@@ -37,12 +36,15 @@ export default {
             handler(value) {
                 this.updateTime(value)
             }
-        },
-        correct: {
-            deep: true,
-            handler(value) {
-                this.percent = parseInt(this.correct/this.total*100)
+        }
+    },
+    computed: {
+        percent() {
+            let percent = 0
+            if(this.correct > -1) {
+                percent = parseInt(this.correct/this.totalQuizzes*100)
             }
+            return percent
         }
     },
     methods: {

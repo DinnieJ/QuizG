@@ -80,13 +80,14 @@ class CollectionController extends Controller
      */
     public function store(Request $request)
     {
-        Collection::create([
+        $new_collection = Collection::create([
             'user_id' => Auth::user()->id,
             'name' => $request->name,
         ]); 
 
         return response([
-            'message' => 'Added successful'
+            'message' => 'Added successful',
+            'collection' => $new_collection
         ],200);
     }
 

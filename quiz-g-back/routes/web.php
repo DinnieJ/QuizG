@@ -21,31 +21,16 @@ Route::get('/login', function () {
     return view('login');
 });
 
-Route::get('/users', function () {
-    return view('users.index');
-});
+Route::get('/users', 'Admin\AdminController@allUser');
 
-Route::get('/users/{id}', function () {
-    return view('users.item');
-});
+Route::get('/users/{id}','Admin\AdminController@detailUser');
 
-Route::get('/collections', function () {
-    return view('collections.index');
-});
+Route::get('/collections','Admin\AdminController@allCollection');
 
-Route::get('/collections/{id}', function () {
-    return view('collections.item');
-});
+Route::get('/collections/{id}', 'Admin\AdminController@detailCollection');
 
-Route::get('/quizzes', function () {
-    return view('quizzes.index');
-});
+Route::get('/quizzes','Admin\AdminController@allQuiz');
 
-Route::get('/quizzes/{id}', function () {
-    return view('quizzes.item');
-});
+Route::get('/quizzes/{id}', 'Admin\AdminController@detailQuiz');
 
-
-Route::get('/history', function () {
-    return view('history.index');
-});
+Route::get('/history', 'Admin\AdminController@allHistory');

@@ -20,4 +20,8 @@ class History extends Model
     public function collection(){
         return $this->belongsTo(\App\Collection::class);
     }
+
+    public function user(){
+        return $this->belongsTo(\App\User::class);
+    }
 }

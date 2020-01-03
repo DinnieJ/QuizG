@@ -6,6 +6,7 @@
         <th scope="col">User</th>
         <th scope="col">Correct</th>
         <th scope="col">Total</th>
+        <th scope="col">Type</th>
     </tr>
     </thead>
     <tbody>
@@ -23,37 +24,13 @@ export default {
         HistoryRow
     },
     props:{
-    },
-    data() {
-        return {
-            histories: [],
-        }
+        histories:Array
     },
     methods: {
 
     },
     created() {
-        let history = {
-            id: -1,
-            collection: {
-                id: 1,
-                name: "Collections"
-            },
-            user: {
-                id: 0,
-                name: "User "
-            },
-            correct: 10,
-            total : 20
-        }
-
-        for(let i = 0; i < 10; i++) {
-            let tmp = {}
-            Object.assign(tmp, history)
-            tmp.id = i,
-            tmp.user.name += i
-            this.histories.push(tmp)
-        }
+        console.log(this.histories)
     }
 }
 </script>

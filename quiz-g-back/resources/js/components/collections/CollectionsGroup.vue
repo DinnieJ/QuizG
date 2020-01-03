@@ -22,33 +22,30 @@ export default {
         CollectionRow
     },
     props:{
-    },
-    data() {
-        return {
-            collections: [],
-        }
+        collections:Array
     },
     methods: {
 
     },
     created() {
-        let collection = {
-            id: -1,
-            name: "Collection ",
-            user: {
-                id: 0,
-                name: "User "
-            }
-        }
+        // let collection = {
+        //     id: -1,
+        //     name: "Collection ",
+        //     user: {
+        //         id: 0,
+        //         name: "User "
+        //     }
+        // }
 
-        for(let i = 0; i < 10; i++) {
-            let tmp = {}
-            Object.assign(tmp, collection)
-            tmp.id = i,
-            tmp.name += i
-            tmp.user.name += i
-            this.collections.push(tmp)
-        }
+        // for(let i = 0; i < 10; i++) {
+        //     let tmp = {}
+        //     Object.assign(tmp, collection)
+        //     tmp.id = i,
+        //     tmp.name += i
+        //     tmp.user.name += i
+        //     this.collections.push(tmp)
+        // }
+        console.log(this.collections);
     }
 }
 </script>

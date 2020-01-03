@@ -2,6 +2,6 @@
 
 @section('main')
 <div class="users-page">
-   <user-show />
+   <user-show :user="{{$user}}" :collections="{{$collections}}" :quizzes="{{$quizzes}}" :histories="{{$histories}}" />
 </div>
 @endsection

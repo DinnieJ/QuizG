@@ -1969,6 +1969,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: {
+    collection: Object
+  },
   data: function data() {
     return {
       collection: {
@@ -2012,30 +2015,28 @@ __webpack_require__.r(__webpack_exports__);
   components: {
     CollectionRow: _CollectionRow__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
-  props: {},
-  data: function data() {
-    return {
-      collections: []
-    };
+  props: {
+    collections: Array
   },
   methods: {},
   created: function created() {
-    var collection = {
-      id: -1,
-      name: "Collection ",
-      user: {
-        id: 0,
-        name: "User "
-      }
-    };
-
-    for (var i = 0; i < 10; i++) {
-      var tmp = {};
-      Object.assign(tmp, collection);
-      tmp.id = i, tmp.name += i;
-      tmp.user.name += i;
-      this.collections.push(tmp);
-    }
+    // let collection = {
+    //     id: -1,
+    //     name: "Collection ",
+    //     user: {
+    //         id: 0,
+    //         name: "User "
+    //     }
+    // }
+    // for(let i = 0; i < 10; i++) {
+    //     let tmp = {}
+    //     Object.assign(tmp, collection)
+    //     tmp.id = i,
+    //     tmp.name += i
+    //     tmp.user.name += i
+    //     this.collections.push(tmp)
+    // }
+    console.log(this.collections);
   }
 });
 
@@ -2069,39 +2070,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
     HistoryRow: _HistoryRow__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
-  props: {},
-  data: function data() {
-    return {
-      histories: []
-    };
+  props: {
+    histories: Array
   },
   methods: {},
   created: function created() {
-    var history = {
-      id: -1,
-      collection: {
-        id: 1,
-        name: "Collections"
-      },
-      user: {
-        id: 0,
-        name: "User "
-      },
-      correct: 10,
-      total: 20
-    };
-
-    for (var i = 0; i < 10; i++) {
-      var tmp = {};
-      Object.assign(tmp, history);
-      tmp.id = i, tmp.user.name += i;
-      this.histories.push(tmp);
-    }
+    console.log(this.histories);
   }
 });
 
@@ -2116,6 +2096,12 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2263,23 +2249,11 @@ __webpack_require__.r(__webpack_exports__);
   components: {
     AnswerRow: _AnswerRow__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
-  data: function data() {
-    return {
-      quiz: {
-        content: "Conafafneaifnaeifhaehfaehfahfhaefhahchac",
-        correct_answer_id: 1,
-        answers: [{
-          id: 1,
-          content: "Answer 1"
-        }, {
-          id: 2,
-          content: "Answer 2"
-        }, {
-          id: 2,
-          content: "Answer 3"
-        }]
-      }
-    };
+  props: {
+    quiz: Object
+  },
+  created: function created() {
+    console.log(this.quiz);
   }
 });
 
@@ -2317,30 +2291,26 @@ __webpack_require__.r(__webpack_exports__);
   components: {
     QuizRow: _QuizRow__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
-  props: {},
-  data: function data() {
-    return {
-      quizzes: []
-    };
+  props: {
+    quizzes: Array
   },
   methods: {},
-  created: function created() {
-    var quiz = {
-      id: -1,
-      content: "Quiz ",
-      user: {
-        id: 0,
-        name: "User "
-      }
-    };
-
-    for (var i = 0; i < 10; i++) {
-      var tmp = {};
-      Object.assign(tmp, quiz);
-      tmp.id = i, tmp.content += i;
-      tmp.user.name += i;
-      this.quizzes.push(tmp);
-    }
+  created: function created() {// let quiz = {
+    //     id: -1,
+    //     content: "Quiz ",
+    //     user: {
+    //         id: 0,
+    //         name: "User "
+    //     }
+    // }
+    // for(let i = 0; i < 10; i++) {
+    //     let tmp = {}
+    //     Object.assign(tmp, quiz)
+    //     tmp.id = i,
+    //     tmp.content += i
+    //     tmp.user.name += i
+    //     this.quizzes.push(tmp)
+    // }
   }
 });
 
@@ -2462,13 +2432,15 @@ __webpack_require__.r(__webpack_exports__);
   components: {
     UserNav: _UserNav__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
+  props: {
+    user: Object,
+    collections: Array,
+    quizzes: Array,
+    histories: Array
+  },
   data: function data() {
     return {
-      active: 'collections',
-      user: {
-        id: 0,
-        name: 'User'
-      }
+      active: 'collections'
     };
   },
   methods: {
@@ -2512,27 +2484,27 @@ __webpack_require__.r(__webpack_exports__);
   components: {
     UserRow: _UserRow__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
-  props: {},
-  data: function data() {
-    return {
-      users: []
-    };
+  props: {
+    users: Array
+  },
+  data: function data() {// return {
+    //     users: []
+    // }
   },
   methods: {},
-  created: function created() {
-    var user = {
-      id: -1,
-      name: "User ",
-      email: "user@abc."
-    };
-
-    for (var i = 0; i < 10; i++) {
-      var tmp = {};
-      Object.assign(tmp, user);
-      tmp.id = i, tmp.name += i;
-      tmp.email += i;
-      this.users.push(tmp);
-    }
+  created: function created() {// let user = {
+    //     id: -1,
+    //     name: "User ",
+    //     email: "user@abc."
+    // }
+    // for(let i = 0; i < 10; i++) {
+    //     let tmp = {}
+    //     Object.assign(tmp, user)
+    //     tmp.id = i,
+    //     tmp.name += i
+    //     tmp.email += i
+    //     this.users.push(tmp)
+    // }
   }
 });
 
@@ -38149,7 +38121,7 @@ var render = function() {
         _vm._v("\r\n        " + _vm._s(_vm.collection.name) + "\r\n    ")
       ]),
       _vm._v(" "),
-      _c("quizzes-group")
+      _c("quizzes-group", { attrs: { quizzes: _vm.collection.quizzes } })
     ],
     1
   )
@@ -38261,7 +38233,9 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Correct")]),
         _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("Total")])
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Total")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Type")])
       ])
     ])
   }
@@ -38288,19 +38262,23 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("tr", [
-    _c("th", { attrs: { scope: "row" } }, [
-      _c(
-        "a",
-        { attrs: { href: "/collections/" + _vm.history.collection.id } },
-        [
-          _vm._v(
-            "\r\n            " +
-              _vm._s(_vm.history.collection.name) +
-              "\r\n        "
+    _vm.history.collection !== null
+      ? _c("th", { attrs: { scope: "row" } }, [
+          _c(
+            "a",
+            { attrs: { href: "/collections/" + _vm.history.collection.id } },
+            [
+              _vm._v(
+                "\r\n            " +
+                  _vm._s(_vm.history.collection.name) +
+                  "\r\n        "
+              )
+            ]
           )
-        ]
-      )
-    ]),
+        ])
+      : _c("th", { attrs: { scope: "row" } }, [
+          _c("p", [_vm._v("Collection deleted")])
+        ]),
     _vm._v(" "),
     _c("td", {}, [
       _c("a", { attrs: { href: "/users/" + _vm.history.user.id } }, [
@@ -38316,6 +38294,10 @@ var render = function() {
     _vm._v(" "),
     _c("td", {}, [
       _vm._v("\r\n         " + _vm._s(_vm.history.total) + "\r\n    ")
+    ]),
+    _vm._v(" "),
+    _c("td", {}, [
+      _vm._v("\r\n         " + _vm._s(_vm.history.type) + "\r\n    ")
     ])
   ])
 }
@@ -38716,11 +38698,17 @@ var render = function() {
           }
         }),
         _vm._v(" "),
-        _vm.active === "collections" ? _c("collections-group") : _vm._e(),
+        _vm.active === "collections"
+          ? _c("collections-group", { attrs: { collections: _vm.collections } })
+          : _vm._e(),
         _vm._v(" "),
-        _vm.active === "quizzes" ? _c("quizzes-group") : _vm._e(),
+        _vm.active === "quizzes"
+          ? _c("quizzes-group", { attrs: { quizzes: _vm.quizzes } })
+          : _vm._e(),
         _vm._v(" "),
-        _vm.active === "history" ? _c("histories-group") : _vm._e()
+        _vm.active === "history"
+          ? _c("histories-group", { attrs: { histories: _vm.histories } })
+          : _vm._e()
       ],
       1
     )

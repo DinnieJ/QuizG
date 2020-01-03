@@ -82,7 +82,8 @@ export default {
       ["error", "danger"],
       ["delete", "danger"],
       ["confirm", "info"],
-      ["submit", "info"]
+      ["submit", "info"],
+      ["edit", "info"]
     ];
     this.colorMap = new Map(kvArray);
   }

@@ -14,10 +14,6 @@ import ApiBuilder from "~/common/api/builder";
 const QuizzesApi = ApiBuilder.build("quizzes");
 
 export default {
-  validate({ params }) {
-    // Must be a number
-    return /\d+$/.test(params.id);
-  },
   middleware: "authenticated",
   async asyncData({
     isDev,
@@ -32,6 +28,10 @@ export default {
     error
   }) {
     let userId = params.userId;
+    let currentUser = store.getters["user/currentUser"];
+    if(userId == currentUser.id) {
+      redirect('/home/collections')
+    }
     let user = {};
     try {
       let response = await QuizzesApi.quizzes(userId);

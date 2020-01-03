@@ -51,9 +51,8 @@ export default {
           path: "/home/collections"
         });
       } catch (e) {
-        console.log("error", e);
-        // this.error.status = true
-        // this.error.message = e.data.error
+        this.error.status = true;
+        this.error.message = e.data.error;
       }
     }
   },

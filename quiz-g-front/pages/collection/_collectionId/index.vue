@@ -7,21 +7,34 @@
       @click-delete="clickDelete($event)"
       @click-remove-quiz="clickRemoveQuiz($event)"
     />
-    <quizzes-group :quizzes="quizzes" selectable :authorize="authorize" />
+    <quizzes-group
+      :quizzes="quizzes"
+      selectable
+      :authorize="authorize"
+      @click-delete="clickDeleteQuiz($event)"
+    />
+    <alert-dialog
+      dialog-id="collection-dialog"
+      :type="dialog.type"
+      :message="dialog.message"
+      @dialog-confirm="dialogConfirm($event)"
+    />
   </div>
 </template>
 
 <script>
+import AlertDialog from "~/components/common/AlertDialog";
 import QuizzesGroup from "~/components/quiz/QuizzesGroup";
 import CollectionNav from "~/components/collection/CollectionNav";
 import { mapGetters } from "vuex";
 import ApiBuilder from "~/common/api/builder";
 const CollectionsApi = ApiBuilder.build("collections");
+const QuizzesApi = ApiBuilder.build("quizzes");
 
 export default {
-  validate({ params }) {
-    // Must be a number
-    return /\d+$/.test(params.id);
+  loading: {
+    color: "blue",
+    height: "5px"
   },
   middleware: "authenticated",
   async asyncData({
@@ -48,8 +61,8 @@ export default {
          */
 
         collection = response.data.collection;
+        authorize = collection.authorize;
         let quizzesSource = collection.quizzes.data;
-        authorize = collection.authored;
 
         var temp = 0;
 
@@ -85,7 +98,21 @@ export default {
   },
   components: {
     QuizzesGroup,
-    CollectionNav
+    CollectionNav,
+    AlertDialog
+  },
+  data() {
+    return {
+      dialog: {
+        type: "edit",
+        message: "Do you want to edit this Collection",
+        target: ""
+      },
+      editCollectionPayload: {},
+      deleteCollectionPayload: {},
+      removeQuizPayload: {},
+      deleteQuizPayload: {}
+    };
   },
   computed: {
     ...mapGetters({
@@ -94,23 +121,40 @@ export default {
       selectedQuizzes: "quiz/selectedQuizzes"
     })
   },
-  data() {
-    return {};
-  },
   methods: {
-    async clickEdit(payload) {
+    showDialog(type, message, target = "") {
+      this.dialog = {
+        type: type,
+        message: message,
+        target: target
+      };
+      this.$bvModal.show("collection-dialog");
+    },
+    async editHandle() {
+      let payload = this.editCollectionPayload;
       try {
         let response = await CollectionsApi.update(
           this.authenToken,
           payload.id,
           payload
         );
-        console.log("edit collection", response);
+        if (response.status === 200) {
+          this.showDialog(
+            "successful",
+            "Edit this Collection Successfully",
+            "edit-collection"
+          );
+        }
       } catch (e) {
-        console.log("edit collection error", e);
+        this.showDialog("error", e);
       }
     },
-    async clickDelete(payload) {
+    clickEdit(payload) {
+      this.showDialog("edit", "Do you want to edit this Collection ?");
+      this.editCollectionPayload = payload;
+    },
+    async deleteHandle() {
+      let payload = this.deleteCollectionPayload;
       try {
         let response = await CollectionsApi.delete(
           this.authenToken,
@@ -118,15 +162,26 @@ export default {
         );
         console.log("delete collection", response);
         if (response.status === 200) {
-          this.$router.push({
-            path: "/home/collections"
-          });
+          this.showDialog(
+            "successful",
+            "Delete this Collection Successfully",
+            "delete-collection"
+          );
         }
       } catch (e) {
-        console.log("delete collection error", e);
+        this.showDialog("error", e);
       }
     },
-    async clickRemoveQuiz(payload) {
+    clickDelete(payload) {
+      this.showDialog(
+        "delete",
+        "Do you want to delete this Collection ?",
+        "delete-collection"
+      );
+      this.deleteCollectionPayload = payload;
+    },
+    async removeQuizHandle() {
+      let payload = this.removeQuizPayload;
       let collectionId = payload.id;
       let quizzesPayload = this.selectedQuizzes.map(item => {
         return item.id;
@@ -143,9 +198,89 @@ export default {
           apiPayload
         );
         if (response.status === 200) {
-          this.$router.go(-1);
+          this.showDialog(
+            "successful",
+            "Remove quizzes from this Collection Successfully",
+            "remove-quiz"
+          );
         }
-      } catch (error) {}
+      } catch (e) {
+        this.showDialog("error", e);
+      }
+    },
+    clickRemoveQuiz(payload) {
+      this.showDialog(
+        "confirm",
+        "Do you want to quizzes from this Collection ?"
+      );
+      this.removeQuizPayload = payload;
+    },
+    async deleteQuizHandle() {
+      let payload = this.deleteQuizPayload;
+      try {
+        let response = await QuizzesApi.delete(this.authenToken, payload.id);
+        if (response.status === 200) {
+          this.showDialog(
+            "successful",
+            "Delete quiz Successfully",
+            "delete-quiz"
+          );
+        }
+      } catch (e) {
+        this.showDialog("error", e);
+      }
+    },
+    clickDeleteQuiz(payload) {
+      this.deleteQuizPayload = payload;
+      this.showDialog(
+        "delete",
+        "Do you want to quizzes from this Collection ?",
+        "delete-quiz"
+      );
+    },
+    async dialogConfirm(confirm) {
+      if (confirm) {
+        switch (this.dialog.type) {
+          case "edit":
+            await this.editHandle();
+            return;
+          case "delete":
+            switch (this.dialog.target) {
+              case "delete-collection":
+                await this.deleteHandle();
+                return;
+              case "delete-quiz":
+                await this.deleteQuizHandle();
+                return;
+            }
+
+            return;
+          case "confirm":
+            await this.removeQuizHandle();
+            return;
+        }
+      } else {
+        switch (this.dialog.type) {
+          case "successful":
+            switch (this.dialog.target) {
+              case "delete-collection":
+                this.$router.push({
+                  path: "/home/collections"
+                });
+                return;
+              case "remove-quiz":
+                this.$router.go(0);
+                return;
+              case "delete-quiz":
+                this.$router.go(0);
+                return;
+            }
+            return;
+          case "edit":
+            this.$router.go(0);
+            return;
+        }
+      }
     }
   },
   created() {}

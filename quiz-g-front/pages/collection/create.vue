@@ -18,6 +18,10 @@ import ApiBuilder from "~/common/api/builder";
 const CollectionsApi = ApiBuilder.build("collections");
 
 export default {
+  loading: {
+    color: "blue",
+    height: "5px"
+  },
   middleware: "authenticated",
   components: {
     CollectionNav,
@@ -38,49 +42,47 @@ export default {
     })
   },
   methods: {
-    clickCreate(payload) {
+    showDialog(type, message) {
       this.dialog = {
-        type: "create",
-        message: "Do you want to create new Collection"
+        type: type,
+        message: message
       };
       this.$bvModal.show("create-collection-dialog");
-      this.createPayload = payload
+    },
+    clickCreate(payload) {
+      this.showDialog("create", "Do you want to create new Collection");
+      this.createPayload = payload;
     },
     async createHandle() {
       let authenToken = this.authenToken;
       try {
-        let response = await CollectionsApi.create(this.authenToken, this.createPayload);
+        let response = await CollectionsApi.create(
+          this.authenToken,
+          this.createPayload
+        );
 
         if (response.status === 200) {
-          this.dialog = {
-            type: "successful",
-            message: "Create new Collection Successfully"
-          };
-          this.$bvModal.show("create-collection-dialog");
+          this.showDialog("successful", "Create new Collection Successfully");
         }
       } catch (error) {
         console.log("error", error);
-        this.dialog = {
-          type: "error",
-          message: error
-        };
-        this.$bvModal.show("create-collection-dialog");
+        this.showDialog("error", error);
       }
     },
     async dialogConfirm(confirm) {
-      if(confirm) {
-        switch(this.dialog.type) {
-          case 'create':
-            await this.createHandle()
-            return
+      if (confirm) {
+        switch (this.dialog.type) {
+          case "create":
+            await this.createHandle();
+            return;
         }
       } else {
-        switch(this.dialog.type) {
-          case 'successful':
+        switch (this.dialog.type) {
+          case "successful":
             this.$router.push({
               path: "/home/collections"
             });
-            return
+            return;
         }
       }
     }

@@ -66,10 +66,8 @@
 </template>
 
 <script>
-
 export default {
-  components: {
-  },
+  components: {},
   props: {
     collection: {
       type: [Object, Boolean],
@@ -86,7 +84,7 @@ export default {
   },
   data() {
     return {
-        name: ''
+      name: ""
     };
   },
   methods: {
@@ -114,12 +112,18 @@ export default {
       });
     },
     clickEdit() {
+      if (this.name.length < 1) {
+        return;
+      }
       this.$emit("click-edit", {
         id: this.collection.id,
         name: this.name
       });
     },
     clickCreate() {
+      if (this.name.length < 1) {
+        return;
+      }
       this.$emit("click-create", {
         name: this.name
       });

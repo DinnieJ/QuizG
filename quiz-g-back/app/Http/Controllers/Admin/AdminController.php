@@ -1,7 +1,10 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
+use Illuminate\Http\Request;
+use Validator;
 use App\Traits\AdminService;
+use Auth;
 class AdminController{
     use AdminService;
     public function allUser(){

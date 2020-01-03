@@ -1871,11 +1871,26 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      active: 'users'
+      active: 'users',
+      csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content')
     };
+  },
+  methods: {
+    logout: function logout() {
+      console.log('logged out');
+      document.getElementById('logout-form').submit();
+    }
   }
 });
 
@@ -37973,8 +37988,44 @@ var render = function() {
                   [_vm._v("\r\n            History\r\n        ")]
                 )
               ]
+            ),
+            _vm._v(" "),
+            _c(
+              "li",
+              {
+                class: "nav-item " + (_vm.active === "logout" ? "active" : "")
+              },
+              [
+                _c(
+                  "a",
+                  {
+                    staticClass: "nav-link",
+                    attrs: { href: "#" },
+                    on: {
+                      click: function($event) {
+                        return _vm.logout()
+                      }
+                    }
+                  },
+                  [_vm._v("\r\n            Logout\r\n        ")]
+                )
+              ]
             )
-          ])
+          ]),
+          _vm._v(" "),
+          _c(
+            "form",
+            {
+              staticStyle: { display: "none" },
+              attrs: { id: "logout-form", action: "/logout", method: "POST" }
+            },
+            [
+              _c("input", {
+                attrs: { type: "hidden", name: "_token" },
+                domProps: { value: _vm.csrf }
+              })
+            ]
+          )
         ]
       )
     ]

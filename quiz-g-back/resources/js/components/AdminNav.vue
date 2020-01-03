@@ -26,7 +26,15 @@
             History
         </a>
       </li>
+      <li :class="`nav-item ${(active === 'logout' ? 'active' : '')}`">
+        <a class="nav-link" href="#" @click="logout()">
+            Logout
+        </a>
+      </li>
     </ul>
+    <form id="logout-form" action="/logout" method="POST" style="display: none;">
+      <input type="hidden" name="_token" :value="csrf">
+    </form>
   </div>
 </nav>
 </template>
@@ -35,8 +43,15 @@
 export default {
     data() {
         return {
-            active: 'users'
+            active: 'users',
+            csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content')
         }
+    },
+    methods:{
+      logout(){
+        console.log('logged out');
+        document.getElementById('logout-form').submit()
+      }
     }
 }
 </script>

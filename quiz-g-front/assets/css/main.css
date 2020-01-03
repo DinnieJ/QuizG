@@ -616,3 +616,9 @@ body {
     font-size: 60px;
     color: #1ab182;
 }
+
+.alert-dialog-header {
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 18px;
+}

@@ -1,75 +1,83 @@
 <template>
-<div class="container">
-    <user-nav 
-        :user="user"
-        active-tab="Quizzes"
-    />
-    <quizzes-group :quizzes="quizzes" selectable/>
-</div>
+  <div class="container">
+    <user-nav :user="user" active-tab="Quizzes" />
+    <quizzes-group :quizzes="quizzes" selectable />
+  </div>
 </template>
 
 <script>
-import QuizApi from '~/common/api/quiz'
-import UserNav from '~/components/user/UserNav'
-import QuizzesGroup from '~/components/quiz/QuizzesGroup'
-import { mapGetters } from 'vuex'
-import ApiBuilder from '~/common/api/builder'
-const QuizzesApi = ApiBuilder.build('quizzes')
+import QuizApi from "~/common/api/quiz";
+import UserNav from "~/components/user/UserNav";
+import QuizzesGroup from "~/components/quiz/QuizzesGroup";
+import { mapGetters } from "vuex";
+import ApiBuilder from "~/common/api/builder";
+const QuizzesApi = ApiBuilder.build("quizzes");
 
 export default {
-    // middleware: 'authenticated',
-    async asyncData({isDev, route, store, env, params, query, req, res, redirect, error}) {
-        let userId = params.userId
-        let user = {}
-        try{
-            let response = await QuizzesApi.quizzes(userId)
-            if(response.status == 200) {
-                 /**
-                 * @type {Array}
-                 */
-                let quizzesSource = response.data.quizzes
-                user = response.data.user
-                var temp = 0
+  validate({ params }) {
+    // Must be a number
+    return /\d+$/.test(params.id);
+  },
+  middleware: "authenticated",
+  async asyncData({
+    isDev,
+    route,
+    store,
+    env,
+    params,
+    query,
+    req,
+    res,
+    redirect,
+    error
+  }) {
+    let userId = params.userId;
+    let user = {};
+    try {
+      let response = await QuizzesApi.quizzes(userId);
+      if (response.status == 200) {
+        /**
+         * @type {Array}
+         */
+        let quizzesSource = response.data.quizzes;
+        user = response.data.user;
+        var temp = 0;
 
-                let quizzesList = quizzesSource.map(quiz => {
-                    temp = quiz.correct_answer_id
-                    quiz.answers.forEach(answer => {
-                        if(answer.id == temp) {
-                            answer.correct = true
-                        } else {
-                            answer.correct = false
-                        }
-                    })
-                   
-                    return quiz;
-                })
-               
-                store.commit('quiz/SET_QUIZZES', quizzesList)
-                store.commit('user/ACTIVE_PAGE', 'discover')
+        let quizzesList = quizzesSource.map(quiz => {
+          temp = quiz.correct_answer_id;
+          quiz.answers.forEach(answer => {
+            if (answer.id == temp) {
+              answer.correct = true;
+            } else {
+              answer.correct = false;
             }
-            
-        } catch(e) {
-            console.log('getAllCollections error', e)
-        }
-        return {
-            user
-        }
-    },
-    components: {
-        UserNav,
-        QuizzesGroup
-    },
-    computed: {
-        ...mapGetters({
-            quizzes: 'quiz/quizzes'
-        })
-    },
-    data() {
-        return {
-        }
-    },
-    created() {
+          });
 
+          return quiz;
+        });
+
+        store.commit("quiz/SET_QUIZZES", quizzesList);
+        store.commit("user/ACTIVE_PAGE", "discover");
+      }
+    } catch (e) {
+      console.log("getAllCollections error", e);
     }
-}
+    return {
+      user
+    };
+  },
+  components: {
+    UserNav,
+    QuizzesGroup
+  },
+  computed: {
+    ...mapGetters({
+      quizzes: "quiz/quizzes"
+    })
+  },
+  data() {
+    return {};
+  },
+  created() {}
+};
 </script>

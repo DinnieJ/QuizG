@@ -1871,11 +1871,26 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      active: 'users'
+      active: 'users',
+      csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content')
     };
+  },
+  methods: {
+    logout: function logout() {
+      console.log('logged out');
+      document.getElementById('logout-form').submit();
+    }
   }
 });
 
@@ -1969,6 +1984,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: {
+    collection: Object
+  },
   data: function data() {
     return {
       collection: {
@@ -2012,30 +2030,28 @@ __webpack_require__.r(__webpack_exports__);
   components: {
     CollectionRow: _CollectionRow__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
-  props: {},
-  data: function data() {
-    return {
-      collections: []
-    };
+  props: {
+    collections: Array
   },
   methods: {},
   created: function created() {
-    var collection = {
-      id: -1,
-      name: "Collection ",
-      user: {
-        id: 0,
-        name: "User "
-      }
-    };
-
-    for (var i = 0; i < 10; i++) {
-      var tmp = {};
-      Object.assign(tmp, collection);
-      tmp.id = i, tmp.name += i;
-      tmp.user.name += i;
-      this.collections.push(tmp);
-    }
+    // let collection = {
+    //     id: -1,
+    //     name: "Collection ",
+    //     user: {
+    //         id: 0,
+    //         name: "User "
+    //     }
+    // }
+    // for(let i = 0; i < 10; i++) {
+    //     let tmp = {}
+    //     Object.assign(tmp, collection)
+    //     tmp.id = i,
+    //     tmp.name += i
+    //     tmp.user.name += i
+    //     this.collections.push(tmp)
+    // }
+    console.log(this.collections);
   }
 });
 
@@ -2069,39 +2085,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
     HistoryRow: _HistoryRow__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
-  props: {},
-  data: function data() {
-    return {
-      histories: []
-    };
+  props: {
+    histories: Array
   },
   methods: {},
   created: function created() {
-    var history = {
-      id: -1,
-      collection: {
-        id: 1,
-        name: "Collections"
-      },
-      user: {
-        id: 0,
-        name: "User "
-      },
-      correct: 10,
-      total: 20
-    };
-
-    for (var i = 0; i < 10; i++) {
-      var tmp = {};
-      Object.assign(tmp, history);
-      tmp.id = i, tmp.user.name += i;
-      this.histories.push(tmp);
-    }
+    console.log(this.histories);
   }
 });
 
@@ -2116,6 +2111,12 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2263,23 +2264,11 @@ __webpack_require__.r(__webpack_exports__);
   components: {
     AnswerRow: _AnswerRow__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
-  data: function data() {
-    return {
-      quiz: {
-        content: "Conafafneaifnaeifhaehfaehfahfhaefhahchac",
-        correct_answer_id: 1,
-        answers: [{
-          id: 1,
-          content: "Answer 1"
-        }, {
-          id: 2,
-          content: "Answer 2"
-        }, {
-          id: 2,
-          content: "Answer 3"
-        }]
-      }
-    };
+  props: {
+    quiz: Object
+  },
+  created: function created() {
+    console.log(this.quiz);
   }
 });
 
@@ -2317,30 +2306,26 @@ __webpack_require__.r(__webpack_exports__);
   components: {
     QuizRow: _QuizRow__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
-  props: {},
-  data: function data() {
-    return {
-      quizzes: []
-    };
+  props: {
+    quizzes: Array
   },
   methods: {},
-  created: function created() {
-    var quiz = {
-      id: -1,
-      content: "Quiz ",
-      user: {
-        id: 0,
-        name: "User "
-      }
-    };
-
-    for (var i = 0; i < 10; i++) {
-      var tmp = {};
-      Object.assign(tmp, quiz);
-      tmp.id = i, tmp.content += i;
-      tmp.user.name += i;
-      this.quizzes.push(tmp);
-    }
+  created: function created() {// let quiz = {
+    //     id: -1,
+    //     content: "Quiz ",
+    //     user: {
+    //         id: 0,
+    //         name: "User "
+    //     }
+    // }
+    // for(let i = 0; i < 10; i++) {
+    //     let tmp = {}
+    //     Object.assign(tmp, quiz)
+    //     tmp.id = i,
+    //     tmp.content += i
+    //     tmp.user.name += i
+    //     this.quizzes.push(tmp)
+    // }
   }
 });
 
@@ -2462,13 +2447,15 @@ __webpack_require__.r(__webpack_exports__);
   components: {
     UserNav: _UserNav__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
+  props: {
+    user: Object,
+    collections: Array,
+    quizzes: Array,
+    histories: Array
+  },
   data: function data() {
     return {
-      active: 'collections',
-      user: {
-        id: 0,
-        name: 'User'
-      }
+      active: 'collections'
     };
   },
   methods: {
@@ -2512,27 +2499,27 @@ __webpack_require__.r(__webpack_exports__);
   components: {
     UserRow: _UserRow__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
-  props: {},
-  data: function data() {
-    return {
-      users: []
-    };
+  props: {
+    users: Array
+  },
+  data: function data() {// return {
+    //     users: []
+    // }
   },
   methods: {},
-  created: function created() {
-    var user = {
-      id: -1,
-      name: "User ",
-      email: "user@abc."
-    };
-
-    for (var i = 0; i < 10; i++) {
-      var tmp = {};
-      Object.assign(tmp, user);
-      tmp.id = i, tmp.name += i;
-      tmp.email += i;
-      this.users.push(tmp);
-    }
+  created: function created() {// let user = {
+    //     id: -1,
+    //     name: "User ",
+    //     email: "user@abc."
+    // }
+    // for(let i = 0; i < 10; i++) {
+    //     let tmp = {}
+    //     Object.assign(tmp, user)
+    //     tmp.id = i,
+    //     tmp.name += i
+    //     tmp.email += i
+    //     this.users.push(tmp)
+    // }
   }
 });
 
@@ -38001,8 +37988,44 @@ var render = function() {
                   [_vm._v("\r\n            History\r\n        ")]
                 )
               ]
+            ),
+            _vm._v(" "),
+            _c(
+              "li",
+              {
+                class: "nav-item " + (_vm.active === "logout" ? "active" : "")
+              },
+              [
+                _c(
+                  "a",
+                  {
+                    staticClass: "nav-link",
+                    attrs: { href: "#" },
+                    on: {
+                      click: function($event) {
+                        return _vm.logout()
+                      }
+                    }
+                  },
+                  [_vm._v("\r\n            Logout\r\n        ")]
+                )
+              ]
             )
-          ])
+          ]),
+          _vm._v(" "),
+          _c(
+            "form",
+            {
+              staticStyle: { display: "none" },
+              attrs: { id: "logout-form", action: "/logout", method: "POST" }
+            },
+            [
+              _c("input", {
+                attrs: { type: "hidden", name: "_token" },
+                domProps: { value: _vm.csrf }
+              })
+            ]
+          )
         ]
       )
     ]
@@ -38149,7 +38172,7 @@ var render = function() {
         _vm._v("\r\n        " + _vm._s(_vm.collection.name) + "\r\n    ")
       ]),
       _vm._v(" "),
-      _c("quizzes-group")
+      _c("quizzes-group", { attrs: { quizzes: _vm.collection.quizzes } })
     ],
     1
   )
@@ -38261,7 +38284,9 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Correct")]),
         _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("Total")])
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Total")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Type")])
       ])
     ])
   }
@@ -38288,19 +38313,23 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("tr", [
-    _c("th", { attrs: { scope: "row" } }, [
-      _c(
-        "a",
-        { attrs: { href: "/collections/" + _vm.history.collection.id } },
-        [
-          _vm._v(
-            "\r\n            " +
-              _vm._s(_vm.history.collection.name) +
-              "\r\n        "
+    _vm.history.collection !== null
+      ? _c("th", { attrs: { scope: "row" } }, [
+          _c(
+            "a",
+            { attrs: { href: "/collections/" + _vm.history.collection.id } },
+            [
+              _vm._v(
+                "\r\n            " +
+                  _vm._s(_vm.history.collection.name) +
+                  "\r\n        "
+              )
+            ]
           )
-        ]
-      )
-    ]),
+        ])
+      : _c("th", { attrs: { scope: "row" } }, [
+          _c("p", [_vm._v("Collection deleted")])
+        ]),
     _vm._v(" "),
     _c("td", {}, [
       _c("a", { attrs: { href: "/users/" + _vm.history.user.id } }, [
@@ -38316,6 +38345,10 @@ var render = function() {
     _vm._v(" "),
     _c("td", {}, [
       _vm._v("\r\n         " + _vm._s(_vm.history.total) + "\r\n    ")
+    ]),
+    _vm._v(" "),
+    _c("td", {}, [
+      _vm._v("\r\n         " + _vm._s(_vm.history.type) + "\r\n    ")
     ])
   ])
 }
@@ -38716,11 +38749,17 @@ var render = function() {
           }
         }),
         _vm._v(" "),
-        _vm.active === "collections" ? _c("collections-group") : _vm._e(),
+        _vm.active === "collections"
+          ? _c("collections-group", { attrs: { collections: _vm.collections } })
+          : _vm._e(),
         _vm._v(" "),
-        _vm.active === "quizzes" ? _c("quizzes-group") : _vm._e(),
+        _vm.active === "quizzes"
+          ? _c("quizzes-group", { attrs: { quizzes: _vm.quizzes } })
+          : _vm._e(),
         _vm._v(" "),
-        _vm.active === "history" ? _c("histories-group") : _vm._e()
+        _vm.active === "history"
+          ? _c("histories-group", { attrs: { histories: _vm.histories } })
+          : _vm._e()
       ],
       1
     )
@@ -51998,7 +52037,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-<<<<<<< HEAD
 /***/ "./resources/js/components/users/UsersGroup.vue":
 /*!******************************************************!*\
   !*** ./resources/js/components/users/UsersGroup.vue ***!
@@ -52065,81 +52103,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_UsersGroup_vue_vue_type_template_id_194bc729___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
-=======
-/***/ "./node_modules/webpack/buildin/module.js":
-/*!***********************************!*\
-  !*** (webpack)/buildin/module.js ***!
-  \***********************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = function(module) {
-	if (!module.webpackPolyfill) {
-		module.deprecate = function() {};
-		module.paths = [];
-		// module.parent = undefined by default
-		if (!module.children) module.children = [];
-		Object.defineProperty(module, "loaded", {
-			enumerable: true,
-			get: function() {
-				return module.l;
-			}
-		});
-		Object.defineProperty(module, "id", {
-			enumerable: true,
-			get: function() {
-				return module.i;
-			}
-		});
-		module.webpackPolyfill = 1;
-	}
-	return module;
-};
-
-
-/***/ }),
-
-/***/ "./resources/js/app.js":
-/*!*****************************!*\
-  !*** ./resources/js/app.js ***!
-  \*****************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-__webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
-
-/***/ }),
-
-/***/ "./resources/js/bootstrap.js":
-/*!***********************************!*\
-  !*** ./resources/js/bootstrap.js ***!
-  \***********************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-window._ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
-/**
- * We'll load the axios HTTP library which allows us to easily issue requests
- * to our Laravel back-end. This library automatically handles sending the
- * CSRF token as a header based on the value of the "XSRF" token cookie.
- */
-
-window.axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
-/**
- * Echo exposes an expressive API for subscribing to channels and listening
- * for events that are broadcast by Laravel. Echo and event broadcasting
- * allows your team to easily build robust real-time web applications.
- */
-// import Echo from 'laravel-echo';
-// window.Pusher = require('pusher-js');
-// window.Echo = new Echo({
-//     broadcaster: 'pusher',
-//     key: process.env.MIX_PUSHER_APP_KEY,
-//     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
-//     forceTLS: true
-// });
->>>>>>> 35b3695fd26999cf33cc2c25b1815fb6b81496f8
 
 /***/ }),
 
@@ -52150,11 +52113,7 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-<<<<<<< HEAD
 // removed by extract-text-webpack-plugin
-=======
-throw new Error("Module build failed (from ./node_modules/css-loader/index.js):\nModuleBuildError: Module build failed (from ./node_modules/sass-loader/dist/cjs.js):\nError: ENOENT: no such file or directory, open 'D:\\php\\Practice\\quizg\\quiz-g-back\\resources\\sass\\app.scss'\n    at runLoaders (D:\\php\\Practice\\quizg\\quiz-g-back\\node_modules\\webpack\\lib\\NormalModule.js:316:20)\n    at D:\\php\\Practice\\quizg\\quiz-g-back\\node_modules\\loader-runner\\lib\\LoaderRunner.js:367:11\n    at D:\\php\\Practice\\quizg\\quiz-g-back\\node_modules\\loader-runner\\lib\\LoaderRunner.js:203:19\n    at process.nextTick (D:\\php\\Practice\\quizg\\quiz-g-back\\node_modules\\enhanced-resolve\\lib\\CachedInputFileSystem.js:85:15)\n    at process._tickCallback (internal/process/next_tick.js:61:11)");
->>>>>>> 35b3695fd26999cf33cc2c25b1815fb6b81496f8
 
 /***/ }),
 
@@ -52165,8 +52124,8 @@ throw new Error("Module build failed (from ./node_modules/css-loader/index.js):\
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\php\Practice\quizg\quiz-g-back\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! D:\php\Practice\quizg\quiz-g-back\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! E:\laravel-learning\quizg\quiz-g-back\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! E:\laravel-learning\quizg\quiz-g-back\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

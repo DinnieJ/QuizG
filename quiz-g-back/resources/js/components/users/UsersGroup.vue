@@ -22,30 +22,31 @@ export default {
         UserRow
     },
     props:{
+        users:Array
     },
     data() {
-        return {
-            users: []
-        }
+        // return {
+        //     users: []
+        // }
     },
     methods: {
 
     },
     created() {
-        let user = {
-            id: -1,
-            name: "User ",
-            email: "user@abc."
-        }
+        // let user = {
+        //     id: -1,
+        //     name: "User ",
+        //     email: "user@abc."
+        // }
 
-        for(let i = 0; i < 10; i++) {
-            let tmp = {}
-            Object.assign(tmp, user)
-            tmp.id = i,
-            tmp.name += i
-            tmp.email += i
-            this.users.push(tmp)
-        }
+        // for(let i = 0; i < 10; i++) {
+        //     let tmp = {}
+        //     Object.assign(tmp, user)
+        //     tmp.id = i,
+        //     tmp.name += i
+        //     tmp.email += i
+        //     this.users.push(tmp)
+        // }
     }
 }
 </script>

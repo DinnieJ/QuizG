@@ -19,4 +19,8 @@ class Quiz extends Model
     public function answers(){
         return $this->hasMany(\App\Answer::class);
     }
+
+    public function user(){
+        return $this->belongsto(\App\User::class);
+    }
 }

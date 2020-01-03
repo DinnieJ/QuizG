@@ -15,7 +15,7 @@ class CollectionController extends Controller
         $data = Collection::paginate(6);
         foreach ($data as &$collection){
             $collection->user;
-            $collection->authorize = (Auth::user()->id == $collection->user->id);
+            $collection->authorize = (Auth::check() && Auth::user()->id == $collection->user->id);
         }
 
         return response([
@@ -26,9 +26,10 @@ class CollectionController extends Controller
     public function getCollectionByUser($user){
         $data = Collection::where('user_id',$user)->get();
         $data->load('user');
+        $authorize = (Auth::check() && $user==Auth::user()->id);
         return response([
             'collections' => $data,
-            'authorize' => ($user==Auth::user()->id),
+            'authorize' => $authorize,
         ],200);
     }
 
@@ -79,13 +80,14 @@ class CollectionController extends Controller
      */
     public function store(Request $request)
     {
-        Collection::create([
+        $new_collection = Collection::create([
             'user_id' => Auth::user()->id,
             'name' => $request->name,
         ]); 
 
         return response([
-            'message' => 'Added successful'
+            'message' => 'Added successful',
+            'collection' => $new_collection
         ],200);
     }
 
@@ -99,12 +101,12 @@ class CollectionController extends Controller
     {
         $data = Collection::find($id,['id','user_id','name']);
         $data->setRelation('quizzes',$data->quizzes()->paginate(5));
-        $authorize = ($data->user_id == Auth::user()->id);
+        $authorize = (Auth::check() && $data->user_id == Auth::user()->id);
 
         $data->authorize = $authorize;
         foreach($data->quizzes as &$quiz){
             $quiz->setRelation('answers',$quiz->answers);
-            $quiz->authorize = ($quiz->user_id == Auth::user()->id);
+            $quiz->authorize = (Auth::check() && $quiz->user_id == Auth::user()->id);
         }
 
         return response([

@@ -82,10 +82,7 @@ class QuizController extends Controller
                 'message' => 'Quiz not found'
             ],400);
         }
-        $authorize = false;
-        if($data->user_id == Auth::user()->id){
-            $authorize = true;
-        }
+        $authorize = (Auth::check() && $data->user_id == Auth::user()->id);
         $quiz->authorize = $authorize;
         $quiz->answers;
 
@@ -174,7 +171,7 @@ class QuizController extends Controller
 
         $quizzes = $quizzes->load('answers');
         $user = User::find($id);
-        $authorize = (Auth::user()->id==$id);
+        $authorize = (Auth::check() && Auth::user()->id==$id);
         return response([
             'quizzes' => $quizzes,
             'user' => $user,
@@ -191,7 +188,7 @@ class QuizController extends Controller
         }
         $quizzes->load('answers');
         foreach($quizzes as $quiz){
-            $quiz->authorize = (Auth::user()->id == $quiz->user_id);
+            $quiz->authorize = (Auth::check() && Auth::user()->id == $quiz->user_id);
         }
         return response([
             'quizzes' => $quizzes,

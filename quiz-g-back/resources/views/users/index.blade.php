@@ -2,6 +2,6 @@
 
 @section('main')
 <div class="users-page">
-   <users-group />
+<users-group :users="{{$users}}"/>
 </div>
 @endsection

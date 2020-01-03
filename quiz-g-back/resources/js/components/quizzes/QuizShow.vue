@@ -33,27 +33,11 @@ export default {
     components: {
         AnswerRow
     },
-    data() {
-        return {
-            quiz: {
-                content: "Conafafneaifnaeifhaehfaehfahfhaefhahchac",
-                correct_answer_id: 1,
-                answers: [
-                    {
-                        id: 1,
-                        content: "Answer 1"
-                    },
-                    {
-                        id: 2,
-                        content: "Answer 2"
-                    },
-                    {
-                        id: 2,
-                        content: "Answer 3"
-                    },
-                ]
-            }
-        }
+    props:{
+        quiz:Object
+    },
+    created(){
+        console.log(this.quiz);
     }
 }
 </script>

@@ -19,6 +19,9 @@ class RedirectIfAuthenticated
     public function handle($request, Closure $next, $guard = null)
     {
         if (Auth::guard($guard)->check()) {
+            if(Auth::guard('admin')->check()){
+                return redirect(RouteServiceProvider::HOME_ADMIN);
+            }
             return redirect(RouteServiceProvider::HOME);
         }
 

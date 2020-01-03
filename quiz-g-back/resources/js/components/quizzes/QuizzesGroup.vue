@@ -22,33 +22,29 @@ export default {
         QuizRow
     },
     props:{
-    },
-    data() {
-        return {
-            quizzes: [],
-        }
+        quizzes:Array
     },
     methods: {
 
     },
     created() {
-        let quiz = {
-            id: -1,
-            content: "Quiz ",
-            user: {
-                id: 0,
-                name: "User "
-            }
-        }
+        // let quiz = {
+        //     id: -1,
+        //     content: "Quiz ",
+        //     user: {
+        //         id: 0,
+        //         name: "User "
+        //     }
+        // }
 
-        for(let i = 0; i < 10; i++) {
-            let tmp = {}
-            Object.assign(tmp, quiz)
-            tmp.id = i,
-            tmp.content += i
-            tmp.user.name += i
-            this.quizzes.push(tmp)
-        }
+        // for(let i = 0; i < 10; i++) {
+        //     let tmp = {}
+        //     Object.assign(tmp, quiz)
+        //     tmp.id = i,
+        //     tmp.content += i
+        //     tmp.user.name += i
+        //     this.quizzes.push(tmp)
+        // }
     }
 }
 </script>

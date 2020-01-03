@@ -19,6 +19,11 @@ class TestController extends Controller
                 'message' => 'Collection not found'
             ],400);
         }
+        if(count($data->quizzes) <= 0){
+            return response([
+                'message' => 'no quiz in collection'
+            ],400);
+        }
         return response([
             'collection' => $data
         ],200);

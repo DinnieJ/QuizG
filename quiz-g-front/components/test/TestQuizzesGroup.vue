@@ -1,175 +1,222 @@
 <template>
-<div class="test-quizzes-group">
+  <div class="test-quizzes-group">
     <div class="test-quizzes-group-header mb-2">
-        <test-time 
-            :time="time"
-            :total-quizzes="noQuizzes"
-            :correct="correct"
-        />
+      <test-time :time="time" :total-quizzes="noQuizzes" :correct="correct" />
     </div>
     <div class="test-quizzes-group-quizzes mb-1">
-        <div class="row h-100">
-            <div class="col-1 d-flex align-items-center">
-                <div class="mx-auto">
-                    <div class="btn-circle text-center" v-if="currentQuiz > 0" @click="clickMove(-1)">
-                        &#60;
-                    </div>
-                </div>
+      <div class="row h-100">
+        <div class="col-1 d-flex align-items-center">
+          <div class="mx-auto">
+            <div
+              class="btn-circle text-center"
+              v-if="currentQuiz > 0"
+              @click="clickMove(-1)"
+            >
+              &#60;
             </div>
-            <div class="col-10">
-                <test-quiz-card 
-                    :quiz="quizzes[currentQuiz]" 
-                    :index="currentQuiz"
-                    :disabled="correct > -1"
-                    @unanswer-quiz="unanswerQuiz($event)"
-                    @answer-quiz="answerQuiz($event)"
-                />
-            </div>
-            <div class="col-1 d-flex align-items-center">
-                <div class="mx-auto">
-                    <div class="btn-circle text-center" v-if="currentQuiz < (noQuizzes - 1)" @click="clickMove(1)">
-                        &#62;
-                    </div>
-                </div>
-            </div>
+          </div>
         </div>
-    </div>
-  <div class="test-quizzes-group-footer">
-        <div class="row px-2">
-            <template v-for="(item, i) in quizzesLink">
-                <div :key="'link-' + i" class="col mb-1">
-                    <div 
-                        :class="'text-center test-quiz-link ' + (item.answer ? 'answer ' : '') + (item.active ? 'active' : '')"
-                        @click="clickLink(i)"
-                    >{{ i + 1 }}</div>
-                </div>
-            </template>
+        <div class="col-10">
+          <test-quiz-card
+            :quiz="quizzes[currentQuiz]"
+            :index="currentQuiz"
+            :disabled="finish"
+            @unanswer-quiz="unanswerQuiz($event)"
+            @answer-quiz="answerQuiz($event)"
+          />
         </div>
-        <div class="container">
-            <button class="btn btn-sm btn-info" @click="clickSubmit()">Submit</button>
-            <button class="btn btn-sm btn-warning" v-if="correct > -1" @click="clickExit()">Exit</button>
-        </div>  
-        
+        <div class="col-1 d-flex align-items-center">
+          <div class="mx-auto">
+            <div
+              class="btn-circle text-center"
+              v-if="currentQuiz < noQuizzes - 1"
+              @click="clickMove(1)"
+            >
+              &#62;
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-</div>
+    <div class="test-quizzes-group-footer">
+      <div class="row px-2">
+        <template v-for="(item, i) in quizzesLink">
+          <div :key="'link-' + i" class="col mb-1">
+            <div
+              :class="
+                'text-center test-quiz-link ' +
+                  (item.answer ? 'answer ' : '') +
+                  (item.active ? 'active' : '')
+              "
+              @click="clickLink(i)"
+            >
+              {{ i + 1 }}
+            </div>
+          </div>
+        </template>
+      </div>
+      <div class="container">
+        <button class="btn btn-sm btn-info" @click="clickSubmit()">
+          Submit
+        </button>
+        <button
+          class="btn btn-sm btn-warning"
+          v-if="finish"
+          @click="clickExit()"
+        >
+          Exit
+        </button>
+      </div>
+    </div>
+    <alert-dialog
+      dialog-id="submit-dialog"
+      type="submit"
+      :message="submitMessage"
+      @dialog-confirm="dialogConfirm($event)"
+    />
+  </div>
 </template>
 
 <script>
-import TestTime from './TestTime'
-import TestQuizCard from './TestQuizCard'
-import { mapGetters } from 'vuex'
+import AlertDialog from "~/components/common/AlertDialog";
+import TestTime from "./TestTime";
+import TestQuizCard from "./TestQuizCard";
+import { mapGetters } from "vuex";
 
 export default {
-    components: {
-        TestTime,
-        TestQuizCard
+  loading: {
+    color: "blue",
+    height: "5px"
+  },
+  components: {
+    TestTime,
+    TestQuizCard,
+    AlertDialog
+  },
+  props: {
+    quizzes: Array,
+    start: {
+      type: Boolean,
+      default: false
     },
-    props: {
-        quizzes: Array,
-        start: {
-            type: Boolean,
-            default: false
-        },
-        correct: {
-            type: Number,
-            default: -1
-        }
-    },
-    data() {
-        return {
-            time: 0,
-            totalTime: 0,
-            clock: {},
-            hours: 1,
-            minutes: 1,
-            seconds: 1,
-            quizzesLink: [],
-            currentQuiz: 0,
-            noQuizzes: 0,
-            clock: {},
-        }
-    },
-    watch:{
-        start: {
-            deep: true,
-            handler(value) {
-                if(value) {
-                    this.startClock()
-                }
-            }
-        }
-    }, 
-    computed: {
-        ...mapGetters({
-            currentCollection: 'collection/currentCollection'
-        })
-    },
-    methods: {
-        clickLink(index) {
-            this.quizzesLink[this.currentQuiz].active = false
-            this.currentQuiz = index
-            this.quizzesLink[this.currentQuiz].active = true
-        },
-        clickMove(step) {
-            this.quizzesLink[this.currentQuiz].active = false
-            if(step === -1) {
-                this.currentQuiz--
-            } else {
-                this.currentQuiz++
-            }
-            this.quizzesLink[this.currentQuiz].active = true
-        },
-        unanswerQuiz(i) {
-            this.quizzesLink[this.currentQuiz].answer = false
-        },
-        answerQuiz(i) {
-            this.quizzesLink[this.currentQuiz].answer = true
-        },
-         startClock() {
-            var context = this
-            context.clock = setInterval(function () {
-                if(context.time == 1) {
-                    context.clickSubmit()
-                }
-                context.time--;
-            }, 1000)
-        },
-        stopClock() {
-            clearInterval(this.clock)
-        },
-        clickSubmit() {
-            this.stopClock()
-            let payload = {
-                collection_id: this.currentCollection.id,
-                data: [],
-                time: (this.totalTime - this.time)
-            }
-            this.quizzes.forEach(item => {
-                payload.data.push({
-                    quiz_id: item.id,
-                    answer_id: item.answer_id
-                })
-            })
-            this.$emit('submit-test', payload)
-        },
-        clickExit() {
-            this.$router.go(-1)
-        }
-    },
-    created() {
-        this.noQuizzes = this.quizzes.length
-        for(let i = 0; i < this.noQuizzes; i++) {
-            this.quizzes[i].choice = -1
-            this.totalTime += this.quizzes[i].time
-            this.quizzesLink.push({
-                answer: false,
-                active: false
-            })
-        }
-
-        this.time = this.totalTime
-
-        this.quizzesLink[0].active = true
+    correct: {
+      type: Number,
+      default: -1
     }
-}
+  },
+  data() {
+    return {
+      time: 0,
+      totalTime: 0,
+      clock: {},
+      hours: 1,
+      minutes: 1,
+      seconds: 1,
+      quizzesLink: [],
+      currentQuiz: 0,
+      noQuizzes: 0,
+      clock: {},
+      finish: false,
+      submitMessage: "Do you want to submit this test ?"
+    };
+  },
+  watch: {
+    start: {
+      deep: true,
+      handler(value) {
+        if (value) {
+          this.startClock();
+        }
+      }
+    }
+  },
+  computed: {
+    ...mapGetters({
+      currentCollection: "collection/currentCollection"
+    })
+  },
+  methods: {
+    clickLink(index) {
+      this.quizzesLink[this.currentQuiz].active = false;
+      this.currentQuiz = index;
+      this.quizzesLink[this.currentQuiz].active = true;
+    },
+    clickMove(step) {
+      this.quizzesLink[this.currentQuiz].active = false;
+      if (step === -1) {
+        this.currentQuiz--;
+      } else {
+        this.currentQuiz++;
+      }
+      this.quizzesLink[this.currentQuiz].active = true;
+    },
+    unanswerQuiz(i) {
+      this.quizzesLink[this.currentQuiz].answer = false;
+    },
+    answerQuiz(i) {
+      this.quizzesLink[this.currentQuiz].answer = true;
+    },
+    startClock() {
+      var context = this;
+      context.clock = setInterval(function() {
+        if (context.time == 1) {
+          context.stopClock();
+          context.submitTest();
+        }
+        context.time--;
+      }, 1000);
+    },
+    stopClock() {
+      clearInterval(this.clock);
+    },
+    submitTest() {
+      let payload = {
+        collection_id: this.currentCollection.id,
+        data: [],
+        time: this.totalTime - this.time
+      };
+      this.quizzes.forEach(item => {
+        payload.data.push({
+          quiz_id: item.id,
+          answer_id: item.answer_id
+        });
+      });
+      this.$emit("submit-test", payload);
+    },
+    clickSubmit() {
+      this.stopClock();
+      this.$bvModal.show("submit-dialog");
+    },
+    dialogConfirm(confirm) {
+      this.stopClock();
+      if (confirm) {
+        this.finish = true;
+        this.submitTest();
+      } else {
+        if (!this.finish) {
+          this.finish = false;
+          this.startClock();
+        }
+      }
+    },
+    clickExit() {
+      this.$router.go(-1);
+    }
+  },
+  created() {
+    this.noQuizzes = this.quizzes.length;
+    for (let i = 0; i < this.noQuizzes; i++) {
+      this.quizzes[i].choice = -1;
+      this.totalTime += this.quizzes[i].time;
+      this.quizzesLink.push({
+        answer: false,
+        active: false
+      });
+    }
+
+    this.time = this.totalTime;
+
+    this.quizzesLink[0].active = true;
+  }
+};
 </script>

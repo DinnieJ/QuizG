@@ -19,6 +19,11 @@ class GameController extends Controller
                 'message' => 'Collection not found'
             ],400);
         }
+        if(count($data->quizzes) <= 0){
+            return response([
+                'message' => 'no quiz in collection'
+            ],400);
+        }
         if(Auth::check()){
            $new_history =  History::create([
                 'user_id' => Auth::user()->id,

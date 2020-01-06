@@ -4,16 +4,17 @@ version: '3'
 
 services:
   # Server container
+  # MySQL container
   mysql:
     image: mysql
     command: --default-authentication-plugin=mysql_native_password
-    restart: always
+    #restart: always
     environment:
       MYSQL_ROOT_PASSWORD: example
 
   adminer:
     image: adminer
-    restart: always
+    #restart: always
     ports:
       - 3306:80
   nginx:
@@ -29,7 +30,8 @@ services:
       # Laravel port
       - 8888:81
     links:
-      - node
+      - node-front
+      - node-back
       - php
 
   # PHP FastCGI Process Manager container
@@ -45,14 +47,19 @@ services:
       PHP_IDE_CONFIG: "serverName=Docker"
 
   # Node container
-  node:
+  node-front:
     build:
       context: docker/dev/node
       dockerfile: Dockerfile
     volumes:
       - ./quiz-g-front:/var/www/quiz-g-front
-  # MySQL container
-
+  
+  node-back:
+    build:
+      context: docker/dev/node
+      dockerfile: Dockerfile
+    volumes:
+      - ./quiz-g-back:/var/www/quiz-g-back
 
 ######### Volumes ###################################
 

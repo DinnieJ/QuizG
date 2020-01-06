@@ -112,6 +112,7 @@ class CollectionController extends Controller
         foreach($data->quizzes as &$quiz){
             $quiz->setRelation('answers',$quiz->answers);
             $quiz->authorize = (Auth::check() && $quiz->user_id == Auth::user()->id);
+            $quiz->load('user');
         }
 
         return response([

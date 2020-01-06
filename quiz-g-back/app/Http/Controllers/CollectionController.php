@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Collection;
 use App\Contain;
 use App\Traits\QuizService;
+use App\User;
 use Auth;
 class CollectionController extends Controller
 {
@@ -25,11 +26,11 @@ class CollectionController extends Controller
 
     public function getCollectionByUser($user){
         $data = Collection::where('user_id',$user)->get();
-        $data->load('user');
         $authorize = (Auth::check() && $user==Auth::user()->id);
         return response([
             'collections' => $data,
             'authorize' => $authorize,
+            'user' => User::find($user)
         ],200);
     }
 

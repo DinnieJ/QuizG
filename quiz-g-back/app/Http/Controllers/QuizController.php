@@ -166,7 +166,8 @@ class QuizController extends Controller
         $quizzes = Quiz::where('user_id',$id)->get();
         if($quizzes == null || count($quizzes) <= 0){
             return response([
-                'message' => 'Quiz not found or empty'
+                'message' => 'Quiz not found or empty',
+                'quizzes' => []
             ],400);
         }
 
@@ -185,6 +186,7 @@ class QuizController extends Controller
         if($quizzes == null){
             return response([
                 'message' => 'There is no quiz in the database',
+                'quizzes' => []
             ],400);
         }
         $quizzes->load('answers');

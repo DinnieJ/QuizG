@@ -84,7 +84,8 @@ class QuizController extends Controller
         }
         $authorize = (Auth::check() && $data->user_id == Auth::user()->id);
         $quiz->authorize = $authorize;
-        $quiz->answers;
+        $quiz->load('answers');
+        $quiz->load('user');
 
         return response(['quiz' => $quiz], 200);
     }
@@ -189,6 +190,7 @@ class QuizController extends Controller
         $quizzes->load('answers');
         foreach($quizzes as $quiz){
             $quiz->authorize = (Auth::check() && Auth::user()->id == $quiz->user_id);
+            $quiz->load('user');
         }
         return response([
             'quizzes' => $quizzes,

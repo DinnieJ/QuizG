@@ -1,49 +1,49 @@
 <template>
-<div class="row">
+  <div class="row">
     <template v-for="(item, i) in quizzes">
-        <quiz-card 
-            :quiz="item" 
-            :index="i + 1" 
-            :key="'quiz-' + i" 
-            :selectable="selectable" 
-            :creator-show="creatorShow" 
-            :authorize="authorize" 
-            @click-delete="clickDelete($event)"
-        />
+      <quiz-card
+        :quiz="item"
+        :index="i + 1"
+        :key="'quiz-' + i"
+        :selectable="selectable"
+        :creator-show="creatorShow"
+        :authorize="authorize"
+        @click-delete="clickDelete($event)"
+      />
     </template>
-</div>
+  </div>
 </template>
 
 <script>
-import QuizCard from './QuizCard'
+import QuizCard from "./QuizCard";
 export default {
-    components: {
-        QuizCard
+  components: {
+    QuizCard
+  },
+  props: {
+    quizzes: Array,
+    selectable: {
+      type: Boolean,
+      default: false
     },
-    props: {
-        quizzes: Array,
-        selectable: {
-            type: Boolean,
-            default: false
-        },
-        creatorShow: {
-            type: Boolean,
-            default: false
-        },
-        authorize: {
-            type: Boolean,
-            default: false
-        }
+    creatorShow: {
+      type: Boolean,
+      default: false
     },
-    methods: {
-        clickDelete(payload) {
-            this.$emit('click-delete',payload)
-        }
-    },
-    created() {
-        if(this.selectable) {
-            this.$store.commit('quiz/RESET_SELECTED_QUIZZES')
-        }
+    authorize: {
+      type: Boolean,
+      default: false
     }
-}
+  },
+  methods: {
+    clickDelete(payload) {
+      this.$emit("click-delete", payload);
+    }
+  },
+  created() {
+    if (this.selectable) {
+      this.$store.commit("quiz/RESET_SELECTED_QUIZZES");
+    }
+  }
+};
 </script>

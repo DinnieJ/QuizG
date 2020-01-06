@@ -12,7 +12,7 @@ class AuthController extends Controller
     public function login(Request $request){
         
         $validator = Validator::make($request->all(), [
-            'email' => 'required',
+            'email' => 'required|email',
             'password'  => 'required',
         ]);
         if($validator->fails()){
@@ -27,7 +27,9 @@ class AuthController extends Controller
             ],200);
         }
 
-         return response()->json(['error'=> 'failed'],401);
+         return response()->json(['error'=> [
+             'email' => "Email login session failed!"
+         ]],400);
     }
 
     public function register(Request $request){

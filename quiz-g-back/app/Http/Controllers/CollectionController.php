@@ -100,6 +100,11 @@ class CollectionController extends Controller
     public function show($id)
     {
         $data = Collection::find($id,['id','user_id','name']);
+        if($data == null){
+            return response([
+                'message' => 'Collection not found'
+            ],400);
+        }
         $data->setRelation('quizzes',$data->quizzes()->paginate(5));
         $authorize = (Auth::check() && $data->user_id == Auth::user()->id);
 
@@ -142,10 +147,13 @@ class CollectionController extends Controller
         $collection = Collection::find($id);
         if($collection != null){
             $collection->delete();
+            return response([
+                'message' => 'Delete successful'
+            ],200);
         }
         return response([
-            'message' => 'Delete successful'
-        ],200);
+            'message' => 'Nothing to delete'
+        ],400);
 
     }
 }
